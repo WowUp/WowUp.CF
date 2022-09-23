@@ -10,7 +10,7 @@
   <p class="text-1">{{ sessionService.statusText$ | async }}</p>
   <div class="flex-grow-1"></div>
   <p class="mr-3">{{ sessionService.pageContextText$ | async }}</p>
-  <p>v{{ versionNumber | async }}</p>
+  <p>v{{ versionNumber | async }} CF</p>
   <div class="h-100 ml-3" [ngSwitch]="appUpdateState$ | async">
     <div *ngSwitchCase="appUpdateState.CheckingForUpdate">
       <p>{{'APP.WOWUP_UPDATE.CHECKING_FOR_UPDATE' | translate}}</p>

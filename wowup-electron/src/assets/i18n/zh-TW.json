@@ -34,8 +34,8 @@
   "ADS": {
     "AD_EXPLAINER_BUTTON": "為什麼會看見廣告？",
     "AD_EXPLAINER_DIALOG": {
-      "MESSAGE": "顯示此廣告是為了支援 <a appExternalLink href=\"https://addons.wago.io/\">wago.io</a> 上辛勤工作、開發出優秀插件的作者們。如果不想看到此廣告，可以在「選項」中禁用 Wago.io 安裝源。",
-      "TITLE": "為什麼會看見廣告？"
+      "MESSAGE": "In order to use <a appExternalLink href=\"https://curseforge.com/\">CurseForge</a> as an addon provider and help support authors for their hard work on your favorite addons we are required to show this advertisement.\n\nIf you do not want to see this ad, you can always disable CurseForge as a provider in the options tab.",
+      "TITLE": "Why am I seeing this ad?"
     }
   },
   "APP": {

@@ -16,7 +16,6 @@ import { FileService } from "../files/file.service";
 import { TocService } from "../toc/toc.service";
 import { WarcraftService } from "../warcraft/warcraft.service";
 import { WowUpApiService } from "../wowup-api/wowup-api.service";
-import { WagoAddonProvider } from "../../addon-providers/wago-addon-provider";
 import { AddonProviderState } from "../../models/wowup/addon-provider-state";
 import { ADDON_PROVIDER_UNKNOWN, WAGO_PROMPT_KEY } from "../../../common/constants";
 import { Subject } from "rxjs";
@@ -61,7 +60,6 @@ export class AddonProviderFactory {
       this.createWowUpCompanionAddonProvider(),
       this.createWowUpAddonProvider(),
       this.createCurseProvider(),
-      this.createWagoAddonProvider(),
       this.createTukUiAddonProvider(),
       this.createWowInterfaceAddonProvider(),
       this.createGitHubAddonProvider(),
@@ -101,17 +99,6 @@ export class AddonProviderFactory {
     this._addonProviderChangeSrc.next(provider);
   }
 
-  public createWagoAddonProvider(): WagoAddonProvider {
-    return new WagoAddonProvider(
-      this._electronService,
-      this._cachingService,
-      this._warcraftService,
-      this._tocService,
-      this._uiMessageService,
-      this._networkService
-    );
-  }
-
   public createWowUpCompanionAddonProvider(): WowUpCompanionAddonProvider {
     return new WowUpCompanionAddonProvider(this._fileService, this._tocService);
   }
@@ -121,7 +108,7 @@ export class AddonProviderFactory {
   }
 
   public createCurseProvider(): CurseAddonProvider {
-    return new CurseAddonProvider(this._tocService);
+    return new CurseAddonProvider(this._cachingService, this._networkService, this._tocService);
   }
 
   public createTukUiAddonProvider(): TukUiAddonProvider {

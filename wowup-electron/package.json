@@ -5,8 +5,8 @@
   "description": "World of Warcraft addon updater",
   "homepage": "https://wowup.io",
   "author": {
-    "name": "Jliddev",
-    "email": "jliddev@gmail.com"
+    "name": "WowUp LLC",
+    "email": "zakrn@wowup.io"
   },
   "gypfile": true,
   "keywords": [
@@ -85,7 +85,7 @@
     "@microsoft/applicationinsights-web": "2.8.7",
     "@ngx-translate/core": "14.0.0",
     "@ngx-translate/http-loader": "7.0.0",
-    "@overwolf/ow-electron": "19.0.16-2",
+    "@overwolf/ow-electron": "19.0.16-4",
     "@overwolf/ow-electron-builder": "23.4.0",
     "@types/adm-zip": "0.5.0",
     "@types/archiver": "5.3.1",
@@ -110,7 +110,7 @@
     "chai": "4.3.6",
     "core-js": "3.21.1",
     "cross-env": "7.0.3",
-    "curseforge-v2": "1.1.2",
+    "curseforge-v2": "1.2.0",
     "del": "6.0.0",
     "dotenv": "16.0.0",
     "electron-notarize": "1.2.1",

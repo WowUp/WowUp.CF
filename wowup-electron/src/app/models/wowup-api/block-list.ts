@@ -5,7 +5,3 @@ export interface CurseAuthorBlockRepresentation {
 export interface CurseBlocksRepresentation {
   authors: CurseAuthorBlockRepresentation[];
 }
-
-export interface BlockListRepresentation {
-  curse: CurseBlocksRepresentation;
-}
