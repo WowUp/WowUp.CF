@@ -1,0 +1,29 @@
+<div class="container">
+  <h2>
+    {{ "PAGES.OPTIONS.WOW.TITLE" | translate }}
+  </h2>
+  <div>
+    <div class="row align-items-center">
+      <div class="flex-grow-1">
+        {{ "PAGES.OPTIONS.WOW.RESCAN_CLIENTS_LABEL" | translate }}
+      </div>
+      <button mat-stroked-button (click)="onReScan()" class="mr-3">
+        {{ "PAGES.OPTIONS.WOW.RESCAN_CLIENTS_BUTTON" | translate }}
+      </button>
+
+      <button mat-flat-button color="primary" (click)="onAddNew()">
+        {{ "PAGES.OPTIONS.WOW.ADD_CLIENT_BUTTON" | translate }}
+      </button>
+    </div>
+    <h2 *ngIf="((wowInstallations$ | async)?.length ?? 0) === 0" class="pt-3">
+      {{ "PAGES.OPTIONS.WOW.NO_CLIENTS_FOUND_TEXT" | translate }}
+    </h2>
+    <app-wow-client-options
+      class="client-section"
+      *ngFor="let installation of wowInstallations$ | async; let i = index"
+      [installationId]="installation.id"
+      [index]="i"
+    >
+    </app-wow-client-options>
+  </div>
+</div>

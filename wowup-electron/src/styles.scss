@@ -1,0 +1,677 @@
+@import "~@circlon/angular-tree-component/css/angular-tree-component.css";
+@import "./markdown.scss";
+@import "./custom-theme.scss";
+
+:not(input):not(textarea),
+:not(input):not(textarea)::after,
+:not(input):not(textarea)::before {
+  -webkit-user-select: none !important;
+  user-select: none !important;
+}
+
+input,
+button,
+textarea,
+:focus {
+  outline: none; // You should add some other style for :focus to help UX/a11y
+}
+
+a:not([draggable="true"]),
+img:not([draggable="true"]) {
+  -webkit-user-drag: none;
+  user-drag: none;
+  /* Technically not supported in Electron yet */
+}
+
+a[href^="http://"],
+a[href^="https://"],
+a[href^="ftp://"]
+{
+  -webkit-user-drag: auto;
+  user-drag: auto;
+  /* Technically not supported in Electron yet */
+}
+
+.selectable {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+
+  * {
+    user-select: text !important;
+    -webkit-user-select: text !important;
+  }
+}
+
+html {
+  overflow: hidden;
+  -webkit-app-region: no-drag;
+}
+
+body {
+  overflow: hidden;
+  margin: 0;
+  -webkit-app-region: no-drag;
+}
+
+a,
+img {
+  -webkit-app-region: no-drag;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.rounded {
+  border-radius: 4px;
+}
+
+.p-0 {
+  padding: 0 !important;
+}
+
+.p-1 {
+  padding: 0.25em !important;
+}
+
+.p-2 {
+  padding: 0.5em !important;
+}
+
+.p-3 {
+  padding: 1em !important;
+}
+
+.pl-1 {
+  padding-left: 0.25em;
+}
+
+.pl-2 {
+  padding-left: 0.5em;
+}
+
+.pl-3 {
+  padding-left: 1em;
+}
+
+.pr-1 {
+  padding-right: 0.25em;
+}
+
+.px-1 {
+  padding: 0 0.25em;
+}
+
+.px-2 {
+  padding: 0 0.5em;
+}
+
+.px-3 {
+  padding: 0 1em;
+}
+
+.pt-1 {
+  padding-top: 0.25em;
+}
+
+.pt-2 {
+  padding-top: 0.5em;
+}
+
+.pt-3 {
+  padding-top: 1em;
+}
+
+.m-0 {
+  margin: 0 !important;
+}
+
+.mr-1 {
+  margin-right: 0.25em !important;
+}
+
+.mr-2 {
+  margin-right: 0.5em !important;
+}
+
+.mr-3 {
+  margin-right: 1em !important;
+}
+
+.ml-1 {
+  margin-left: 0.25em !important;
+}
+
+.ml-2 {
+  margin-left: 0.5em !important;
+}
+
+.ml-3 {
+  margin-left: 1em !important;
+}
+
+.mt-1 {
+  margin-top: 0.25em !important;
+}
+
+.mt-2 {
+  margin-top: 0.5em !important;
+}
+
+.mt-3 {
+  margin-top: 1em !important;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+.mb-1 {
+  margin-bottom: 0.25em !important;
+}
+
+.mb-2 {
+  margin-bottom: 0.5em !important;
+}
+
+.mb-3 {
+  margin-bottom: 1em !important;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.pre-wrap {
+  white-space: pre-wrap;
+}
+
+.no-reg-drag {
+  -webkit-app-region: no-drag;
+}
+
+.no-link {
+  pointer-events: none;
+  text-decoration: none;
+  color: inherit !important;
+}
+
+.pointer {
+  pointer-events: all !important;
+
+  &:hover {
+    cursor: pointer !important;
+  }
+}
+
+.option-icon {
+  width: 17px !important;
+  height: 17px !important;
+}
+
+mat-icon.success-icon {
+  color: green;
+}
+
+.grow-tab-content {
+  .mat-tab-body-wrapper {
+    flex-grow: 1;
+  }
+}
+
+.mat-tab-label,
+.mat-tab-label-content,
+.mat-select-value,
+.mat-form-field-infix {
+  &:hover {
+    cursor: pointer !important;
+  }
+}
+
+.mat-button,
+.mat-stroked-button,
+.mat-raised-button,
+.mat-flat-button {
+  &:hover {
+    cursor: default !important;
+  }
+
+  &:not(.mat-button-disabled) {
+    &:hover {
+      cursor: pointer !important;
+    }
+  }
+
+  // Prevent clicking thru the button via the text
+  .mat-button-wrapper {
+    pointer-events: none;
+  }
+}
+
+.mat-slide-toggle-thumb,
+.mat-slide-toggle-bar {
+  &:hover {
+    cursor: pointer !important;
+  }
+}
+
+.mat-slide-toggle-thumb,
+.mat-slide-toggle-bar,
+.mat-button-wrapper {
+  -webkit-app-region: no-drag;
+}
+
+.window-appicon {
+  background-size: 30px !important;
+  padding-left: 12px !important;
+}
+
+.tab-container {
+  overflow: auto;
+  overflow-x: hidden;
+  height: 100%;
+
+  &.mac {
+    // height: calc(100vh - 95px);
+  }
+
+  &.windows {
+    // height: calc(100vh - 103px);
+  }
+
+  &.linux {
+    height: calc(100vh - 103px);
+  }
+}
+
+.no-pad-select {
+  .mat-form-field-wrapper {
+    padding-bottom: 0 !important;
+  }
+}
+
+.d-inline {
+  display: inline;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-grow-1 {
+  flex-grow: 1;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+
+  &.align-items-center {
+    align-items: center;
+  }
+
+  &.align-items-start {
+    align-items: flex-start;
+  }
+
+  &.justify-content-center {
+    justify-content: center;
+  }
+
+  &.justify-content-end {
+    justify-content: flex-end;
+  }
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+
+  &.align-items-center {
+    align-items: center;
+  }
+
+  &.align-items-start {
+    align-items: flex-start;
+  }
+
+  &.justify-content-center {
+    justify-content: center;
+  }
+
+  &.justify-content-end {
+    justify-content: flex-end;
+  }
+  &.justify-content-between {
+    justify-content: space-between;
+  }
+}
+
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
+}
+
+.addon-summary {
+  img {
+    max-width: 100%;
+  }
+}
+
+.addon-summary,
+.addon-changelog {
+  strong,
+  b {
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+  }
+}
+
+.addon-table {
+  width: 100%;
+  height: 100%;
+
+  .cell-break-all {
+    word-break: break-all;
+  }
+
+  .cell-wrap-text {
+    white-space: normal;
+  }
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
+  border: 4px solid transparent;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.ignored {
+  color: var(--text-4) !important;
+}
+
+.addon-context-menu {
+  .addon-context-menu-header {
+    padding: 0 16px 8px 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .addon-name {
+      word-break: break-all;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .thumbnail {
+      width: 30px;
+      height: 30px;
+      margin-right: 16px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      flex-shrink: 0;
+
+      img {
+        height: 100%;
+      }
+
+      .thumbnail-letter {
+        color: var(--text-4);
+        font-size: 1.5em;
+        font-weight: 400;
+      }
+    }
+
+    .addon-name {
+      font-size: 1em;
+    }
+
+    .addon-update-available {
+      mat-icon {
+        height: 10px;
+      }
+    }
+  }
+}
+
+.wide-slide-toggle {
+  width: 100%;
+
+  &:hover {
+    cursor: pointer !important;
+  }
+
+  .mat-slide-toggle-label {
+    &:hover {
+      cursor: pointer !important;
+    }
+  }
+
+  .mat-slide-toggle-content {
+    flex-grow: 1;
+  }
+}
+
+.light-select {
+  .mat-form-field-label {
+    color: var(--text-2) !important;
+  }
+}
+
+.vertical-radio-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.cell-break-all {
+  word-break: break-all;
+}
+
+.cell-wrap-text {
+  white-space: normal;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+}
+
+.max-lines-3 {
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+
+.cell-center-text {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.install-button {
+  min-width: 120px !important;
+}
+
+.progress-button {
+  position: relative;
+  overflow: hidden;
+  min-width: 120px !important;
+
+  .progress-bar {
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    width: 100%;
+    left: 0;
+    position: absolute;
+  }
+
+  .mat-progress-bar-buffer {
+    background: var(--text-4) !important;
+  }
+
+  .mat-progress-bar-fill::after {
+    background: var(--background-primary) !important;
+  }
+}
+
+.error-text {
+  color: red;
+}
+
+.no-tabs {
+  &.mat-tab-group {
+    .mat-tab-header {
+      display: none;
+    }
+  }
+}
+
+.snackbar-error {
+  border: 2px solid red;
+}
+
+.snackbar-success {
+  border: 2px solid green;
+}
+
+.bnet-btn {
+  background-color: #0074e0;
+  border: solid 2px transparent;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+  border-radius: 4px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  text-decoration: none;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+.bnet-btn-sm {
+  font-size: inherit;
+  border-radius: 4px;
+  // border: 1px solid white;
+  cursor: pointer;
+}
+.bnet-btn:hover {
+  background-color: #0074e0;
+  border-color: #47a6ff;
+  color: #fff;
+}
+
+.update-badge {
+  background-color: var(--background-primary);
+  padding: 0.25em 0.5em;
+  border-radius: 4px;
+  font-size: 75%;
+  &.badge-lg {
+    font-size: 100%;
+  }
+}
+
+// MATERIAL OVERRIDES
+
+.no-input-border {
+  .mat-form-field-infix {
+    border: none !important;
+  }
+}
+
+.z-badge {
+  .mat-badge-content {
+    z-index: 100;
+  }
+}
+
+.clear-badge {
+  .mat-badge-content {
+    color: transparent;
+  }
+}
+
+.mat-tooltip {
+  font-size: 0.95em;
+}
+
+.mat-tab-labels {
+  z-index: 2;
+}
+
+th.mat-header-cell .mat-sort-header-container.mat-sort-header-sorted .mat-sort-header-arrow {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.mat-menu-content {
+  .mat-checkbox {
+    display: block;
+  }
+}
+
+.header-less-tabs .mat-tab-group .mat-tab-header {
+  display: none;
+}
+
+// SCROLLBAR
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  border-width: 1px;
+  border-style: solid;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}

@@ -1,0 +1,36 @@
+@import "../../../custom-theme.scss";
+
+.app-logo {
+  position: absolute;
+  width: 40px;
+  z-index: 1;
+  top: 4px;
+  left: 0.5em;
+
+  img {
+    width: 100%;
+  }
+}
+.page-container {
+  overflow: hidden;
+  height: 100%;
+  // display: flex;
+  // flex-direction: column;
+}
+.tabs {
+  // flex-grow: 1;
+  height: 100%;
+  overflow: hidden;
+}
+.preload-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+}
+.tab-bar-placeholder {
+  height: 48px;
+  width: 100%;
+}

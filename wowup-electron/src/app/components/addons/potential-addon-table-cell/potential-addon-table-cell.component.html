@@ -1,0 +1,23 @@
+<span>
+  <div class="addon-column">
+    <div class="thumbnail-container bg-secondary-3">
+      <app-addon-thumbnail [url]="addon.thumbnailUrl" [name]="addon.name"></app-addon-thumbnail>
+    </div>
+    <div class="addon-text">
+      <a class="addon-title hover-text-2 " (click)="viewDetails()">{{ addon.name }}</a>
+      <div class="addon-version text-2">
+        <div *ngIf="isBetaChannel || isAlphaChannel" class="channel mr-2"
+          [ngClass]="{ beta: isBetaChannel, alpha: isAlphaChannel }">
+          {{ channelTranslationKey | translate }}
+        </div>
+        <span *ngIf="hasRequiredDependencies()" class="dependency-icon mr-1"
+          [matTooltip]="'COMMON.DEPENDENCY.TOOLTIP' | translate: dependencyTooltip">
+          <mat-icon svgIcon="fas:link"></mat-icon>
+        </span>
+        <span>
+          {{ addon | getAddonListItemFileProp: "version":channel }}
+        </span>
+      </div>
+    </div>
+  </div>
+</span>

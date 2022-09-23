@@ -1,0 +1,249 @@
+<div class="container">
+  <h2>
+    {{ "PAGES.OPTIONS.APPLICATION.TITLE" | translate }}
+  </h2>
+  <!-- SET LANGUAGE -->
+  <div class="toggle">
+    <div class="row align-items-center">
+      <div class="flex-grow-1">
+        <div>
+          {{ "PAGES.OPTIONS.APPLICATION.SET_LANGUAGE_LABEL" | translate }}
+        </div>
+        <small class="text-2">{{ "PAGES.OPTIONS.APPLICATION.SET_LANGUAGE_DESCRIPTION" | translate }}</small>
+      </div>
+      <mat-form-field class="">
+        <mat-label>{{ "PAGES.OPTIONS.APPLICATION.CURRENT_LANGUAGE_LABEL" | translate }}</mat-label>
+        <mat-select [value]="currentLanguage$ | async" (selectionChange)="onCurrentLanguageChange($event)">
+          <mat-option *ngFor="let language of languages" [value]="language.localeId">
+            {{ language.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="divider"></div>
+  </div>
+
+  <!-- THEME -->
+  <div class="toggle">
+    <div class="row align-items-center">
+      <div class="flex-grow-1">
+        <div>
+          {{ "PAGES.OPTIONS.APPLICATION.THEME_LABEL" | translate }}
+        </div>
+        <small class="text-2">{{ "PAGES.OPTIONS.APPLICATION.THEME_DESCRIPTION" | translate }}</small>
+      </div>
+      <mat-form-field class="">
+        <mat-label>{{ "PAGES.OPTIONS.APPLICATION.THEME_LABEL" | translate }}</mat-label>
+        <mat-select [(value)]="currentTheme">
+          <mat-optgroup *ngFor="let themeGroup of themeGroups" [label]="themeGroup.name | translate">
+            <mat-option *ngFor="let theme of themeGroup.themes" [value]="theme.class">
+              {{ theme.display | translate }}
+            </mat-option>
+          </mat-optgroup>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="divider"></div>
+  </div>
+  <!-- TELEMETRY -->
+  <div class="toggle">
+    <div class="row align-items-center">
+      <div class="flex-grow-1">
+        <div class="label">
+          {{ "PAGES.OPTIONS.APPLICATION.TELEMETRY_LABEL" | translate }}
+        </div>
+      </div>
+      <mat-slide-toggle [checked]="telemetryEnabled$ | async" (change)="onTelemetryChange($event)"></mat-slide-toggle>
+    </div>
+    <small class="text-2">
+      {{ "PAGES.OPTIONS.APPLICATION.TELEMETRY_DESCRIPTION" | translate }}
+    </small>
+    <div class="divider"></div>
+  </div>
+  <!-- MINIMIZE ON CLOSE -->
+  <div class="toggle">
+    <div class="row align-items-center">
+      <div class="flex-grow-1">
+        <div class="label">
+          {{ "PAGES.OPTIONS.APPLICATION.MINIMIZE_ON_CLOSE_LABEL" | translate }}
+        </div>
+      </div>
+      <mat-slide-toggle [checked]="collapseToTray$ | async" (change)="onCollapseChange($event)"> </mat-slide-toggle>
+    </div>
+    <small class="text-2">{{ minimizeOnCloseDescription }}</small>
+    <div class="divider"></div>
+  </div>
+  <!-- SYSTEM NOTIFICATIONS -->
+  <div class="toggle">
+    <div class="row align-items-center">
+      <div class="flex-grow-1">
+        <div class="label">
+          {{ "PAGES.OPTIONS.APPLICATION.ENABLE_SYSTEM_NOTIFICATIONS_LABEL" | translate }}
+        </div>
+      </div>
+      <mat-slide-toggle [checked]="enableSystemNotifications$ | async" (change)="onEnableSystemNotifications($event)">
+      </mat-slide-toggle>
+    </div>
+    <small class="text-2">
+      {{ "PAGES.OPTIONS.APPLICATION.ENABLE_SYSTEM_NOTIFICATIONS_DESCRIPTION" | translate }}
+    </small>
+    <div class="divider"></div>
+  </div>
+  <!-- APP BADGE -->
+  <div class="toggle">
+    <div class="row align-items-center">
+      <div class="flex-grow-1">
+        <div class="label">
+          {{ "PAGES.OPTIONS.APPLICATION.ENABLE_APP_BADGE_LABEL" | translate }}
+        </div>
+      </div>
+      <mat-slide-toggle [checked]="enableAppBadge$ | async" (change)="onToggleAppBadge($event)"> </mat-slide-toggle>
+    </div>
+    <small class="text-2">
+      {{ "PAGES.OPTIONS.APPLICATION.ENABLE_APP_BADGE_DESCRIPTION" | translate }}
+    </small>
+    <div class="divider"></div>
+  </div>
+  <!-- HARDWARE ACCELERATION -->
+  <div class="toggle">
+    <div class="row align-items-center">
+      <div class="flex-grow-1">
+        <div>
+          {{ "PAGES.OPTIONS.APPLICATION.USE_HARDWARE_ACCELERATION_LABEL" | translate }}
+        </div>
+      </div>
+      <mat-slide-toggle [checked]="useHardwareAcceleration$ | async" (change)="onUseHardwareAccelerationChange($event)">
+      </mat-slide-toggle>
+    </div>
+    <small
+      class="text-2"
+      [innerHTML]="'PAGES.OPTIONS.APPLICATION.USE_HARDWARE_ACCELERATION_DESCRIPTION' | translate"
+    ></small>
+    <div class="divider"></div>
+  </div>
+  <!-- SYMLINK SUPPORT -->
+  <div class="toggle">
+    <div class="row align-items-center">
+      <div class="flex-grow-1">
+        <div>
+          {{ "PAGES.OPTIONS.APPLICATION.USE_SYMLINK_SUPPORT" | translate }}
+        </div>
+      </div>
+      <mat-slide-toggle [checked]="useSymlinkMode$ | async" (change)="onSymlinkModeChange($event)"> </mat-slide-toggle>
+    </div>
+    <small class="text-2">{{ "PAGES.OPTIONS.APPLICATION.USE_SYMLINK_SUPPORT_DESCRIPTION" | translate }}</small>
+    <div class="divider"></div>
+  </div>
+  <!-- START WITH SYSTEM -->
+  <div class="toggle">
+    <div class="row align-items-center">
+      <div class="flex-grow-1">
+        <div>
+          {{ "PAGES.OPTIONS.APPLICATION.START_WITH_SYSTEM_LABEL" | translate }}
+        </div>
+        <small class="text-2">{{ "PAGES.OPTIONS.APPLICATION.START_WITH_SYSTEM_DESCRIPTION" | translate }}</small>
+      </div>
+      <mat-slide-toggle [checked]="startWithSystem$ | async" (change)="onStartWithSystemChange($event)">
+      </mat-slide-toggle>
+    </div>
+    <div class="divider"></div>
+  </div>
+  <!-- START MINIMIZED -->
+  <div class="toggle">
+    <div class="row align-items-center">
+      <div class="flex-grow-1">
+        <div>
+          {{ "PAGES.OPTIONS.APPLICATION.START_MINIMIZED_LABEL" | translate }}
+        </div>
+        <small class="text-2">{{ "PAGES.OPTIONS.APPLICATION.START_MINIMIZED_DESCRIPTION" | translate }}</small>
+      </div>
+      <mat-slide-toggle
+        [disabled]="(startWithSystem$ | async) === false"
+        [checked]="startMinimized$ | async"
+        (change)="onStartMinimizedChange($event)"
+      >
+      </mat-slide-toggle>
+    </div>
+    <div class="divider"></div>
+  </div>
+  <!-- KEEP LAST OPENED TAB -->
+  <div class="toggle">
+    <div class="row align-items-center">
+      <div class="flex-grow-1">
+        <div>
+          {{ "PAGES.OPTIONS.APPLICATION.KEEP_LAST_OPENED_TAB_LABEL" | translate }}
+        </div>
+        <small class="text-2">{{ "PAGES.OPTIONS.APPLICATION.KEEP_LAST_OPENED_TAB_DESCRIPTION" | translate }}</small>
+      </div>
+      <mat-slide-toggle [checked]="keepAddonDetailTab$ | async" (change)="onKeepAddonDetailTabChange($event)">
+      </mat-slide-toggle>
+    </div>
+    <div class="divider"></div>
+  </div>
+  <!-- SCALE -->
+  <div class="toggle">
+    <div class="row row align-items-center">
+      <div class="flex-grow-1">
+        <div>{{ "PAGES.OPTIONS.APPLICATION.SCALE_LABEL" | translate }}</div>
+        <small class="text-2">{{ "PAGES.OPTIONS.APPLICATION.SCALE_DESCRIPTION" | translate }}</small>
+      </div>
+      <mat-form-field class="light-select">
+        <mat-select [(value)]="currentScale" (selectionChange)="onScaleChange($event)">
+          <mat-option *ngFor="let value of zoomScale" [value]="value">
+            {{ value * 100 | number: "1.0-0" }} %
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="divider"></div>
+  </div>
+  <!-- APP PROTOCOL -->
+  <!-- <div class="row row align-items-center">
+    <div class="flex-grow-1">
+      <div>
+        {{ "PAGES.OPTIONS.APPLICATION.PROTOCOL_LABEL" | translate }}
+      </div>
+      <small class="text-2">{{ "PAGES.OPTIONS.APPLICATION.PROTOCOL_DESCRIPTION" | translate }}</small>
+    </div>
+    <mat-slide-toggle [checked]="wowupProtocolHandled$ | async" (change)="onProtocolHandlerChange($event, wowupProtocolName)">
+    </mat-slide-toggle>
+    <div class="divider"></div>
+  </div> -->
+  <!-- CURSE PROTOCOL -->
+  <!-- <div class="toggle">
+    <div class="row align-items-center">
+      <div class="flex-grow-1">
+        <div>
+          {{ "PAGES.OPTIONS.APPLICATION.CURSE_PROTOCOL_LABEL" | translate }}
+        </div>
+        <small class="text-2">{{ "PAGES.OPTIONS.APPLICATION.CURSE_PROTOCOL_DESCRIPTION" | translate }}</small>
+      </div>
+      <mat-slide-toggle
+        [checked]="curseforgeProtocolHandled$ | async"
+        (change)="onProtocolHandlerChange($event, curseProtocolName)"
+      >
+      </mat-slide-toggle>
+    </div>
+    <div class="divider"></div>
+  </div> -->
+  <!-- RELEASE CHANNEL -->
+  <div class="toggle">
+    <div class="row align-items-center">
+      <div class="flex-grow-1">
+        <div>
+          {{ "PAGES.OPTIONS.APPLICATION.APP_RELEASE_CHANNEL_LABEL" | translate }}
+        </div>
+        <small class="text-2">{{ "PAGES.OPTIONS.APPLICATION.APP_RELEASE_CHANNEL_DESCRIPTION" | translate }}</small>
+      </div>
+      <mat-form-field class="">
+        <mat-label>{{ "PAGES.OPTIONS.APPLICATION.APP_RELEASE_CHANNEL_DROPDOWN_LABEL" | translate }}</mat-label>
+        <mat-select [value]="currentReleaseChannel$ | async" (selectionChange)="onReleaseChannelChange($event)">
+          <mat-option *ngFor="let channel of releaseChannels" [value]="channel.value">
+            {{ channel.labelKey | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="divider"></div>
+  </div>
+</div>

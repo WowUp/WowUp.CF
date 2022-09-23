@@ -1,0 +1,13 @@
+.addon-status-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 62px;
+}
+.unavailable {
+  background-color: var(--background-secondary-3);
+  display: inline;
+  padding: 1em;
+  border-radius: 4px;
+}

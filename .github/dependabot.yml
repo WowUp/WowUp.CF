@@ -1,0 +1,7 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/wowup-electron"
+    schedule:
+      interval: "daily"
+    target-branch: "develop"

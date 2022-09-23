@@ -1,0 +1,815 @@
+@use "@angular/material" as mat;
+@import "./variables.scss";
+@import "@angular/material/theming";
+
+@import "~ag-grid-community/dist/styles/ag-grid.css";
+@import "~ag-grid-community/dist/styles/ag-theme-material/sass//ag-theme-material-mixin";
+
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+:root {
+  --success-color: rgb(25, 135, 84);
+  --warning-color: rgb(255, 193, 7);
+  --secondary-color: rgb(108, 117, 125);
+}
+
+$md-wowup-pallette: (
+  50: #e8eaf6,
+  100: #6b69d6,
+  200: #504fa1,
+  300: #383773,
+  400: #5c6bc0,
+  500: #3f51b5,
+  600: #3949ab,
+  700: #303f9f,
+  800: #283593,
+  900: #1a237e,
+  A100: $wowup-purple-1,
+  A200: $wowup-control,
+  A400: $wowup-purple-3,
+  A700: #6874bb,
+  contrast: (
+    50: #000000,
+    100: #ffffff,
+    200: #ffffff,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #ffffff,
+    A400: #ffffff,
+    A700: #ffffff,
+  ),
+);
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$wowup-default-primary: mat.define-palette($md-wowup-pallette, 100, 50, 300);
+$wowup-default-accent: mat.define-palette($md-wowup-pallette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$wowup-default-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as `color` or `typography`.
+$wowup-default-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $wowup-default-primary,
+      accent: $wowup-default-accent,
+      warn: $wowup-default-warn,
+    ),
+  )
+);
+
+$wowup-light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $wowup-default-primary,
+      accent: $wowup-default-accent,
+      warn: $wowup-default-warn,
+    ),
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($wowup-default-theme);
+
+.default-theme-light-theme {
+  @include mat.all-component-colors($wowup-light-theme);
+}
+
+// Horde theme
+$horde-pallette: (
+  50: #e8eaf6,
+  100: $horde-red-1,
+  200: #504fa1,
+  300: #383773,
+  400: #5c6bc0,
+  500: #3f51b5,
+  600: #3949ab,
+  700: #303f9f,
+  800: #283593,
+  900: #1a237e,
+  A100: $horde-red-1,
+  A200: $horde-control,
+  A400: $horde-red-3,
+  A700: #6874bb,
+  contrast: (
+    50: #000000,
+    100: #ffffff,
+    200: #ffffff,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #ffffff,
+    A400: #ffffff,
+    A700: #ffffff,
+  ),
+);
+$horde-primary: mat.define-palette($horde-pallette, 100, 50, 300);
+$horde-accent: mat.define-palette($horde-pallette, A200, A100, A400);
+$horde-warn: mat.define-palette(mat.$deep-orange-palette);
+$horde-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $horde-primary,
+      accent: $horde-accent,
+      warn: $horde-warn,
+    ),
+  )
+);
+
+$horde-theme-light: mat.define-light-theme(
+  (
+    color: (
+      primary: $horde-primary,
+      accent: $horde-accent,
+      warn: $horde-warn,
+    ),
+  )
+);
+
+.horde-theme-light-theme {
+  @include mat.all-component-colors($horde-theme-light);
+}
+
+.horde-theme {
+  @include mat.all-component-colors($horde-theme);
+}
+
+// Alliance theme
+$alliance-pallette: (
+  50: #e8eaf6,
+  100: $alliance-blue-1,
+  200: $alliance-blue-2,
+  300: #383773,
+  400: #5c6bc0,
+  500: #3f51b5,
+  600: #3949ab,
+  700: #303f9f,
+  800: #283593,
+  900: #1a237e,
+  A100: $alliance-blue-1,
+  A200: $alliance-control,
+  A400: $alliance-blue-3,
+  A700: #6874bb,
+  contrast: (
+    50: #000000,
+    100: #ffffff,
+    200: #ffffff,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #ffffff,
+    A400: #ffffff,
+    A700: #ffffff,
+  ),
+);
+$alliance-primary: mat.define-palette($alliance-pallette, 100, 50, 300);
+$alliance-accent: mat.define-palette($alliance-pallette, A200, A100, A400);
+$alliance-warn: mat.define-palette(mat.$deep-orange-palette);
+$alliance-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $alliance-primary,
+      accent: $alliance-accent,
+      warn: $alliance-warn,
+    ),
+  )
+);
+
+$alliance-theme-light: mat.define-light-theme(
+  (
+    color: (
+      primary: $alliance-primary,
+      accent: $alliance-accent,
+      warn: $alliance-warn,
+    ),
+  )
+);
+
+.alliance-theme-light-theme {
+  @include mat.all-component-colors($alliance-theme-light);
+}
+
+.alliance-theme {
+  @include mat.all-component-colors($alliance-theme);
+}
+
+// VARS
+body {
+  --patreon-color: #e64049;
+  --github-color: #9032ad;
+  --wow-gold-color: #ffcc00;
+  --text-white: #ffffff;
+}
+
+.default-theme {
+  --background-primary: #6b69d6;
+  --background-primary-2: #504fa1;
+  --background-primary-3: #383773;
+  --background-secondary-1: #666666;
+  --background-secondary-2: #555555;
+  --background-secondary-3: #444444;
+  --background-secondary-4: #333333;
+  --background-secondary-5: #222222;
+  --control-color: #536dfe;
+  --epic-color: #a335ee;
+  --rare-color: #0070dd;
+  --scrollbar-track-color: #333333;
+  --text-1: #ffffff;
+  --text-2: #dcddde;
+  --text-3: #cccccc;
+  --text-4: #bbbbbb;
+  --warn-color: #f44336;
+  --tab-text: #ffffff;
+  --tab-disabled: #ffffff;
+  --tab-inactive: #bbbbbb;
+  --divider-color: #666666;
+  --grid-border: rgba(255, 255, 255, 0.12);
+  --footer-hover: #444444;
+
+  --title-logo: url("assets/images/wowup-white-1.png");
+  --theme-logo: url("assets/images/wowup-white-1.png");
+}
+
+.default-theme-light-theme {
+  --background-primary: #6b69d6;
+  --background-primary-2: #504fa1;
+  --background-primary-3: #383773;
+  --background-secondary-1: #ffffff;
+  --background-secondary-2: #f3f3f3;
+  --background-secondary-3: #ebedef;
+  --background-secondary-4: #e3e5e8;
+  --background-secondary-5: #caccce;
+  --control-color: #536dfe;
+  --epic-color: #a335ee;
+  --rare-color: #0070dd;
+  --scrollbar-track-color: #e3e5e8;
+  --text-1: #000000;
+  --text-2: #666666;
+  --text-3: #888888;
+  --text-4: #aaaaaa;
+  --warn-color: #f44336;
+  --tab-text: #ffffff;
+  --tab-disabled: #ffffff;
+  --tab-inactive: #777;
+  --divider-color: #aaaaaa;
+  --grid-border: #cccccc;
+  --footer-hover: #cccccc;
+
+  --title-logo: url("assets/images/wowup-white-1.png");
+  --theme-logo: url("assets/images/wowup-dark-1.png");
+}
+
+.horde-theme {
+  --background-primary: #8c1616;
+  --background-primary-2: #9d3939;
+  --background-primary-3: #5c0606;
+  --background-secondary-1: #666666;
+  --background-secondary-2: #555555;
+  --background-secondary-3: #444444;
+  --background-secondary-4: #333333;
+  --background-secondary-5: #222222;
+  --control-color: #ff5b5b;
+  --epic-color: #a335ee;
+  --rare-color: #0070dd;
+  --scrollbar-track-color: #333333;
+  --text-1: #ffffff;
+  --text-2: #dcddde;
+  --text-3: #cccccc;
+  --text-4: #bbbbbb;
+  --warn-color: #f44336;
+  --tab-text: #ffffff;
+  --tab-disabled: #ffffff;
+  --tab-inactive: #bbbbbb;
+  --divider-color: #666666;
+  --grid-border: rgba(255, 255, 255, 0.12);
+  --footer-hover: #444444;
+
+  --title-logo: url("assets/images/horde-1.png");
+  --theme-logo: url("assets/images/horde-1.png");
+}
+
+.horde-theme-light-theme {
+  --background-primary: #8c1616;
+  --background-primary-2: #9d3939;
+  --background-primary-3: #5c0606;
+  --background-secondary-1: #ffffff;
+  --background-secondary-2: #f3f3f3;
+  --background-secondary-3: #ebedef;
+  --background-secondary-4: #e3e5e8;
+  --background-secondary-5: #caccce;
+  --control-color: #ff5b5b;
+  --epic-color: #a335ee;
+  --rare-color: #0070dd;
+  --scrollbar-track-color: #e3e5e8;
+  --text-1: #000000;
+  --text-2: #666666;
+  --text-3: #888888;
+  --text-4: #aaaaaa;
+  --warn-color: #f44336;
+  --tab-text: #ffffff;
+  --tab-disabled: #ffffff;
+  --tab-inactive: #777;
+  --divider-color: #aaaaaa;
+  --grid-border: #cccccc;
+  --footer-hover: #cccccc;
+
+  --title-logo: url("assets/images/horde-1.png");
+  --theme-logo: url("assets/images/horde-dark-1.png");
+}
+
+.alliance-theme {
+  --background-primary: #162c57;
+  --background-primary-2: #394c70;
+  --background-primary-3: #06102c;
+  --background-secondary-1: #666666;
+  --background-secondary-2: #555555;
+  --background-secondary-3: #444444;
+  --background-secondary-4: #333333;
+  --background-secondary-5: #222222;
+  --control-color: #335eff;
+  --epic-color: #a335ee;
+  --rare-color: #0070dd;
+  --scrollbar-track-color: #333333;
+  --text-1: #ffffff;
+  --text-2: #dcddde;
+  --text-3: #cccccc;
+  --text-4: #bbbbbb;
+  --warn-color: #f44336;
+  --tab-text: #ffffff;
+  --tab-disabled: #ffffff;
+  --tab-inactive: #bbbbbb;
+  --divider-color: #666666;
+  --grid-border: rgba(255, 255, 255, 0.12);
+
+  --title-logo: url("assets/images/alliance-1.png");
+  --theme-logo: url("assets/images/alliance-1.png");
+}
+
+.alliance-theme-light-theme {
+  --background-primary: #162c57;
+  --background-primary-2: #394c70;
+  --background-primary-3: #06102c;
+  --background-secondary-1: #ffffff;
+  --background-secondary-2: #f3f3f3;
+  --background-secondary-3: #ebedef;
+  --background-secondary-4: #e3e5e8;
+  --background-secondary-5: #caccce;
+  --control-color: #335eff;
+  --epic-color: #a335ee;
+  --rare-color: #0070dd;
+  --scrollbar-track-color: #e3e5e8;
+  --text-1: #000000;
+  --text-2: #666666;
+  --text-3: #888888;
+  --text-4: #aaaaaa;
+  --warn-color: #f44336;
+  --tab-text: #ffffff;
+  --tab-disabled: #ffffff;
+  --tab-inactive: #777;
+  --divider-color: #aaaaaa;
+  --grid-border: #cccccc;
+  --footer-hover: #cccccc;
+
+  --title-logo: url("assets/images/alliance-1.png");
+  --theme-logo: url("assets/images/alliance-dark-1.png");
+}
+
+.bg-primary {
+  background-color: var(--background-primary);
+}
+
+.bg-primary-2 {
+  background-color: var(--background-primary-2);
+}
+
+.bg-primary-3 {
+  background-color: var(--background-primary-3);
+}
+
+.bg-secondary {
+  background-color: var(--background-secondary-1);
+}
+
+.bg-secondary-2 {
+  background-color: var(--background-secondary-2);
+}
+
+.bg-secondary-3 {
+  background-color: var(--background-secondary-3);
+}
+
+.bg-secondary-4 {
+  background-color: var(--background-secondary-4);
+}
+
+.bg-secondary-5 {
+  background-color: var(--background-secondary-5);
+}
+
+.hover-primary-2:hover {
+  background-color: var(--background-primary-2);
+}
+
+.hover-bg-secondary:hover {
+  background-color: var(--background-secondary-1);
+}
+
+.hover-bg-secondary-2:hover {
+  background-color: var(--background-secondary-2);
+}
+
+.hover-bg-secondary-3:hover {
+  background-color: var(--background-secondary-3);
+}
+
+.hover-bg-secondary-4:hover {
+  background-color: var(--background-secondary-4);
+}
+
+.hover-bg-secondary-5:hover {
+  background-color: var(--background-secondary-5);
+}
+
+.border-primary {
+  border-color: var(--background-primary);
+}
+
+.text-white {
+  color: var(--text-white);
+}
+
+.text-1 {
+  color: var(--text-1);
+}
+
+.text-1-hover {
+  &:hover {
+    color: var(--text-1) !important;
+  }
+}
+
+.text-2 {
+  color: var(--text-2);
+}
+
+.text-3 {
+  color: var(--text-3);
+}
+
+.text-success {
+  color: var(--success-color);
+}
+
+.text-primary-1 {
+  color: var(--background-primary) !important;
+}
+
+.text-primary-2 {
+  color: var(--background-primary-2) !important;
+}
+
+.text-primary-3 {
+  color: var(--background-primary-3) !important;
+}
+
+.text-control {
+  color: var(--control-color) !important;
+}
+
+.text-warning {
+  color: var(--warn-color) !important;
+}
+
+.wowup-snackbar {
+  background-color: var(--background-secondary-4) !important;
+
+  &.text-1 {
+    * {
+      color: var(--text-1) !important;
+    }
+  }
+}
+
+.addon-summary,
+.addon-changelog {
+  a {
+    color: var(--control-color);
+
+    &:visited {
+      color: var(--control-color);
+    }
+  }
+
+  h1,
+  h2 {
+    border-bottom: 1px solid var(--background-secondary-1);
+  }
+
+  hr {
+    background-color: var(--background-secondary-1);
+  }
+
+  code {
+    background-color: var(--background-secondary-4);
+  }
+}
+
+.changelog {
+  a {
+    color: var(--control-color);
+  }
+}
+
+// .tab {
+//   &:hover {
+//     svg {
+//       fill: var(--text-white);
+//     }
+//   }
+// }
+
+.tab-icon-inactive {
+  svg {
+    transition: fill 0.3s ease 0.1s;
+    fill: var(--tab-inactive);
+  }
+}
+
+.tab-icon-active {
+  svg {
+    transition: fill 0.3s ease 0.1s;
+    fill: var(--text-1);
+  }
+}
+
+.tab-icon-disabled {
+  svg {
+    fill: var(--text-disabled);
+    opacity: 0.25;
+  }
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--scrollbar-track-color);
+  margin: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-color: var(--background-primary-3);
+  background: var(--background-primary);
+  background: linear-gradient(146deg, var(--background-primary) 0%, var(--background-primary-2) 100%);
+  min-height: 40px;
+}
+
+div[class*="light-theme"] {
+  .window-control {
+    &:hover {
+      background-color: var(--background-secondary-5);
+    }
+
+    img {
+      filter: invert(100%);
+    }
+  }
+
+  .logo-img {
+    filter: invert(100%);
+  }
+}
+
+// MATERIAL STYLES
+.mat-input-element {
+  caret-color: var(--text-3) !important;
+  color: var(--text-1) !important;
+}
+
+.mat-form-field.mat-focused .mat-form-field-label {
+  color: var(--text-2) !important;
+}
+
+.mat-form-field-ripple {
+  background-color: var(--background-primary-2) !important;
+}
+
+.mat-card {
+  background-color: var(--background-secondary-3);
+}
+
+// .mat-button {
+//   color: var(--control-color);
+//   background: transparent;
+// }
+
+// .mat-stroked-button {
+//   background-color: transparent;
+//   color: var(--text-1);
+// }
+
+// .mat-flat-button {
+//   &.mat-primary {
+//     background-color: var(--background-primary) !important;
+//     color: var(--text-1) !important;
+//   }
+// }
+
+.mat-button {
+  &.mat-primary {
+    color: var(--control-color) !important;
+  }
+}
+
+.mat-icon-button {
+  &.mat-accent {
+    svg {
+      fill: var(--text-1);
+    }
+  }
+}
+
+.mat-option.mat-selected:not(.mat-option-disabled) {
+  color: var(--text-3) !important;
+}
+
+.sub-accordion .mat-expansion-panel-header,
+.sub-accordion .mat-expansion-panel-body {
+  background-color: var(--background-secondary-2);
+}
+
+// TREE VIEW
+div.tree div.tree-children::before {
+  content: "";
+  position: absolute;
+  border-left: 1px dotted var(--text-2);
+  height: 100%;
+  top: -14px;
+  left: 0;
+}
+
+div.tree {
+  padding-left: 0;
+  margin-left: -5px;
+}
+
+div.tree div.tree-children {
+  position: relative;
+  padding-left: 0;
+  margin-left: 16px;
+}
+
+div.tree div.tree-children::before {
+  left: 5px;
+}
+
+div.tree tree-node > div > .node-wrapper {
+  margin-left: 24px;
+}
+
+div.tree tree-node > div > .node-wrapper > .node-content-wrapper {
+  margin-left: 4px;
+}
+
+div.tree tree-node > div.tree-node-leaf > .node-wrapper {
+  margin-left: 0;
+}
+
+div.tree tree-node > div::before {
+  content: "";
+  position: absolute;
+  border-bottom: 1px dotted var(--text-2);
+  width: 7px;
+  margin-top: 12px;
+  left: 7px;
+}
+
+// div.tree tree-node > div .toggle-children-wrapper {
+//   width: 13px;
+//   height: 13px;
+//   border: 1px solid var(--text-2);
+//   position: absolute;
+//   left: 0;
+//   margin-top: 5px;
+//   margin-left: 0;
+//   display: inline-block;
+//   z-index: 1;
+// }
+
+// div.tree tree-node > div .toggle-children-wrapper::before {
+//   content: "";
+//   display: inline-block;
+//   width: 7px;
+//   border-top: 1px solid var(--text-2);
+//   position: absolute;
+//   top: 5px;
+//   left: 2px;
+// }
+
+// div.tree tree-node > div .toggle-children-wrapper.toggle-children-wrapper-collapsed::after {
+//   content: "";
+//   display: inline-block;
+//   height: 7px;
+//   border-left: 1px solid var(--text-2);
+//   position: absolute;
+//   top: 2px;
+//   left: 5px;
+// }
+
+div.tree tree-node > div .toggle-children-wrapper .toggle-children {
+  display: none;
+}
+
+div.tree tree-node > div .node-content-wrapper {
+  margin-left: 4px;
+}
+
+div.tree > tree-node > div::before {
+  left: 14px;
+}
+
+div.tree > tree-node > div > .node-wrapper > tree-node-expander > .toggle-children-wrapper {
+  left: 22px;
+}
+
+.node-content-wrapper:hover {
+  background-color: var(--background-secondary-4);
+}
+
+.node-content-wrapper-active,
+.node-content-wrapper-focused,
+.node-content-wrapper:hover {
+  box-shadow: none;
+}
+
+.node-content-wrapper-focused,
+.node-content-wrapper-active,
+.node-content-wrapper.node-content-wrapper-active:hover,
+.node-content-wrapper-active.node-content-wrapper-focused {
+  background-color: var(--background-secondary-3);
+}
+
+.tree-icon {
+  transition: transform 0.3s;
+}
+.tree-icon.expanded {
+  transform: rotate(90deg);
+}
+
+// LIGHT BOX
+
+.lb-outerContainer {
+  background-color: var(--background-secondary-4);
+}
+
+.lb-cancel {
+  width: 80px;
+  height: 80px;
+  background-image: url("assets/images/wowup-white-1.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+// GRID STYLES
+.ag-theme-material {
+  @include ag-theme-material(
+    (
+      foreground-color: var(--text-1),
+      disabled-foreground-color: rgba(var(--text-1), 0.38),
+      secondary-foreground-color: rgba(var(--text-1), 0.54),
+      background-color: var(--background-secondary),
+      modal-overlay-background-color: rgba(var(--background-secondary-2), 0.66),
+      header-background-color: var(--background-secondary),
+      header-cell-hover-background-color: hsl(var(--background-secondary-2), 95%),
+      row-hover-color: var(--background-secondary-2),
+      row-border-color: var(--grid-border),
+      border-color: var(--grid-border),
+      secondary-border-color: var(--grid-border),
+      selected-row-background-color: var(--background-secondary-4),
+      range-selection-border-color: transparent,
+    )
+  );
+}
