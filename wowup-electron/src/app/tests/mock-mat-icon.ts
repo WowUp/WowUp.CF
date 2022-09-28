@@ -12,15 +12,4 @@ export class MockMatIconComponent {
   @Input() public fontIcon: any;
 }
 
-export function overrideIconModule(testBed: TestBedStatic): TestBedStatic {
-  return testBed.overrideModule(MatIconModule, {
-    remove: {
-      declarations: [MatIcon],
-      exports: [MatIcon],
-    },
-    add: {
-      declarations: [MockMatIconComponent],
-      exports: [MockMatIconComponent],
-    },
-  });
-}
+

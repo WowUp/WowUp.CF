@@ -66,45 +66,13 @@ export class WebViewComponent implements OnDestroy, AfterViewInit {
   }
 
   private async initWebview(element: ElementRef) {
-    // const pageReferrer = this.options.referrer ? `httpreferrer="${this.options.referrer}"` : "";
-    // const userAgent = this.options.userAgent ?? "";
-    const preloadPath = `file://${await this._fileService.getAssetFilePath(this.options.preloadFilePath)}`;
-    // const preload = this.options.preloadFilePath ? `preload="${preloadPath}"` : "";
-    const partition = this.options.partition ?? "memcache";
-
     console.debug("initWebview", this.options);
 
     const placeholder = document.createElement("div");
-    placeholder.style.width = "100%";
-    placeholder.style.height = "100%";
+    placeholder.style.width = "400px";
+    placeholder.style.height = "300px";
 
-    /* eslint-disable no-irregular-whitespace */
     const webview: any = document.createElement("owadview");
-    // webview.id = this._id;
-    // webview.src = this.options.pageUrl;
-    // webview.setAttribute("style", "width: 100%; height: 100%;");
-    // webview.nodeintegration = false;
-    // webview.nodeintegrationinsubframes = false;
-    // webview.plugins = false;
-    // webview.allowpopups = true;
-    // webview.partition = partition;
-    // webview.preload = preloadPath;
-    
-    // webview.useragent = userAgent;
-
-    // placeholder.innerHTML = `
-    // <webview id="${this._id}"
-    //   ${pageReferrer}
-    //   style="width: 100%; height: 100%;"
-    //   nodeintegration​="false"
-    //   nodeintegrationinsubframes​="false"
-    //   plugins​="false"
-    //   allowpopups
-    //   partition="${partition}"
-    //   ${preload}
-    //   useragent="${userAgent}">
-    // </webview>`;
-    /* eslint-enable no-irregular-whitespace */
 
     this._tag = webview; // placeholder.firstElementChild as Electron.WebviewTag;
 

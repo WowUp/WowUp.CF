@@ -12,7 +12,13 @@ import { Addon } from "../../common/entities/addon";
 import { getWowClientGroup } from "../../common/warcraft";
 import { WowClientGroup, WowClientType } from "../../common/warcraft/wow-client-type";
 import { WowInstallation } from "../../common/warcraft/wow-installation";
-import { AddonCategory, AddonChannelType, AddonDependencyType, AddonWarningType } from "../../common/wowup/models";
+import {
+  AddonCategory,
+  AddonChannelType,
+  AddonDependencyType,
+  AddonWarningType,
+  AdPageOptions,
+} from "../../common/wowup/models";
 import { AppConfig } from "../../environments/environment";
 import { SourceRemovedAddonError } from "../errors";
 import { AddonFolder } from "../models/wowup/addon-folder";
@@ -79,7 +85,7 @@ export class CurseAddonProvider extends AddonProvider {
     );
 
     this._cf2Client = new cfv2.CFV2Client({
-      apiKey: "$2a$10$KB/rroj2RVrwQs5t7WXyXOcG43YYCPasUh8i3y0c2FJ3vAT30dv32",
+      apiKey: AppConfig.curseforge.apiKey,
     });
   }
 
@@ -408,6 +414,12 @@ export class CurseAddonProvider extends AddonProvider {
     return "";
   }
 
+  public getAdPageParams(): AdPageOptions {
+    return {
+      pageUrl: "",
+    };
+  }
+
   private isCfFileCompatible(clientType: WowClientType, file: cfv2.CF2File): boolean {
     if (Array.isArray(file.sortableGameVersions) && file.sortableGameVersions.length > 0) {
       const gameVersionTypeId = this.getGameVersionTypeId(clientType);
@@ -722,7 +734,7 @@ export class CurseAddonProvider extends AddonProvider {
         downloadCount: result.downloadCount,
         summary: result.summary,
         screenshotUrls: this.getScreenshotUrls(result),
-        externallyBlocked: result.allowModDistribution === false,
+        externallyBlocked: false,
       };
 
       return searchResult;

@@ -72,20 +72,16 @@ export class AddonProviderFactory {
   }
 
   public async shouldShowConsentDialog(): Promise<boolean> {
-    return (await this._preferenceStorageService.getAsync(WAGO_PROMPT_KEY)) === undefined;
-  }
-
-  public async updateWagoConsent(): Promise<void> {
-    return await this._preferenceStorageService.setAsync(WAGO_PROMPT_KEY, true);
+    return false;
   }
 
   public async setProviderEnabled(type: AddonProviderType, enabled: boolean): Promise<void> {
     if (!this._providerMap.has(type)) {
-      throw new Error("cannot set provider state, not found");
+      throw new Error(`cannot set provider state, not found: ${type}`);
     }
 
     const provider = this._providerMap.get(type);
-    if (!provider.allowEdit) {
+    if (!provider || !provider.allowEdit) {
       throw new Error(`this provider is not editable: ${type}`);
     }
 
