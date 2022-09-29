@@ -331,23 +331,6 @@ function createWindow(): BrowserWindow {
       return false;
     });
 
-    webContents.on("did-fail-load", (evt, code, desc, url) => {
-      log.error("[webview] did-fail-load", code, desc, url);
-      setTimeout(() => {
-        log.error("[webview] reload");
-        webContents.reload();
-      }, 2000);
-    });
-
-    webContents.on("will-navigate", (evt, url) => {
-      log.debug("[webview] will-navigate", url);
-      if (webContents.getURL() === url) {
-        log.debug(`[webview] reload detected`);
-      } else {
-        evt.preventDefault(); // block the webview from navigating at all
-      }
-    });
-
     // webview allowpopups must be enabled for any link to work
     // https://www.electronjs.org/docs/latest/api/webview-tag#allowpopups
     webContents.setWindowOpenHandler((details) => {
