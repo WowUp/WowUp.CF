@@ -17,7 +17,7 @@ import { TocService } from "../toc/toc.service";
 import { WarcraftService } from "../warcraft/warcraft.service";
 import { WowUpApiService } from "../wowup-api/wowup-api.service";
 import { AddonProviderState } from "../../models/wowup/addon-provider-state";
-import { ADDON_PROVIDER_UNKNOWN, WAGO_PROMPT_KEY } from "../../../common/constants";
+import { ADDON_PROVIDER_UNKNOWN } from "../../../common/constants";
 import { Subject } from "rxjs";
 import { PreferenceStorageService } from "../storage/preference-storage.service";
 import { SensitiveStorageService } from "../storage/sensitive-storage.service";
@@ -212,6 +212,10 @@ export class AddonProviderFactory {
   }
 
   public canShowChangelog(providerName: string | undefined): boolean {
+    if (providerName === undefined) {
+      return false;
+    }
+    
     return this.getProvider(providerName)?.canShowChangelog ?? false;
   }
 

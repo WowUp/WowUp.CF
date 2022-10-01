@@ -20,7 +20,6 @@ import { TranslateService } from "@ngx-translate/core";
 
 import {
   ADDON_PROVIDER_HUB,
-  ADDON_PROVIDER_WAGO,
   DEFAULT_CHANNEL_PREFERENCE_KEY_SUFFIX,
 } from "../../../common/constants";
 import { WowClientType } from "../../../common/warcraft/wow-client-type";
@@ -622,7 +621,6 @@ export class GetAddonsComponent implements OnInit, OnDestroy {
       addons,
       [
         (sr) => (sr.providerName === ADDON_PROVIDER_HUB ? 1 : 0),
-        (sr) => (sr.providerName === ADDON_PROVIDER_WAGO ? 1 : 0),
         "downloadCount",
       ],
       ["desc", "desc", "desc"]

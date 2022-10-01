@@ -17,7 +17,7 @@ import { UntypedFormControl, UntypedFormGroup } from "@angular/forms";
 import { MatListOption, MatSelectionListChange } from "@angular/material/list";
 import { TranslateService } from "@ngx-translate/core";
 
-import { ADDON_PROVIDER_WAGO, PREF_CF2_API_KEY, PREF_GITHUB_PERSONAL_ACCESS_TOKEN } from "../../../../common/constants";
+import { PREF_CF2_API_KEY, PREF_GITHUB_PERSONAL_ACCESS_TOKEN } from "../../../../common/constants";
 import { AppConfig } from "../../../../environments/environment";
 import { AddonProviderType } from "../../../addon-providers/addon-provider";
 import { AddonProviderState } from "../../../models/wowup/addon-provider-state";
@@ -102,41 +102,8 @@ export class OptionsAddonSectionComponent implements OnInit, OnDestroy {
   public async onProviderStateSelectionChange(event: MatSelectionListChange): Promise<void> {
     for (const option of event.options) {
       const providerName: AddonProviderType = option.value;
-      if (option.selected && providerName === ADDON_PROVIDER_WAGO) {
-        this.onWagoEnable(option);
-      } else {
-        await this._addonProviderService.setProviderEnabled(providerName, option.selected);
-      }
+      await this._addonProviderService.setProviderEnabled(providerName, option.selected);
     }
-  }
-
-  private onWagoEnable(option: MatListOption) {
-    const providerName: AddonProviderType = option.value;
-    const title: string = this._translateService.instant("DIALOGS.PERMISSIONS.WAGO.TOGGLE_LABEL");
-    const message: string = this._translateService.instant("DIALOGS.PERMISSIONS.WAGO.DESCRIPTION", {
-      termsUrl: AppConfig.wago.termsUrl,
-      dataUrl: AppConfig.wago.dataConsentUrl,
-    });
-
-    const dialogRef = this._dialogFactory.getConfirmDialog(title, message);
-    dialogRef
-      .afterClosed()
-      .pipe(
-        first(),
-        switchMap((result) => {
-          if (result) {
-            return from(this._addonProviderService.setProviderEnabled(providerName, option.selected));
-          } else {
-            option.selected = !option.selected;
-          }
-          return of(undefined);
-        }),
-        catchError((err) => {
-          console.error(err);
-          return of(undefined);
-        })
-      )
-      .subscribe();
   }
 
   public onOpenLink = (element: HTMLAnchorElement): boolean => {
