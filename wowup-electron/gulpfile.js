@@ -1,5 +1,9 @@
+require("dotenv").config();
+
 const gulp = require("gulp");
 const del = require("del");
+const fs = require("fs/promises");
+const path = require("path");
 const { spawn } = require("child_process");
 
 function defaultTask(cb) {
@@ -53,6 +57,24 @@ function npmRun(cmd) {
   };
 }
 
+async function updateCfKey() {
+  const cfApiKey = process.env.CURSEFORGE_API_KEY;
+  console.log(cfApiKey);
+  if (typeof cfApiKey !== "string" || cfApiKey.length === 0) {
+    throw new Error("CURSEFORGE_API_KEY missing");
+  }
+
+  const envPath = "src/environments";
+  const environments = await fs.readdir(envPath);
+
+  for (let env of environments) {
+    let envData = await fs.readFile(path.join(envPath, env), { encoding: "utf-8" });
+    envData = envData.replace("{{CURSEFORGE_API_KEY}}", cfApiKey);
+
+    console.log(envData);
+  }
+}
+
 const prePackageTasks = [
   npmRun("lint"),
   npmRun("build:prod"),
@@ -63,5 +85,6 @@ const prePackageTasks = [
 ];
 
 exports.default = defaultTask;
+exports.packageCfLocal = gulp.series(updateCfKey);
 exports.package = gulp.series(...prePackageTasks, npmRun("electron:publish"));
 exports.packageLocal = gulp.series(...prePackageTasks, npmRun("electron:publish:never:local"));
