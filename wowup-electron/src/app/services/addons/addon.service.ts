@@ -61,6 +61,7 @@ import { WarcraftService } from "../warcraft/warcraft.service";
 import { WowUpService } from "../wowup/wowup.service";
 import { AddonProviderFactory } from "./addon.provider.factory";
 import { AddonFingerprintService } from "./addon-fingerprint.service";
+import { CurseAddonProvider } from "../../addon-providers/curse-addon-provider";
 
 export enum ScanUpdateType {
   Start,
@@ -785,7 +786,14 @@ export class AddonService {
   };
 
   public async logDebugData(): Promise<void> {
+    const curseProvider = this._addonProviderService.getProvider<CurseAddonProvider>(ADDON_PROVIDER_CURSEFORGE);
     const hubProvider = this._addonProviderService.getProvider<WowUpAddonProvider>(ADDON_PROVIDER_HUB);
+    if (curseProvider === undefined) {
+      throw new Error("curse provider not found");
+    }
+    if (hubProvider === undefined) {
+      throw new Error("hub provider not found");
+    }
 
     const clientMap = {};
     const installations = await this._warcraftInstallationService.getWowInstallationsAsync();
@@ -794,12 +802,23 @@ export class AddonService {
 
       const useSymlinkMode = await this._wowUpService.getUseSymlinkMode();
       const addonFolders = await this._warcraftService.listAddons(installation, useSymlinkMode);
+      await this._addonFingerprintService.getFingerprints(addonFolders);
 
+      const curseMap = {};
       const hubMap = {};
-      const hubScanResults = await hubProvider.getScanResults(addonFolders);
-      hubScanResults.forEach((sr) => (hubMap[sr.folderName] = sr.fingerprint));
+
+      addonFolders.forEach((af) => {
+        if (af.cfScanResults !== undefined) {
+          curseMap[af.cfScanResults.folderName] = af.cfScanResults.fingerprint;
+        }
+
+        if (af.wowUpScanResults !== undefined) {
+          hubMap[af.wowUpScanResults.folderName] = af.wowUpScanResults.fingerprint;
+        }
+      });
 
       clientMap[clientTypeName] = {
+        curse: curseMap,
         hub: hubMap,
       };
 

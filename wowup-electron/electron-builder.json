@@ -1,6 +1,6 @@
 {
-  "productName": "WowUp",
-  "appId": "io.wowup.jliddev",
+  "productName": "WowUp-CF",
+  "appId": "io.wowupcf.jliddev",
   "directories": {
     "output": "release/"
   },

@@ -68,9 +68,11 @@ async function updateCfKey() {
   const environments = await fs.readdir(envPath);
 
   for (let env of environments) {
-    let envData = await fs.readFile(path.join(envPath, env), { encoding: "utf-8" });
+    const filePath = path.join(envPath, env);
+    let envData = await fs.readFile(filePath, { encoding: "utf-8" });
     envData = envData.replace("{{CURSEFORGE_API_KEY}}", cfApiKey);
 
+    await fs.writeFile(filePath, envData);
     console.log(envData);
   }
 }
@@ -85,6 +87,4 @@ const prePackageTasks = [
 ];
 
 exports.default = defaultTask;
-exports.packageCfLocal = gulp.series(updateCfKey);
-exports.package = gulp.series(...prePackageTasks, npmRun("electron:publish"));
-exports.packageLocal = gulp.series(...prePackageTasks, npmRun("electron:publish:never:local"));
+exports.packageCfLocal = gulp.series(updateCfKey, npmRun("electron:publish:never:local"));
