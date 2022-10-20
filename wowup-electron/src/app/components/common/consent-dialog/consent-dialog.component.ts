@@ -1,6 +1,8 @@
-import { AfterViewChecked, Component, ElementRef, ViewChild } from "@angular/core";
+import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { UntypedFormControl, UntypedFormGroup } from "@angular/forms";
 import { MatDialogRef } from "@angular/material/dialog";
+import { IPC_OW_IS_CMP_REQUIRED, IPC_OW_OPEN_CMP } from "../../../../common/constants";
+import { ElectronService } from "../../../services";
 import { LinkService } from "../../../services/links/link.service";
 import { formatDynamicLinks } from "../../../utils/dom.utils";
 
@@ -14,21 +16,42 @@ export interface ConsentDialogResult {
   templateUrl: "./consent-dialog.component.html",
   styleUrls: ["./consent-dialog.component.scss"],
 })
-export class ConsentDialogComponent implements AfterViewChecked {
+export class ConsentDialogComponent implements AfterViewChecked, OnInit {
   @ViewChild("dialogContent", { read: ElementRef }) public dialogContent!: ElementRef;
 
   public consentOptions: UntypedFormGroup;
+  public requiresCmp = false;
 
-  public constructor(public dialogRef: MatDialogRef<ConsentDialogComponent>, private _linkService: LinkService) {
+  public constructor(
+    public dialogRef: MatDialogRef<ConsentDialogComponent>,
+    private _linkService: LinkService,
+    private _electronService: ElectronService
+  ) {
     this.consentOptions = new UntypedFormGroup({
       telemetry: new UntypedFormControl(true),
       wagoProvider: new UntypedFormControl(true),
     });
   }
 
+  public ngOnInit(): void {
+    this._electronService
+      .invoke(IPC_OW_IS_CMP_REQUIRED)
+      .then((cmpRequired) => {
+        console.log("cmpRequired", cmpRequired);
+        this.requiresCmp = cmpRequired;
+      })
+      .catch((e) => console.error("IPC_OW_IS_CMP_REQUIRED failed", e));
+  }
+
   public ngAfterViewChecked(): void {
     const descriptionContainer: HTMLDivElement = this.dialogContent?.nativeElement;
     formatDynamicLinks(descriptionContainer, this.onOpenLink);
+  }
+
+  public onClickManage(evt: MouseEvent): void {
+    evt.preventDefault();
+
+    this._electronService.invoke(IPC_OW_OPEN_CMP).catch((e) => console.error("onClickManage failed", e));
   }
 
   public onNoClick(): void {

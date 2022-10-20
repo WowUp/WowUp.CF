@@ -313,7 +313,7 @@
     },
     "PERMISSIONS": {
       "MESSAGE": "Before we get started we need to setup a few permissions for the app.",
-      "POSITIVE_BUTTON": "Confirm",
+      "POSITIVE_BUTTON": "Accept & Continue",
       "TELEMETRY": {
         "DESCRIPTION": "Help improve WowUp by sending anonymous app install data and/or errors?",
         "TOGGLE_LABEL": "Allow Telemetry"

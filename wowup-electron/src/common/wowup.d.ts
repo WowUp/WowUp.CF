@@ -63,6 +63,8 @@ declare type RendererChannels =
   | "list-files"
   | "maximize-window"
   | "minimize-window"
+  | "ow-is-cmp-required"
+  | "ow-open-cmp"
   | "path-exists"
   | "push-init"
   | "push-register"

@@ -34,7 +34,7 @@
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/ow-electron",
       "trace": "verbose",
-      "runtimeArgs": ["--serve", ".", "--remote-debugging-port=9876"],
+      "runtimeArgs": ["--force-cmp", "--serve", ".", "--remote-debugging-port=9876"],
       "windows": {
         "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/ow-electron.cmd"
       },

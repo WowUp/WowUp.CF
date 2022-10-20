@@ -78,6 +78,8 @@ import {
   IPC_WINDOW_IS_FULLSCREEN,
   IPC_WINDOW_IS_MAXIMIZED,
   IPC_CURSE_GET_SCAN_RESULTS,
+  IPC_OW_IS_CMP_REQUIRED,
+  IPC_OW_OPEN_CMP,
 } from "../src/common/constants";
 import { Addon } from "../src/common/entities/addon";
 import { CopyFileRequest } from "../src/common/models/copy-file-request";
@@ -217,6 +219,14 @@ export function initializeIpcHandlers(window: BrowserWindow): void {
     log.info(`[CreateDirectory] '${directoryPath}'`);
     await fsp.mkdir(directoryPath, { recursive: true });
     return true;
+  });
+
+  handle(IPC_OW_IS_CMP_REQUIRED, async () => {
+    return await (app as any).overwolf.isCMPRequired();
+  });
+
+  handle(IPC_OW_OPEN_CMP, () => {
+    (app as any).overwolf.openCMPWindow();
   });
 
   handle(IPC_GET_ZOOM_FACTOR, () => {
