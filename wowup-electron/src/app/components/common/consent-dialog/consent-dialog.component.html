@@ -19,12 +19,10 @@
         consents, or to object to the processing of your data. You can change your preferences any time via the settings
         screen.
       </mat-hint>
-      <div class="row w-100 justify-content-center mt-2">
-        <button mat-raised-button color="primary" type="button" (click)="onClickManage($event)">Manage</button>
-      </div>
     </div>
   </div>
   <div mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" type="button" (click)="onClickManage($event)">Manage</button>
     <button mat-raised-button color="primary" type="submit" cdkFocusInitial>
       {{ "DIALOGS.PERMISSIONS.POSITIVE_BUTTON" | translate }}
     </button>
