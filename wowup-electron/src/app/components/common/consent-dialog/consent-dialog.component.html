@@ -11,13 +11,13 @@
       <mat-hint>{{ "DIALOGS.PERMISSIONS.TELEMETRY.DESCRIPTION" | translate }}</mat-hint>
     </div>
     <div *ngIf="requiresCmp" class="mb-3">
-      <h3 class="m-0">CurseForge</h3>
+      <h3 class="m-0">{{ "DIALOGS.PERMISSIONS.CURSEFORGE.TITLE" | translate }}</h3>
       <mat-hint style="max-width: 600px; display: block">
-        In order to use this application's integration with CurseForge they require that you allow them to show you an
-        ad from one of their
-        <a href="https://www.curseforge.com" (click)="onClickAdVendors($event)">ad vendors</a>. Click on the Manage button to control you
-        consents, or to object to the processing of your data. You can change your preferences any time via the settings
-        screen.
+        <span>{{ "DIALOGS.PERMISSIONS.CURSEFORGE.DESCRIPTION_TOP" | translate }}</span>
+        <a href="#" (click)="onClickAdVendors($event)">{{
+          "DIALOGS.PERMISSIONS.CURSEFORGE.DESCRIPTION_AD_LINK" | translate
+        }}</a>
+        <span>{{ "DIALOGS.PERMISSIONS.CURSEFORGE.DESCRIPTION_BOTTOM" | translate }}</span>
       </mat-hint>
       <div class="row w-100 justify-content-center mt-2">
         <button mat-raised-button color="primary" type="button" (click)="onClickManage($event)">Manage</button>
