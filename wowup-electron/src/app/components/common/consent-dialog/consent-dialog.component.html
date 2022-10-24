@@ -22,7 +22,7 @@
     </div>
   </div>
   <div mat-dialog-actions align="end">
-    <button mat-raised-button color="primary" type="button" (click)="onClickManage($event)">Manage</button>
+    <button *ngIf="requiresCmp" mat-raised-button color="primary" type="button" (click)="onClickManage($event)">Manage</button>
     <button mat-raised-button color="primary" type="submit" cdkFocusInitial>
       {{ "DIALOGS.PERMISSIONS.POSITIVE_BUTTON" | translate }}
     </button>

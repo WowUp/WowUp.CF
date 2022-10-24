@@ -32,7 +32,7 @@
             <button mat-list-item (click)="optionTabIndex = 5">
               {{ "PAGES.OPTIONS.TABS.ABOUT" | translate }}
             </button>
-            <button [hidden]="isCMPRequired === false" mat-list-item (click)="optionTabIndex = 6">
+            <button *ngIf="isCMPRequired" mat-list-item (click)="optionTabIndex = 6">
               {{ "PAGES.OPTIONS.TABS.CURSEFORGE" | translate }}
             </button>
           </mat-action-list>
