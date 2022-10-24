@@ -4,7 +4,6 @@ import { MatDialogRef } from "@angular/material/dialog";
 import { IPC_OW_IS_CMP_REQUIRED, IPC_OW_OPEN_CMP } from "../../../../common/constants";
 import { ElectronService } from "../../../services";
 import { LinkService } from "../../../services/links/link.service";
-import { formatDynamicLinks } from "../../../utils/dom.utils";
 
 export interface ConsentDialogResult {
   telemetry: boolean;
@@ -44,8 +43,12 @@ export class ConsentDialogComponent implements AfterViewChecked, OnInit {
   }
 
   public ngAfterViewChecked(): void {
-    const descriptionContainer: HTMLDivElement = this.dialogContent?.nativeElement;
-    formatDynamicLinks(descriptionContainer, this.onOpenLink);
+  }
+
+  public onClickAdVendors(evt: MouseEvent): void {
+    evt.preventDefault();
+
+    this._electronService.invoke(IPC_OW_OPEN_CMP, "vendors").catch((e) => console.error("onClickAdVendors failed", e));
   }
 
   public onClickManage(evt: MouseEvent): void {
@@ -65,10 +68,4 @@ export class ConsentDialogComponent implements AfterViewChecked, OnInit {
 
     this.dialogRef.close(this.consentOptions.value);
   }
-
-  private onOpenLink = (element: HTMLAnchorElement): boolean => {
-    this._linkService.confirmLinkNavigation(element.href).subscribe();
-
-    return false;
-  };
 }
