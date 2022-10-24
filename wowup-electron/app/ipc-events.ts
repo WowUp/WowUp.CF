@@ -225,8 +225,13 @@ export function initializeIpcHandlers(window: BrowserWindow): void {
     return await (app as any).overwolf.isCMPRequired();
   });
 
-  handle(IPC_OW_OPEN_CMP, () => {
-    (app as any).overwolf.openCMPWindow();
+  handle(IPC_OW_OPEN_CMP, (evt, cmpTab?: string) => {
+    const options = {} as any;
+    if (cmpTab) {
+      options.tab = cmpTab;
+    }
+
+    (app as any).overwolf.openCMPWindow(options);
   });
 
   handle(IPC_GET_ZOOM_FACTOR, () => {
