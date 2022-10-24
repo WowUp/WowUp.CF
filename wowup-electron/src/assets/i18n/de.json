@@ -312,6 +312,13 @@
       "TITLE": "Neu in Version {versionNumber}"
     },
     "PERMISSIONS": {
+      "CURSEFORGE": {
+        "DESCRIPTION_AD_LINK": "ad vendors",
+        "DESCRIPTION_BOTTOM": ". Click on the Manage button to control you consents, or to object to the processing of your data. You can change your preferences any time via the settings screen.",
+        "DESCRIPTION_TOP": " In order to use this application's integration with CurseForge they require that you allow them to show you an ad from one of their ",
+        "MANAGE_BUTTON": "Manage",
+        "TITLE": "CurseForge"
+      },
       "MESSAGE": "Bevor wir beginnen, müssen wir einige Berechtigungen für die App einrichten.",
       "POSITIVE_BUTTON": "Bestätigen",
       "TELEMETRY": {
@@ -549,6 +556,12 @@
         "USE_SYMLINK_SUPPORT_CONFIRMATION_LABEL": "Symlink-Unterstützung aktivieren?",
         "USE_SYMLINK_SUPPORT_DESCRIPTION": "Erlaubt WowUp Symlink-Ordner in deinem Addon-Ordner zu scannen. Warnung: Diese werden beim Aktualisieren/Installieren ersetzt."
       },
+      "CURSEFORGE": {
+        "ADS_OPTION_DESCRIPTION": "View and manage how CurseForge advertisers may use your data for ad personalization",
+        "ADS_OPTION_LABEL": "Ads Personalization & Data",
+        "ADS_OPTION_MANAGE": "Manage",
+        "TITLE": "CurseForge"
+      },
       "DEBUG": {
         "CONFIG_FILES_BUTTON": "Konfigurationsdateien anzeigen",
         "CONFIG_FILES_DESCRIPTION": "Öffne den Ordner, in dem beispielsweise deine addons.json und preferences.json gespeichert sind.",
@@ -566,6 +579,7 @@
         "ADDONS": "Addons",
         "APPLICATION": "Anwendung",
         "CLIENTS": "Clients",
+        "CURSEFORGE": "CurseForge",
         "DEBUG": "Debug"
       },
       "WOW": {

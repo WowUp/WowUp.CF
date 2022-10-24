@@ -312,6 +312,13 @@
       "TITLE": "Patch Notes {versionNumber}"
     },
     "PERMISSIONS": {
+      "CURSEFORGE": {
+        "DESCRIPTION_AD_LINK": "ad vendors",
+        "DESCRIPTION_BOTTOM": ". Click on the Manage button to control you consents, or to object to the processing of your data. You can change your preferences any time via the settings screen.",
+        "DESCRIPTION_TOP": " In order to use this application's integration with CurseForge they require that you allow them to show you an ad from one of their ",
+        "MANAGE_BUTTON": "Manage",
+        "TITLE": "CurseForge"
+      },
       "MESSAGE": "Before we get started we need to setup a few permissions for the app.",
       "POSITIVE_BUTTON": "Accept & Continue",
       "TELEMETRY": {
@@ -322,13 +329,6 @@
       "WAGO": {
         "DESCRIPTION": "Enable the Wago.io addon provider to help support the authors of your favorite addons! This will display a promotional panel required to use their service.\nBy opting in you agree to their <a appExternalLink href=\"{termsUrl}\" >Terms of Service</a> and <a appExternalLink href=\"{dataUrl}\" >Data Consent</a>.",
         "TOGGLE_LABEL": "Enable Wago.io Provider"
-      },
-      "CURSEFORGE": {
-        "TITLE": "CurseForge",
-        "DESCRIPTION_TOP": " In order to use this application's integration with CurseForge they require that you allow them to show you an ad from one of their ",
-        "DESCRIPTION_BOTTOM": ". Click on the Manage button to control you consents, or to object to the processing of your data. You can change your preferences any time via the settings screen.",
-        "DESCRIPTION_AD_LINK": "ad vendors",
-        "MANAGE_BUTTON": "Manage"
       }
     },
     "SELECT_INSTALLATION": {
@@ -556,6 +556,12 @@
         "USE_SYMLINK_SUPPORT_CONFIRMATION_LABEL": "Enable symlink support?",
         "USE_SYMLINK_SUPPORT_DESCRIPTION": "Allow WowUp to scan symlink folders in your addon folder. Warning: they will be replaced when updating/installing."
       },
+      "CURSEFORGE": {
+        "ADS_OPTION_DESCRIPTION": "View and manage how CurseForge advertisers may use your data for ad personalization",
+        "ADS_OPTION_LABEL": "Ads Personalization & Data",
+        "ADS_OPTION_MANAGE": "Manage",
+        "TITLE": "CurseForge"
+      },
       "DEBUG": {
         "CONFIG_FILES_BUTTON": "Show Config Files",
         "CONFIG_FILES_DESCRIPTION": "Open the folder where for example your addons.json and preferences.json are stored.",
@@ -568,19 +574,13 @@
         "LOG_FILES_LABEL": "Log Files",
         "TITLE": "Debug"
       },
-      "CURSEFORGE": {
-        "TITLE": "CurseForge",
-        "ADS_OPTION_LABEL": "Ads Personalization & Data",
-        "ADS_OPTION_DESCRIPTION": "View and manage how CurseForge advertisers may use your data for ad personalization",
-        "ADS_OPTION_MANAGE": "Manage"
-      },
       "TABS": {
         "ABOUT": "About",
         "ADDONS": "Addons",
         "APPLICATION": "Application",
         "CLIENTS": "Clients",
-        "DEBUG": "Debug",
-        "CURSEFORGE": "CurseForge"
+        "CURSEFORGE": "CurseForge",
+        "DEBUG": "Debug"
       },
       "WOW": {
         "ADD_CLIENT_BUTTON": "Add New",

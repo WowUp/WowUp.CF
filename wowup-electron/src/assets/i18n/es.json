@@ -312,6 +312,13 @@
       "TITLE": "Notas de la versión {versionNumber}"
     },
     "PERMISSIONS": {
+      "CURSEFORGE": {
+        "DESCRIPTION_AD_LINK": "ad vendors",
+        "DESCRIPTION_BOTTOM": ". Click on the Manage button to control you consents, or to object to the processing of your data. You can change your preferences any time via the settings screen.",
+        "DESCRIPTION_TOP": " In order to use this application's integration with CurseForge they require that you allow them to show you an ad from one of their ",
+        "MANAGE_BUTTON": "Manage",
+        "TITLE": "CurseForge"
+      },
       "MESSAGE": "Antes de empezar, necesitamos configurar algunos permisos para la aplicación.",
       "POSITIVE_BUTTON": "Confirmar",
       "TELEMETRY": {
@@ -549,6 +556,12 @@
         "USE_SYMLINK_SUPPORT_CONFIRMATION_LABEL": "¿Activar soporte de enlaces simbólicos?",
         "USE_SYMLINK_SUPPORT_DESCRIPTION": "Permite a WowUp escanear enlaces simbólicos en la carpeta de addons.\nAdvertecia: Los enlaces serán reemplazados al actualizar/instalar los addons."
       },
+      "CURSEFORGE": {
+        "ADS_OPTION_DESCRIPTION": "View and manage how CurseForge advertisers may use your data for ad personalization",
+        "ADS_OPTION_LABEL": "Ads Personalization & Data",
+        "ADS_OPTION_MANAGE": "Manage",
+        "TITLE": "CurseForge"
+      },
       "DEBUG": {
         "CONFIG_FILES_BUTTON": "Mostrar archivos de configuración",
         "CONFIG_FILES_DESCRIPTION": "Abre la carpeta donde se encuentra almacenado addons.json y preferences.json por ejemplo.",
@@ -566,6 +579,7 @@
         "ADDONS": "Addons",
         "APPLICATION": "Aplicación",
         "CLIENTS": "Clientes",
+        "CURSEFORGE": "CurseForge",
         "DEBUG": "Depuración"
       },
       "WOW": {

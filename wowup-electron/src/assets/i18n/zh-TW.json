@@ -312,6 +312,13 @@
       "TITLE": "更新記錄 {versionNumber}"
     },
     "PERMISSIONS": {
+      "CURSEFORGE": {
+        "DESCRIPTION_AD_LINK": "ad vendors",
+        "DESCRIPTION_BOTTOM": ". Click on the Manage button to control you consents, or to object to the processing of your data. You can change your preferences any time via the settings screen.",
+        "DESCRIPTION_TOP": " In order to use this application's integration with CurseForge they require that you allow them to show you an ad from one of their ",
+        "MANAGE_BUTTON": "Manage",
+        "TITLE": "CurseForge"
+      },
       "MESSAGE": "在開始使用 WowUp 之前，請設定此應用程式的許可權。",
       "POSITIVE_BUTTON": "確認",
       "TELEMETRY": {
@@ -549,6 +556,12 @@
         "USE_SYMLINK_SUPPORT_CONFIRMATION_LABEL": "啟用符號連結？",
         "USE_SYMLINK_SUPPORT_DESCRIPTION": "允許 WowUp 掃描插件所在路徑下的符號連結。警告：符號連結在安裝或更新插件時會被替換。"
       },
+      "CURSEFORGE": {
+        "ADS_OPTION_DESCRIPTION": "View and manage how CurseForge advertisers may use your data for ad personalization",
+        "ADS_OPTION_LABEL": "Ads Personalization & Data",
+        "ADS_OPTION_MANAGE": "Manage",
+        "TITLE": "CurseForge"
+      },
       "DEBUG": {
         "CONFIG_FILES_BUTTON": "顯示配置檔案",
         "CONFIG_FILES_DESCRIPTION": "開啟儲存 addons.json、preferences.json 等配置檔案的資料夾。",
@@ -566,6 +579,7 @@
         "ADDONS": "插件",
         "APPLICATION": "應用程式",
         "CLIENTS": "客戶端",
+        "CURSEFORGE": "CurseForge",
         "DEBUG": "除錯"
       },
       "WOW": {
