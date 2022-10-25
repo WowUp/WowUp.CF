@@ -38,6 +38,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Inject Token
+        run: |
+          cd ./wowup-electron
+          node ./inject-token.js
+          
       - name: Install Angular CLI
         run: npm install -g @angular/cli
 
