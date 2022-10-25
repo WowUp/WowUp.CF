@@ -105,7 +105,7 @@ describe("MyAddonsComponent", () => {
       wowInstallations$: new BehaviorSubject<any[]>([]),
     });
 
-    let testBed = TestBed.configureTestingModule({
+    const testBed = TestBed.configureTestingModule({
       declarations: [MyAddonsComponent, InvertBoolPipe],
       imports: [
         MatModule,

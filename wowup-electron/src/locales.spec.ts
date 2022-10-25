@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { TestBed } from "@angular/core/testing";
 import { TranslateCompiler, TranslateLoader, TranslateModule, TranslateService } from "@ngx-translate/core";
 import fs from "fs";
@@ -19,10 +20,10 @@ function loadLocale(code: string) {
 
   LOCALE_SET[code] = flatten(localeObj);
 
-  console.log("LOCALE " + code + " " + Object.keys(localeObj).length);
+  console.log(`LOCALE ${code} ${Object.keys(localeObj).length.toString()}`);
 }
 
-for (let code of LOCALES) {
+for (const code of LOCALES) {
   loadLocale(code);
 }
 
@@ -30,7 +31,7 @@ class CustomCompiler extends TranslateCompiler {
   private mfCache = new Map<string, MessageFormat>();
   private config: MessageFormatOptions<"string">;
 
-  constructor() {
+  public constructor() {
     super();
 
     this.config = { customFormatters: undefined, biDiSupport: false, strict: false };
@@ -104,7 +105,11 @@ describe("LocaleTest", () => {
   LOCALES.forEach((locale) => {
     describe(`${locale}:`, () => {
       beforeEach(async () => {
-        firstValueFrom(translate.use(locale));
+        try {
+          return await firstValueFrom(translate.use(locale));
+        } catch (e) {
+          return console.error(e);
+        }
       });
 
       const localeKeys = loadLocaleKeys(locale);
@@ -120,7 +125,7 @@ describe("LocaleTest", () => {
               })
             )
             .subscribe((tx) => {
-              console.log("TX " + tx);
+              console.log(`TX ${tx}`);
               expect(tx === lk).toBeFalse();
               done();
             });

@@ -62,7 +62,7 @@ describe("AddonDetailComponent", () => {
 
     dialogModel = { listItem: viewModel } as AddonDetailModel;
 
-    let testBed = TestBed.configureTestingModule({
+    const testBed = TestBed.configureTestingModule({
       declarations: [AddonDetailComponent],
       imports: [
         MatModule,

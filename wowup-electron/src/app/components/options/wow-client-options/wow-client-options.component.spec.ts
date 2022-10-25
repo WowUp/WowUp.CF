@@ -41,7 +41,7 @@ describe("WowClientOptionsComponent", () => {
       editingWowInstallationId$: new Observable(),
     });
 
-    let testBed = TestBed.configureTestingModule({
+    const testBed = TestBed.configureTestingModule({
       declarations: [WowClientOptionsComponent],
       imports: [
         MatModule,

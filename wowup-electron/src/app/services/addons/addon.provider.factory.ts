@@ -71,7 +71,7 @@ export class AddonProviderFactory {
     }
   }
 
-  public async shouldShowConsentDialog(): Promise<boolean> {
+  public shouldShowConsentDialog(): boolean {
     return false;
   }
 
@@ -215,7 +215,7 @@ export class AddonProviderFactory {
     if (providerName === undefined) {
       return false;
     }
-    
+
     return this.getProvider(providerName)?.canShowChangelog ?? false;
   }
 

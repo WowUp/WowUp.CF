@@ -8,6 +8,7 @@ import {
   NO_LATEST_SEARCH_RESULT_FILES_ERROR,
   NO_SEARCH_RESULTS_ERROR,
 } from "../../common/constants";
+import { CurseFolderScanResult } from "../../common/curse/curse-folder-scan-result";
 import { Addon } from "../../common/entities/addon";
 import { getWowClientGroup } from "../../common/warcraft";
 import { WowClientGroup, WowClientType } from "../../common/warcraft/wow-client-type";
@@ -71,7 +72,7 @@ export class CurseAddonProvider extends AddonProvider {
   public enabled = true;
   public allowEdit = true;
 
-  constructor(
+  public constructor(
     private _cachingService: CachingService,
     private _networkService: NetworkService,
     private _tocService: TocService
@@ -323,7 +324,9 @@ export class CurseAddonProvider extends AddonProvider {
       return;
     }
 
-    const scanResults = addonFolders.filter((af) => af.cfScanResults !== undefined).map((af) => af.cfScanResults!);
+    const scanResults = addonFolders
+      .map((af) => af.cfScanResults)
+      .filter((sr): sr is CurseFolderScanResult => sr !== undefined);
 
     const fingerprints = scanResults.map((sr) => sr.fingerprint);
 
@@ -331,7 +334,7 @@ export class CurseAddonProvider extends AddonProvider {
     const fingerprintData = result.data?.data;
 
     const matchPairs: { addonFolder: AddonFolder; match: cfv2.CF2FingerprintMatch; addon?: cfv2.CF2Addon }[] = [];
-    for (let af of addonFolders) {
+    for (const af of addonFolders) {
       let exactMatch = fingerprintData?.exactMatches.find(
         (em) =>
           this.isCfFileCompatible(installation.clientType, em.file) &&
@@ -339,8 +342,8 @@ export class CurseAddonProvider extends AddonProvider {
       );
 
       // If the addon does not have an exact match, check the partial matches.
-      if (!exactMatch && Array.isArray(fingerprintData?.partialMatches)) {
-        exactMatch = fingerprintData!.partialMatches.find((partialMatch) =>
+      if (!exactMatch && Array.isArray(fingerprintData?.partialMatches) && fingerprintData !== undefined) {
+        exactMatch = fingerprintData.partialMatches.find((partialMatch) =>
           partialMatch.file?.modules?.some((module) => module.fingerprint === af.cfScanResults?.fingerprint)
         );
       }
@@ -464,8 +467,8 @@ export class CurseAddonProvider extends AddonProvider {
     const folderList = folders.join(",");
     const latestFiles = this.getLatestFiles(cfAddon, installation.clientType);
 
-    let channelType = this.getChannelType(cfFile.releaseType);
-    let latestVersion = latestFiles.find((lf) => this.getChannelType(lf.releaseType) <= channelType);
+    const channelType = this.getChannelType(cfFile.releaseType);
+    const latestVersion = latestFiles.find((lf) => this.getChannelType(lf.releaseType) <= channelType);
 
     const targetToc = this._tocService.getTocForGameType2(addonFolder, installation.clientType);
     if (!targetToc) {

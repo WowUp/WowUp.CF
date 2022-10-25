@@ -82,7 +82,7 @@ describe("GetAddonsComponent", () => {
       wowInstallations$: new BehaviorSubject<any[]>([]),
     });
 
-    let testBed = TestBed.configureTestingModule({
+    const testBed = TestBed.configureTestingModule({
       declarations: [GetAddonsComponent],
       imports: [
         MatModule,

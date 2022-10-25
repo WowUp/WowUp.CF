@@ -40,7 +40,7 @@ describe("InstallFromProtocolDialogComponent", () => {
 
     dialogModel = { protocol: "" };
 
-    let testBed = TestBed.configureTestingModule({
+    const testBed = TestBed.configureTestingModule({
       declarations: [InstallFromProtocolDialogComponent],
       imports: [
         MatModule,

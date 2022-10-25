@@ -8,7 +8,7 @@ import { ElectronService } from "../../../services";
   styleUrls: ["./options-curseforge-section.component.scss"],
 })
 export class OptionsCurseforgeSectionComponent {
-  constructor(private _electronService: ElectronService) {}
+  public constructor(private _electronService: ElectronService) {}
 
   public onClickManage(evt: MouseEvent): void {
     evt.preventDefault();

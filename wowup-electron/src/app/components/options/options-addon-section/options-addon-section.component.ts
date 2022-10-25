@@ -3,7 +3,6 @@ import {
   catchError,
   combineLatest,
   debounceTime,
-  first,
   from,
   Observable,
   of,
@@ -14,11 +13,10 @@ import {
 
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { UntypedFormControl, UntypedFormGroup } from "@angular/forms";
-import { MatListOption, MatSelectionListChange } from "@angular/material/list";
+import { MatSelectionListChange } from "@angular/material/list";
 import { TranslateService } from "@ngx-translate/core";
 
 import { PREF_CF2_API_KEY, PREF_GITHUB_PERSONAL_ACCESS_TOKEN } from "../../../../common/constants";
-import { AppConfig } from "../../../../environments/environment";
 import { AddonProviderType } from "../../../addon-providers/addon-provider";
 import { AddonProviderState } from "../../../models/wowup/addon-provider-state";
 import { AddonProviderFactory } from "../../../services/addons/addon.provider.factory";

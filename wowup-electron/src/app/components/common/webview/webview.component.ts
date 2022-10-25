@@ -65,7 +65,7 @@ export class WebViewComponent implements OnDestroy, AfterViewInit {
     this.webviewContainer.nativeElement.innerHTML = 0;
   }
 
-  private async initWebview(element: ElementRef) {
+  private initWebview(element: ElementRef) {
     console.debug("initWebview", this.options);
 
     const placeholder = document.createElement("div");

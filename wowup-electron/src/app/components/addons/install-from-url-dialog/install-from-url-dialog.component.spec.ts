@@ -22,7 +22,7 @@ describe("InstallFromUrlDialogComponent", () => {
   let addonServiceSpy: any;
 
   beforeEach(async () => {
-    let testBed = TestBed.configureTestingModule({
+    const testBed = TestBed.configureTestingModule({
       declarations: [InstallFromUrlDialogComponent],
       imports: [
         MatModule,
