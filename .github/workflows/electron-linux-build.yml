@@ -42,6 +42,11 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: sudo apt install flatpak flatpak-builder
 
+      - name: Inject Token
+        run: |
+          cd ./wowup-electron
+          node ./inject-token.js
+
       - name: Install Angular CLI
         run: npm install -g @angular/cli
 
