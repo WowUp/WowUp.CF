@@ -34,7 +34,7 @@ export class WebViewComponent implements OnDestroy, AfterViewInit {
   ) {}
 
   public ngAfterViewInit(): void {
-    this.initWebview(this.webviewContainer).catch((e) => console.error(e));
+    this.initWebview(this.webviewContainer);
     this._electronService.on("webview-new-window", this.onWebviewNewWindow);
     this._uiMessageService.message$
       .pipe(
