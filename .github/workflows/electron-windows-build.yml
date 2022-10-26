@@ -39,6 +39,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Inject Token
+        env:
+          CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
         run: |
           cd ./wowup-electron
           node ./inject-token.js
