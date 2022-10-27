@@ -240,7 +240,7 @@ function createWindow(): BrowserWindow {
     transparent: false,
     resizable: true,
     backgroundColor: getBackgroundColor(),
-    title: "WowUp",
+    title: "WowUp CF",
     titleBarStyle: "hidden",
     webPreferences: {
       preload: join(__dirname, "preload.js"),

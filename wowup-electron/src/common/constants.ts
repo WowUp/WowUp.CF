@@ -1,4 +1,4 @@
-export const APP_USER_MODEL_ID = "io.wowup.jliddev"; // Bundle ID
+export const APP_USER_MODEL_ID = "io.wowupcf.jliddev"; // Bundle ID
 
 // FEATURES
 export const FEATURE_ACCOUNTS_ENABLED = false;
