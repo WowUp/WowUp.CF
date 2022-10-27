@@ -11,7 +11,7 @@ This is the repository for our [WowUp](https://wowup.io) client with [CurseForge
 
 ## WowUp
 
-![image](https://user-images.githubusercontent.com/20467484/150164985-673d02da-e7ec-42aa-b77d-655c8e3117ff.png)
+![image](https://user-images.githubusercontent.com/20467484/198173792-6287ab5b-efc4-4686-be14-b69f4ec3b298.png)
 
 WowUp is the community centered World of Warcraft addon updater. We attempt to bring the addon community together in an easy to use updater application. We have an ever growing list of supported features.
 
