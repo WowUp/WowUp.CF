@@ -2,7 +2,7 @@
   <img src="https://cdn.wowup.io/site/assets/icons/android-chrome-512x512.png" width="200" />
 </p>
 
-# WowUp Client Repository
+# WowUp CurseForge Client Repository
 
 [![WowUp on Discord](https://img.shields.io/static/v1?label=Discord&message=WowUp&color=7289DA)](https://discord.gg/rk4F5aD)
 [![WowUp on Patreon](https://img.shields.io/static/v1?label=Patreon&message=WowUp&color=f96854)](https://www.patreon.com/jliddev)
