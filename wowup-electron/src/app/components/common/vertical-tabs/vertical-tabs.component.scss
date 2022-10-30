@@ -144,6 +144,16 @@
   display: flex;
   flex-direction: column;
 
+  .tnx-banner {
+    background-image: var(--theme-banner);
+    background-position: top left;
+    text-align: center;
+    padding: 6px;
+    font-weight: 500;
+    word-spacing: 2px;
+    font-size: 15px;
+  }
+
   .ad-details {
     flex-grow: 1;
 
@@ -159,6 +169,10 @@
     flex-shrink: 0;
     width: 400px;
     height: 300px;
-    background-color: var(--background-secondary-3);
+    background-color: var(--background-secondary-4);
+    background-image: var(--ad-placeholder);
+    background-position: top 32px center;
+    background-repeat: no-repeat;
+    background-size: 55%;
   }
 }
