@@ -128,8 +128,8 @@
 
   <!-- AD FRAME -->
   <div *ngIf="sessionService.adSpace$ | async" class="ad-space">
-    <div class="tnx-banner" style="" (click)="onClickAdExplainer()">
-      {{ "ADS.AD_EXPLAINER_BUTTON" | translate }} 
+    <div class="tab hover-bg-secondary-4 addon-info-btn" (click)="onClickAdExplainer()">
+      {{ "ADS.AD_EXPLAINER_BUTTON" | translate }}
     </div>
     <div class="ad">
       <app-webview *ngFor="let params of adPageParams$ | async" [options]="params"></app-webview>
