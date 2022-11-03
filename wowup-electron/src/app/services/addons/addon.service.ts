@@ -16,6 +16,7 @@ import {
   ADDON_PROVIDER_RAIDERIO,
   ADDON_PROVIDER_TUKUI,
   ADDON_PROVIDER_UNKNOWN,
+  ADDON_PROVIDER_WAGO,
   ADDON_PROVIDER_WOWINTERFACE,
   ADDON_PROVIDER_WOWUP_COMPANION,
   ADDON_PROVIDER_ZIP,
@@ -99,6 +100,7 @@ const ADDON_PROVIDER_TOC_EXTERNAL_ID_MAP = {
   [ADDON_PROVIDER_TUKUI]: "tukUiProjectId",
   [ADDON_PROVIDER_CURSEFORGE]: "curseProjectId",
   [ADDON_PROVIDER_CURSEFORGEV2]: "curseProjectId",
+  [ADDON_PROVIDER_WAGO]: "wagoAddonId",
 };
 
 @Injectable({
@@ -839,8 +841,9 @@ export class AddonService {
   }
 
   private getLatestGameVersion(tocs: Toc[]) {
-    const versions = tocs.map((toc) => toc.interface);
-    return AddonUtils.getGameVersion(_.orderBy(versions, [], "desc")[0] || "");
+    const versions = tocs.map((toc) => +toc.interface);
+    const ordered = _.orderBy(versions, [], "desc");
+    return AddonUtils.getGameVersion(ordered[0]?.toString() || "");
   }
 
   private async backupOriginalDirectories(addon: Addon): Promise<string[]> {
