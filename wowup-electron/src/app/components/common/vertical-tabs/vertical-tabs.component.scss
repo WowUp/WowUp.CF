@@ -144,6 +144,18 @@
   display: flex;
   flex-direction: column;
 
+  .addon-info-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    line-height: 40px;
+
+    &:hover {
+      border: 2px solid var(--background-primary);
+      box-sizing: border-box;
+    }
+  }
+
   .ad-details {
     flex-grow: 1;
 
@@ -159,6 +171,10 @@
     flex-shrink: 0;
     width: 400px;
     height: 300px;
-    background-color: var(--background-secondary-3);
+    background-color: var(--background-secondary-4);
+    background-image: var(--ad-placeholder);
+    background-position: top 32px center;
+    background-repeat: no-repeat;
+    background-size: 55%;
   }
 }
