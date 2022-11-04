@@ -90,7 +90,7 @@ export class CurseAddonProvider extends AddonProvider {
     });
   }
 
-  public async getAllBatch(installations: WowInstallation[], addonIds: string[]): Promise<GetAllBatchResult> {
+  public override async getAllBatch(installations: WowInstallation[], addonIds: string[]): Promise<GetAllBatchResult> {
     const batchResult: GetAllBatchResult = {
       errors: {},
       installationResults: {},
@@ -132,7 +132,7 @@ export class CurseAddonProvider extends AddonProvider {
     return batchResult;
   }
 
-  public async getAll(installation: WowInstallation, addonIds: string[]): Promise<GetAllResult> {
+  public override async getAll(installation: WowInstallation, addonIds: string[]): Promise<GetAllResult> {
     if (!addonIds.length) {
       return {
         searchResults: [],
@@ -168,7 +168,7 @@ export class CurseAddonProvider extends AddonProvider {
     };
   }
 
-  public async getFeaturedAddons(installation: WowInstallation): Promise<AddonSearchResult[]> {
+  public override async getFeaturedAddons(installation: WowInstallation): Promise<AddonSearchResult[]> {
     const addons = await this.getFeaturedAddonList(installation);
     const filteredAddons = this.filterFeaturedAddons(addons, installation.clientType);
 
@@ -180,11 +180,11 @@ export class CurseAddonProvider extends AddonProvider {
     return strictFilter(mapped);
   }
 
-  public shouldMigrate(addon: Addon): boolean {
+  public override shouldMigrate(addon: Addon): boolean {
     return !addon.installedExternalReleaseId;
   }
 
-  public async searchByQuery(
+  public override async searchByQuery(
     query: string,
     installation: WowInstallation,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -209,7 +209,10 @@ export class CurseAddonProvider extends AddonProvider {
     return searchResults;
   }
 
-  public async searchByUrl(addonUri: URL, installation: WowInstallation): Promise<SearchByUrlResult | undefined> {
+  public override async searchByUrl(
+    addonUri: URL,
+    installation: WowInstallation
+  ): Promise<SearchByUrlResult | undefined> {
     const slugRegex = /\/addons\/(.*?)(\/|$)/gi;
     const slugMatch = slugRegex.exec(addonUri.pathname);
     if (!slugMatch || slugMatch.length < 2) {
@@ -223,7 +226,7 @@ export class CurseAddonProvider extends AddonProvider {
     };
   }
 
-  public async searchProtocol(protocol: string): Promise<ProtocolSearchResult | undefined> {
+  public override async searchProtocol(protocol: string): Promise<ProtocolSearchResult | undefined> {
     const protocolData = this.parseProtocol(protocol);
     if (!protocolData.addonId || !protocolData.fileId) {
       throw new Error("Invalid protocol data");
@@ -260,7 +263,10 @@ export class CurseAddonProvider extends AddonProvider {
     return searchResult;
   }
 
-  public async getCategory(category: AddonCategory, installation: WowInstallation): Promise<AddonSearchResult[]> {
+  public override async getCategory(
+    category: AddonCategory,
+    installation: WowInstallation
+  ): Promise<AddonSearchResult[]> {
     const curseCategories = this.mapAddonCategory(category);
     const gameVersionTypeId = this.getGameVersionTypeId(installation.clientType);
 
@@ -282,7 +288,7 @@ export class CurseAddonProvider extends AddonProvider {
     return searchResults;
   }
 
-  public getById(addonId: string, installation: WowInstallation): Observable<AddonSearchResult | undefined> {
+  public override getById(addonId: string, installation: WowInstallation): Observable<AddonSearchResult | undefined> {
     return from(this.getByIdBase(addonId)).pipe(
       map((result) => {
         if (!result) {
@@ -299,7 +305,7 @@ export class CurseAddonProvider extends AddonProvider {
     );
   }
 
-  public isValidAddonUri(addonUri: URL): boolean {
+  public override isValidAddonUri(addonUri: URL): boolean {
     return (
       addonUri.host !== undefined &&
       addonUri.host.endsWith("curseforge.com") &&
@@ -307,15 +313,15 @@ export class CurseAddonProvider extends AddonProvider {
     );
   }
 
-  public isValidAddonId(addonId: string): boolean {
+  public override isValidAddonId(addonId: string): boolean {
     return !!addonId && !isNaN(parseInt(addonId, 10));
   }
 
-  public isValidProtocol(protocol: string): boolean {
+  public override isValidProtocol(protocol: string): boolean {
     return protocol.toLowerCase().startsWith("curseforge://");
   }
 
-  public async scan(
+  public override async scan(
     installation: WowInstallation,
     addonChannelType: AddonChannelType,
     addonFolders: AddonFolder[]
@@ -372,7 +378,7 @@ export class CurseAddonProvider extends AddonProvider {
     console.log(matchPairs);
   }
 
-  public async getChangelog(
+  public override async getChangelog(
     installation: WowInstallation,
     externalId: string,
     externalReleaseId: string
@@ -396,7 +402,11 @@ export class CurseAddonProvider extends AddonProvider {
     return "";
   }
 
-  public async getDescription(installation: WowInstallation, externalId: string, addon?: Addon): Promise<string> {
+  public override async getDescription(
+    installation: WowInstallation,
+    externalId: string,
+    addon?: Addon
+  ): Promise<string> {
     try {
       const cacheKey = `${this.name}_description_${externalId}`;
       const response = await this._cachingService.transaction(
@@ -417,7 +427,7 @@ export class CurseAddonProvider extends AddonProvider {
     return "";
   }
 
-  public getAdPageParams(): AdPageOptions {
+  public override getAdPageParams(): AdPageOptions {
     return {
       pageUrl: "",
     };
