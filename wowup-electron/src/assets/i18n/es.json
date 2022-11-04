@@ -32,10 +32,10 @@
     "VERSION_MISMATCH": "Las versiones no coinciden"
   },
   "ADS": {
-    "AD_EXPLAINER_BUTTON": "This ad supports addon creators ❤",
+    "AD_EXPLAINER_BUTTON": "Este anuncio ayuda a los creadores ❤",
     "AD_EXPLAINER_DIALOG": {
-      "MESSAGE": "In order to use <a appExternalLink href=\"https://curseforge.com/\">CurseForge</a> as an addon provider and help support authors for their hard work on your favorite addons we are required to show this advertisement.\n\nIf you do not want to see this ad, you can always disable CurseForge as a provider in the options tab.",
-      "TITLE": "Why am I seeing this ad?"
+      "MESSAGE": "Para poder utilizar <a appExternalLink href=\"https://curseforge.com/\">CurseForge</a> como proveedor de addons y apoyar a los autores por su duro trabajo creando tus addons favoritos, necesitamos mostrar esta publicidad.\n\nSi no quieres ver esta publicidad, siempre puedes desactivar CurseForge como proveedor en la pestaña de opciones.",
+      "TITLE": "¿Por qué estoy viendo este anuncio?"
     }
   },
   "APP": {
@@ -313,10 +313,10 @@
     },
     "PERMISSIONS": {
       "CURSEFORGE": {
-        "DESCRIPTION_AD_LINK": "ad vendors",
-        "DESCRIPTION_BOTTOM": ". Click on the Manage button to control you consents, or to object to the processing of your data. You can change your preferences any time via the settings screen.",
-        "DESCRIPTION_TOP": " In order to use this application's integration with CurseForge they require that you allow them to show you an ad from one of their ",
-        "MANAGE_BUTTON": "Manage",
+        "DESCRIPTION_AD_LINK": "vendedores de anuncios",
+        "DESCRIPTION_BOTTOM": ". Haz clic en el botón Administrar para controlar sus consentimientos, o para oponerse al procesado de sus datos. Puede cambiar sus preferencias en cualquier momento a través de la pantalla de configuración.",
+        "DESCRIPTION_TOP": " Para poder utilizar la integración con CurseForge de esta aplicación, estos requieren su consentimiento para mostrarle publicidad de uno de sus ",
+        "MANAGE_BUTTON": "Administrar",
         "TITLE": "CurseForge"
       },
       "MESSAGE": "Antes de empezar, necesitamos configurar algunos permisos para la aplicación.",
@@ -489,7 +489,7 @@
     },
     "OPTIONS": {
       "ADDON": {
-        "AD_REQUIRED_HINT": "Anuncio requerido",
+        "AD_REQUIRED_HINT": "Publicidad requerida",
         "CURSE_FORGE_V2": {
           "API_KEY_DESCRIPTION": "Si ha solicitado una clave para la API de CurseForge, puede introducirla aquí para conectar con ella.",
           "API_KEY_TITLE": "Clave de API CurseForge",
@@ -557,9 +557,9 @@
         "USE_SYMLINK_SUPPORT_DESCRIPTION": "Permite a WowUp escanear enlaces simbólicos en la carpeta de addons.\nAdvertecia: Los enlaces serán reemplazados al actualizar/instalar los addons."
       },
       "CURSEFORGE": {
-        "ADS_OPTION_DESCRIPTION": "View and manage how CurseForge advertisers may use your data for ad personalization",
-        "ADS_OPTION_LABEL": "Ads Personalization & Data",
-        "ADS_OPTION_MANAGE": "Manage",
+        "ADS_OPTION_DESCRIPTION": "Ver y administrar la manera en que los anunciantes de CurseForge pueden usar sus datos para la personalización de la publicidad",
+        "ADS_OPTION_LABEL": "Personalización de publicidad y datos",
+        "ADS_OPTION_MANAGE": "Administrar",
         "TITLE": "CurseForge"
       },
       "DEBUG": {
