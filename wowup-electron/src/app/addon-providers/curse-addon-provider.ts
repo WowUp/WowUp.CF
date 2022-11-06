@@ -67,6 +67,7 @@ export class CurseAddonProvider extends AddonProvider {
 
   public readonly name = ADDON_PROVIDER_CURSEFORGE;
   public readonly forceIgnore = false;
+  public readonly allowChannelChange = true;
 
   public adRequired = true;
   public enabled = true;
