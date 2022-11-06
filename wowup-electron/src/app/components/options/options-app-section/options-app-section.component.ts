@@ -46,7 +46,8 @@ interface ReleaseChannelViewModel {
 })
 export class OptionsAppSectionComponent implements OnInit {
   public readonly wowupProtocolName = APP_PROTOCOL_NAME;
-
+  public readonly curseProtocolName = CURSE_PROTOCOL_NAME;
+  
   public minimizeOnCloseDescription = "";
   public protocolRegistered = false;
   public zoomScale = ZOOM_SCALE;
