@@ -25,6 +25,7 @@ const CHANGELOGS: ChangeLog[] = [
     </ul>
     <h4 style="margin-top: 1em;">Changes</h4>
     <ul>
+    <li>Spanish locale updates (SkollVargr)</li>
     <li>Attempt to fix the weird diagonal line bug</li>
     <li>Fix issues with 10.x interface version detection/sorting</li>
     <li>Update a bunch of dependencies</li>
