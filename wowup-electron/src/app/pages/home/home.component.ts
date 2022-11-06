@@ -1,11 +1,12 @@
-import { from, Subscription } from "rxjs";
-import { filter, first, map, switchMap } from "rxjs/operators";
+import { from, of, Subject, Subscription } from "rxjs";
+import { catchError, filter, first, map, switchMap, takeUntil, tap } from "rxjs/operators";
 
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { TranslateService } from "@ngx-translate/core";
 
 import {
+  CURSE_PROTOCOL_NAME,
   IPC_POWER_MONITOR_RESUME,
   IPC_POWER_MONITOR_UNLOCK,
   TAB_INDEX_ABOUT,
@@ -29,6 +30,7 @@ import { WarcraftInstallationService } from "../../services/warcraft/warcraft-in
 import { WowUpService } from "../../services/wowup/wowup.service";
 import { WowInstallation } from "../../../common/warcraft/wow-installation";
 import { WowUpProtocolService } from "../../services/wowup/wowup-protocol.service";
+import { getProtocol } from "../../utils/string.utils";
 
 @Component({
   selector: "app-home",
@@ -39,6 +41,7 @@ import { WowUpProtocolService } from "../../services/wowup/wowup-protocol.servic
 export class HomeComponent implements AfterViewInit, OnDestroy {
   private _appUpdateInterval?: number;
   private _subscriptions: Subscription[] = [];
+  private _onDestroy$ = new Subject<boolean>();
 
   public readonly TAB_INDEX_MY_ADDONS = TAB_INDEX_MY_ADDONS;
   public readonly TAB_INDEX_GET_ADDONS = TAB_INDEX_GET_ADDONS;
@@ -66,6 +69,18 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     const wowInstalledSub = this._warcraftInstallationService.wowInstallations$.subscribe((installations) => {
       this.hasWowClient = installations.length > 0;
     });
+
+    this.electronService.customProtocol$
+      .pipe(
+        takeUntil(this._onDestroy$),
+        filter((protocol) => getProtocol(protocol) === CURSE_PROTOCOL_NAME),
+        tap((protocol) => this.handleAddonInstallProtocol(protocol)),
+        catchError((e) => {
+          console.error(e);
+          return of(undefined);
+        })
+      )
+      .subscribe();
 
     const scanErrorSub = this._addonService.scanError$.subscribe(this.onAddonScanError);
     const addonInstallErrorSub = this._addonService.addonInstalled$.subscribe(this.onAddonInstalledEvent);
@@ -117,6 +132,8 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this._onDestroy$.next(true);
+    this._onDestroy$.complete();
     window.clearInterval(this._appUpdateInterval);
     this._subscriptions.forEach((sub) => sub.unsubscribe());
   }
