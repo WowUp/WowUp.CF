@@ -12,7 +12,7 @@
   "win": {
     "icon": "electron-build/icon-cf.ico",
     "target": ["nsis", "portable"],
-    "forceCodeSigning": false,
+    "forceCodeSigning": true,
     "publisherName": "WowUp LLC"
   },
   "nsis": {
