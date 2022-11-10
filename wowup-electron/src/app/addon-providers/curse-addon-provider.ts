@@ -68,10 +68,12 @@ export class CurseAddonProvider extends AddonProvider {
   public readonly name = ADDON_PROVIDER_CURSEFORGE;
   public readonly forceIgnore = false;
   public readonly allowChannelChange = true;
+  public readonly allowReinstall = true;
+  public readonly canBatchFetch = true;
+  public readonly allowEdit = true;
 
   public adRequired = true;
   public enabled = true;
-  public allowEdit = true;
 
   public constructor(
     private _cachingService: CachingService,
