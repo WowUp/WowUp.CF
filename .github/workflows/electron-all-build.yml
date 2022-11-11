@@ -55,7 +55,7 @@ jobs:
         run: |
           cd ./wowup-electron
           npm ci
-          npm run electron:publish
+          npm run electron:publish:vanilla
 
       - name: Build Mac App
         if: matrix.os == 'macos-11'
@@ -69,7 +69,7 @@ jobs:
         run: |
           cd ./wowup-electron
           npm ci
-          npm run electron:publish
+          npm run electron:publish:vanilla
 
       - name: Build Windows App
         if: matrix.os == 'windows-latest'
