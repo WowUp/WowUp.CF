@@ -1,6 +1,6 @@
 {
   "name": "wowup-cf",
-  "version": "2.9.2-beta.1",
+  "version": "2.9.2-beta.2",
   "private": true,
   "description": "World of Warcraft addon updater",
   "keywords": [
@@ -33,6 +33,7 @@
     "electron:build": "npm run build:prod && ow-electron-builder build",
     "electron:build:local": "npm run build:prod && ow-electron-builder build -c electron-builder-local.json",
     "electron:publish": "npm run lint && npm run build:prod && ow-electron-builder build --publish always",
+    "electron:publish:vanilla": "npm run lint && npm run build:prod && electron-builder build --publish always",
     "electron:publish:linux": "docker-compose -f linux-compose.yml up",
     "electron:publish:never": "npm run electron:build && ow-electron-builder --publish never",
     "electron:publish:never:local": "npm run build:dev && npx ow-electron-builder -c electron-builder-local.json --publish never",
@@ -134,6 +135,7 @@
     "curseforge-v2": "1.2.0",
     "del": "7.0.0",
     "dotenv": "16.0.3",
+    "electron-builder": "23.6.0",
     "electron-notarize": "1.2.2",
     "electron-reload": "2.0.0-alpha.1",
     "eslint": "8.27.0",

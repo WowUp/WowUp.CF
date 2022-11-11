@@ -59,4 +59,4 @@ jobs:
         run: |
           cd ./wowup-electron
           npm i
-          npm run electron:publish
+          npm run electron:publish:vanilla

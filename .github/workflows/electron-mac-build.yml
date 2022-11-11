@@ -48,9 +48,6 @@ jobs:
       - name: Install Angular CLI
         run: npm install -g @angular/cli
 
-      - name: Install dmg-license?
-        run: npm install -g dmg-license
-
       - name: Build Mac App
         if: matrix.os == 'macos-11'
         env:
@@ -63,4 +60,4 @@ jobs:
         run: |
           cd ./wowup-electron
           npm i
-          npm run electron:publish
+          npm run electron:publish:vanilla
