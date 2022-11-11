@@ -129,7 +129,7 @@ export abstract class AddonProvider {
     return undefined;
   }
 
-  public getDownloadAuth(): DownloadAuth | undefined {
-    return undefined;
+  public getDownloadAuth(): Promise<DownloadAuth | undefined> {
+    return Promise.resolve(undefined);
   }
 }
