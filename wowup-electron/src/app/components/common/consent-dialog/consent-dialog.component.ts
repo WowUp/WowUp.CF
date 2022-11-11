@@ -34,7 +34,7 @@ export class ConsentDialogComponent implements AfterViewChecked, OnInit {
 
   public ngOnInit(): void {
     this._electronService
-      .invoke(IPC_OW_IS_CMP_REQUIRED)
+      .invoke<boolean>(IPC_OW_IS_CMP_REQUIRED)
       .then((cmpRequired) => {
         console.log("cmpRequired", cmpRequired);
         this.requiresCmp = cmpRequired;
@@ -42,8 +42,7 @@ export class ConsentDialogComponent implements AfterViewChecked, OnInit {
       .catch((e) => console.error("IPC_OW_IS_CMP_REQUIRED failed", e));
   }
 
-  public ngAfterViewChecked(): void {
-  }
+  public ngAfterViewChecked(): void {}
 
   public onClickAdVendors(evt: MouseEvent): void {
     evt.preventDefault();

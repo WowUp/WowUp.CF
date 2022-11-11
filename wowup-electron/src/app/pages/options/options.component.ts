@@ -21,13 +21,11 @@ export class OptionsComponent implements OnInit {
     public wowUpService: WowUpService,
     public sessionService: SessionService,
     public electronService: ElectronService
-  ) {
-
-  }
+  ) {}
 
   public ngOnInit(): void {
     this.electronService
-      .invoke(IPC_OW_IS_CMP_REQUIRED)
+      .invoke<boolean>(IPC_OW_IS_CMP_REQUIRED)
       .then((cmpRequired) => {
         this.isCMPRequired = cmpRequired;
       })
