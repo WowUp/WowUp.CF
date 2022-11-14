@@ -761,18 +761,11 @@ export class CurseAddonProvider extends AddonProvider {
   }
 
   private getValidClientTypes(file: cfv2.CF2File): WowClientType[] {
-    const gameVersions: WowClientType[] = [];
-
-    const flavorMatches =
-      GAME_TYPE_LISTS.find(
-        (list) => file.sortableGameVersions.find((sgv) => sgv.gameVersionTypeId === list.typeId) !== undefined
-      )?.matches ?? [];
-
-    gameVersions.push(...flavorMatches);
-
-    if (!Array.isArray(file.gameVersions) || file.gameVersions.length === 0) {
-      return gameVersions;
-    }
+    const gameVersions: WowClientType[] = _.flatten(
+      GAME_TYPE_LISTS.filter((type) =>
+        file.sortableGameVersions.find((sgv) => sgv.gameVersionTypeId === type.typeId)
+      ).map((game) => game.matches)
+    );
 
     return _.uniq(gameVersions);
   }
