@@ -28,6 +28,7 @@ const CHANGELOGS: ChangeLog[] = [
     <h4 style="margin-top: 1em;">Fixes</h4>
     <ul>
     <li>Rendering lists should no longer fail due to malformed game version</li>
+    <li>Fix an issue with missing client types when installing from CF page link</li>
     </ul>
     `,
   },
