@@ -362,6 +362,8 @@ export class WowUpAddonProvider extends AddonProvider {
     return "";
   }
 
+
+
   private async getAddonsByCategory(gameType: WowGameType, category: AddonCategory) {
     const url = new URL(`${API_URL}/addons/category/${category}/${gameType}`);
     return await this._cachingService.transaction(

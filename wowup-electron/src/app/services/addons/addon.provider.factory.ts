@@ -71,8 +71,8 @@ export class AddonProviderFactory {
     }
   }
 
-  public shouldShowConsentDialog(): boolean {
-    return false;
+  public shouldShowConsentDialog(): Promise<boolean> {
+    return Promise.resolve(false);
   }
 
   public async setProviderEnabled(type: AddonProviderType, enabled: boolean): Promise<void> {

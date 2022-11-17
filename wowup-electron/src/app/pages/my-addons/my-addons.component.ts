@@ -185,7 +185,6 @@ export class MyAddonsComponent implements OnInit, OnDestroy, AfterViewInit {
   // Grid
   public rowDataG: any[] = [];
   public columnDefs$ = new BehaviorSubject<ColDef[]>([]);
-
   public gridApi!: GridApi;
   public gridColumnApi!: ColumnApi;
   public rowClassRules = {
@@ -333,8 +332,6 @@ export class MyAddonsComponent implements OnInit, OnDestroy, AfterViewInit {
       addonInstalledSub,
       addonRemovedSub
     );
-
-
 
     this.columnDefs$.next(this.createColumns());
   }
