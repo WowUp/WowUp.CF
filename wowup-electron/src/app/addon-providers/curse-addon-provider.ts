@@ -2,38 +2,42 @@ import * as cfv2 from "curseforge-v2";
 import * as _ from "lodash";
 import { from, map, Observable } from "rxjs";
 import { v4 as uuidv4 } from "uuid";
+import {
+  Addon,
+  AddonCategory,
+  AddonChannelType,
+  AddonDependencyType,
+  AddonFolder,
+  AddonProvider,
+  AddonScanResult,
+  AddonSearchResult,
+  AddonSearchResultDependency,
+  AddonSearchResultFile,
+  AddonWarningType,
+  AdPageOptions,
+  GetAllBatchResult,
+  GetAllResult,
+  ProtocolSearchResult,
+  SearchByUrlResult,
+  WowClientGroup,
+  WowClientType,
+  WowInstallation,
+} from "wowup-lib-core";
+import { getEnumName } from "wowup-lib-core/lib/utils";
 
 import {
   ADDON_PROVIDER_CURSEFORGE,
   NO_LATEST_SEARCH_RESULT_FILES_ERROR,
   NO_SEARCH_RESULTS_ERROR,
 } from "../../common/constants";
-import { CurseFolderScanResult } from "../../common/curse/curse-folder-scan-result";
-import { Addon } from "../../common/entities/addon";
 import { getWowClientGroup } from "../../common/warcraft";
-import { WowClientGroup, WowClientType } from "../../common/warcraft/wow-client-type";
-import { WowInstallation } from "../../common/warcraft/wow-installation";
-import {
-  AddonCategory,
-  AddonChannelType,
-  AddonDependencyType,
-  AddonWarningType,
-  AdPageOptions,
-} from "../../common/wowup/models";
 import { AppConfig } from "../../environments/environment";
 import { SourceRemovedAddonError } from "../errors";
-import { AddonFolder } from "../models/wowup/addon-folder";
-import { AddonSearchResult } from "../models/wowup/addon-search-result";
-import { AddonSearchResultDependency } from "../models/wowup/addon-search-result-dependency";
-import { AddonSearchResultFile } from "../models/wowup/addon-search-result-file";
-import { ProtocolSearchResult } from "../models/wowup/protocol-search-result";
 import { CachingService } from "../services/caching/caching-service";
 import { CircuitBreakerWrapper, NetworkService } from "../services/network/network.service";
 import { TocService } from "../services/toc/toc.service";
 import * as AddonUtils from "../utils/addon.utils";
 import { strictFilter } from "../utils/array.utils";
-import { getEnumName } from "../utils/enum.utils";
-import { AddonProvider, GetAllBatchResult, GetAllResult, SearchByUrlResult } from "./addon-provider";
 
 interface ProtocolData {
   addonId: number;
@@ -291,21 +295,22 @@ export class CurseAddonProvider extends AddonProvider {
     return searchResults;
   }
 
-  public override getById(addonId: string, installation: WowInstallation): Observable<AddonSearchResult | undefined> {
-    return from(this.getByIdBase(addonId)).pipe(
-      map((result) => {
-        if (!result) {
-          return undefined;
-        }
+  public override async getById(
+    addonId: string,
+    installation: WowInstallation
+  ): Promise<AddonSearchResult | undefined> {
+    const result = await this.getByIdBase(addonId);
 
-        const latestFiles = this.getLatestFiles(result, installation.clientType);
-        if (!latestFiles?.length) {
-          return undefined;
-        }
+    if (!result) {
+      return undefined;
+    }
 
-        return this.getAddonSearchResult(result, latestFiles);
-      })
-    );
+    const latestFiles = this.getLatestFiles(result, installation.clientType);
+    if (!latestFiles?.length) {
+      return undefined;
+    }
+
+    return this.getAddonSearchResult(result, latestFiles);
   }
 
   public override isValidAddonUri(addonUri: URL): boolean {
@@ -335,9 +340,9 @@ export class CurseAddonProvider extends AddonProvider {
 
     const scanResults = addonFolders
       .map((af) => af.cfScanResults)
-      .filter((sr): sr is CurseFolderScanResult => sr !== undefined);
+      .filter((sr) => sr !== undefined) as AddonScanResult[];
 
-    const fingerprints = scanResults.map((sr) => sr.fingerprint);
+    const fingerprints = scanResults.map((sr) => sr.fingerprintNum);
 
     const result = await this._cf2Client.getFingerprintMatches({ fingerprints });
     const fingerprintData = result.data?.data;
@@ -347,13 +352,13 @@ export class CurseAddonProvider extends AddonProvider {
       let exactMatch = fingerprintData?.exactMatches.find(
         (em) =>
           this.isCfFileCompatible(installation.clientType, em.file) &&
-          em.file.modules.some((m) => m.fingerprint == af.cfScanResults?.fingerprint)
+          em.file.modules.some((m) => m.fingerprint == af.cfScanResults?.fingerprintNum)
       );
 
       // If the addon does not have an exact match, check the partial matches.
       if (!exactMatch && Array.isArray(fingerprintData?.partialMatches) && fingerprintData !== undefined) {
         exactMatch = fingerprintData.partialMatches.find((partialMatch) =>
-          partialMatch.file?.modules?.some((module) => module.fingerprint === af.cfScanResults?.fingerprint)
+          partialMatch.file?.modules?.some((module) => module.fingerprint === af.cfScanResults?.fingerprintNum)
         );
       }
 

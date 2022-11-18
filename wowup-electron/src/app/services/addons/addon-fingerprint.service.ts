@@ -1,8 +1,6 @@
 import { Injectable } from "@angular/core";
+import { AddonFolder, AddonScanResult } from "wowup-lib-core";
 import { IPC_CURSE_GET_SCAN_RESULTS, IPC_WOWUP_GET_SCAN_RESULTS } from "../../../common/constants";
-import { CurseFolderScanResult } from "../../../common/curse/curse-folder-scan-result";
-import { AddonFolder } from "../../models/wowup/addon-folder";
-import { AppWowUpScanResult } from "../../models/wowup/app-wowup-scan-result";
 import { ElectronService } from "../electron/electron.service";
 
 @Injectable({
@@ -15,14 +13,14 @@ export class AddonFingerprintService {
     const filePaths = addonFolders.map((addonFolder) => addonFolder.path);
 
     console.time("WowUpScan");
-    const wowUpScanResults: AppWowUpScanResult[] = await this._electronService.invoke(
+    const wowUpScanResults: AddonScanResult[] = await this._electronService.invoke(
       IPC_WOWUP_GET_SCAN_RESULTS,
       filePaths
     );
     console.timeEnd("WowUpScan");
 
     console.time("CFScan");
-    const cfScanResults: CurseFolderScanResult[] = await this._electronService.invoke(
+    const cfScanResults: AddonScanResult[] = await this._electronService.invoke(
       IPC_CURSE_GET_SCAN_RESULTS,
       filePaths
     );
