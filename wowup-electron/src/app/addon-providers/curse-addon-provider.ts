@@ -1,6 +1,5 @@
 import * as cfv2 from "curseforge-v2";
 import * as _ from "lodash";
-import { from, map, Observable } from "rxjs";
 import { v4 as uuidv4 } from "uuid";
 import {
   Addon,
@@ -340,7 +339,7 @@ export class CurseAddonProvider extends AddonProvider {
 
     const scanResults = addonFolders
       .map((af) => af.cfScanResults)
-      .filter((sr) => sr !== undefined) as AddonScanResult[];
+      .filter((sr): sr is AddonScanResult => sr !== undefined);
 
     const fingerprints = scanResults.map((sr) => sr.fingerprintNum);
 

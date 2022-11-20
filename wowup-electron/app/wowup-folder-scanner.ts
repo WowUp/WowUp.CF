@@ -98,7 +98,7 @@ export class WowUpFolderScanner {
     const fingerprint = hashString(hashConcat);
 
     const result: AddonScanResult = {
-      source: "wowup",
+      source: 'wowup',
       fileFingerprints: fingerprintList,
       fingerprint,
       fingerprintNum: 0,

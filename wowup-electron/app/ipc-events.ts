@@ -289,6 +289,7 @@ export function initializeIpcHandlers(window: BrowserWindow): void {
   });
 
   handle(IPC_SET_LOGIN_ITEM_SETTINGS, (evt, settings: Settings) => {
+    console.log("IPC_SET_LOGIN_ITEM_SETTINGS", settings);
     return app.setLoginItemSettings(settings);
   });
 

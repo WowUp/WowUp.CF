@@ -28,7 +28,7 @@ export class AddonFingerprintService {
 
     addonFolders.forEach((af) => {
       af.wowUpScanResults = wowUpScanResults.find((wur) => wur.path === af.path);
-      af.cfScanResults = cfScanResults.find((cfr) => cfr.directory === af.path);
+      af.cfScanResults = cfScanResults.find((cfr) => cfr.path === af.path);
     });
   }
 }

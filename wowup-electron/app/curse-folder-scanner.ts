@@ -101,12 +101,11 @@ export class CurseFolderScanner {
 
     return {
       source: "curseforge",
-      directory: folderPath,
+      path: folderPath,
       fileCount: matchingFiles.length,
       fingerprint: fingerprint.toString(),
       fingerprintNum: fingerprint,
       folderName: path.basename(folderPath),
-      individualFingerprints,
     };
   }
 
