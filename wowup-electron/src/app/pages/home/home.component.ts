@@ -28,9 +28,10 @@ import { SessionService } from "../../services/session/session.service";
 import { SnackbarService } from "../../services/snackbar/snackbar.service";
 import { WarcraftInstallationService } from "../../services/warcraft/warcraft-installation.service";
 import { WowUpService } from "../../services/wowup/wowup.service";
-import { WowInstallation } from "../../../common/warcraft/wow-installation";
+
 import { WowUpProtocolService } from "../../services/wowup/wowup-protocol.service";
 import { getProtocol } from "../../utils/string.utils";
+import { WowInstallation } from "wowup-lib-core";
 
 @Component({
   selector: "app-home",

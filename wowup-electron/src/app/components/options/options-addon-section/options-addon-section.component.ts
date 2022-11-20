@@ -17,13 +17,14 @@ import { MatSelectionListChange } from "@angular/material/list";
 import { TranslateService } from "@ngx-translate/core";
 
 import { PREF_CF2_API_KEY, PREF_GITHUB_PERSONAL_ACCESS_TOKEN } from "../../../../common/constants";
-import { AddonProviderType } from "../../../addon-providers/addon-provider";
+
 import { AddonProviderState } from "../../../models/wowup/addon-provider-state";
 import { AddonProviderFactory } from "../../../services/addons/addon.provider.factory";
 import { DialogFactory } from "../../../services/dialog/dialog.factory";
 import { LinkService } from "../../../services/links/link.service";
 import { SensitiveStorageService } from "../../../services/storage/sensitive-storage.service";
 import { formatDynamicLinks } from "../../../utils/dom.utils";
+import { AddonProviderType } from "wowup-lib-core";
 
 interface AddonProviderStateModel extends AddonProviderState {
   adRequired: boolean;

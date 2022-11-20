@@ -81,15 +81,15 @@ import {
   IPC_OW_IS_CMP_REQUIRED,
   IPC_OW_OPEN_CMP,
 } from "../src/common/constants";
-import { Addon } from "../src/common/entities/addon";
+
 import { CopyFileRequest } from "../src/common/models/copy-file-request";
 import { DownloadRequest } from "../src/common/models/download-request";
 import { DownloadStatus } from "../src/common/models/download-status";
 import { DownloadStatusType } from "../src/common/models/download-status-type";
-import { FsDirent, FsStats, TreeNode } from "../src/common/models/ipc-events";
+import { FsDirent, TreeNode } from "../src/common/models/ipc-events";
 import { UnzipRequest } from "../src/common/models/unzip-request";
 import { RendererChannels } from "../src/common/wowup";
-import { MenuConfig, SystemTrayConfig, WowUpScanResult } from "../src/common/wowup/models";
+import { MenuConfig, SystemTrayConfig } from "../src/common/wowup/models";
 import { createAppMenu } from "./app-menu";
 import * as fsp from "fs/promises";
 
@@ -113,8 +113,8 @@ import { GetDirectoryTreeRequest } from "../src/common/models/ipc-request";
 import { ProductDb } from "../src/common/wowup/product-db";
 import { restoreWindow } from "./window-state";
 import { firstValueFrom, from, mergeMap, toArray } from "rxjs";
-import { CurseFolderScanResult } from "../src/common/curse/curse-folder-scan-result";
 import { CurseFolderScanner } from "./curse-folder-scanner";
+import { Addon, AddonScanResult, FsStats } from "wowup-lib-core";
 
 let PENDING_OPEN_URLS: string[] = [];
 
@@ -289,6 +289,7 @@ export function initializeIpcHandlers(window: BrowserWindow): void {
   });
 
   handle(IPC_SET_LOGIN_ITEM_SETTINGS, (evt, settings: Settings) => {
+    console.log("IPC_SET_LOGIN_ITEM_SETTINGS", settings);
     return app.setLoginItemSettings(settings);
   });
 
@@ -384,7 +385,7 @@ export function initializeIpcHandlers(window: BrowserWindow): void {
     return true;
   });
 
-  handle(IPC_CURSE_GET_SCAN_RESULTS, async (evt, filePaths: string[]): Promise<CurseFolderScanResult[]> => {
+  handle(IPC_CURSE_GET_SCAN_RESULTS, async (evt, filePaths: string[]): Promise<AddonScanResult[]> => {
     // Scan addon folders in parallel for speed!?
     try {
       const taskResults = await firstValueFrom(
@@ -401,7 +402,7 @@ export function initializeIpcHandlers(window: BrowserWindow): void {
     }
   });
 
-  handle(IPC_WOWUP_GET_SCAN_RESULTS, async (evt, filePaths: string[]): Promise<WowUpScanResult[]> => {
+  handle(IPC_WOWUP_GET_SCAN_RESULTS, async (evt, filePaths: string[]): Promise<AddonScanResult[]> => {
     const taskResults = await firstValueFrom(
       from(filePaths).pipe(
         mergeMap((folder) => from(new WowUpFolderScanner(folder).scanFolder()), 3),
@@ -691,7 +692,7 @@ export function initializeIpcHandlers(window: BrowserWindow): void {
 
           if (typeof arg.auth?.headers === "object") {
             for (const [key, value] of Object.entries(arg.auth.headers)) {
-              log.info(`Setting header: ${key}=${value.substring(0,3)}***`);
+              log.info(`Setting header: ${key}=${value.substring(0, 3)}***`);
               req.setHeader(key, value);
             }
           }

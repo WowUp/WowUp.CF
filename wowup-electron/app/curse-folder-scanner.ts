@@ -1,10 +1,10 @@
 import * as path from "path";
 import * as _ from "lodash";
 import * as log from "electron-log";
-import { CurseFolderScanResult } from "../src/common/curse/curse-folder-scan-result";
 import { exists, readDirRecursive } from "./file.utils";
 import * as fsp from "fs/promises";
 import { firstValueFrom, from, mergeMap, toArray } from "rxjs";
+import { AddonScanResult } from "wowup-lib-core";
 
 const nativeAddon = require("../build/Release/addon.node");
 
@@ -71,7 +71,7 @@ export class CurseFolderScanner {
     return /<!--.*?-->/gims;
   }
 
-  public async scanFolder(folderPath: string): Promise<CurseFolderScanResult> {
+  public async scanFolder(folderPath: string): Promise<AddonScanResult> {
     const fileList = await readDirRecursive(folderPath);
     fileList.forEach((fp) => (this._fileMap[fp.toLowerCase()] = fp));
 
@@ -100,11 +100,12 @@ export class CurseFolderScanner {
     const fingerprint = this.getStringHash(hashConcat);
 
     return {
-      directory: folderPath,
+      source: "curseforge",
+      path: folderPath,
       fileCount: matchingFiles.length,
-      fingerprint,
+      fingerprint: fingerprint.toString(),
+      fingerprintNum: fingerprint,
       folderName: path.basename(folderPath),
-      individualFingerprints,
     };
   }
 
