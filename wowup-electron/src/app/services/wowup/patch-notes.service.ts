@@ -18,6 +18,10 @@ const CHANGELOGS: ChangeLog[] = [
   {
     Version: "2.9.2",
     html: `
+    <h4>New Features</h4>
+    <ul>
+    <li>Dynamic WoW client names (CyanoHao)</li>
+    </ul>
     <h4 style="margin-top: 1em;">Changes</h4>
     <ul>
     <li>Spanish locale updates (SkollVargr)</li>
@@ -28,6 +32,7 @@ const CHANGELOGS: ChangeLog[] = [
     </ul>
     <h4 style="margin-top: 1em;">Fixes</h4>
     <ul>
+    <li>Searching on CurseForge should work more as expected</li>
     <li>Rendering lists should no longer fail due to malformed game version</li>
     <li>Fix an issue with missing client types when installing from CF page link</li>
     </ul>
