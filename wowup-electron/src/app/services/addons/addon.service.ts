@@ -1435,7 +1435,7 @@ export class AddonService {
   private getExternalIdsForProvider(addonProvider: AddonProvider, addons: Addon[]): string[] {
     return _.filter(addons, (addon) => addon.providerName === addonProvider.name)
       .map((f) => f.externalId)
-      .filter((id) => typeof id === "string");
+      .filter((id): id is string => typeof id === "string");
   }
 
   private async removeGitFolders(addonFolders: AddonFolder[]) {

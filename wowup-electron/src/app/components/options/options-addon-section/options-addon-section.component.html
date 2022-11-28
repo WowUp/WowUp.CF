@@ -13,7 +13,7 @@
         <mat-list-option
           *ngFor="let state of addonProviderStates$ | async"
           [value]="state.providerName"
-          [selected]="state.enabled"
+          [(selected)]="state.enabled"
         >
           <div>
             {{ state.providerName }}

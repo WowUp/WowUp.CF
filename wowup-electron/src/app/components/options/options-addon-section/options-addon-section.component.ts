@@ -1,7 +1,6 @@
 import {
   BehaviorSubject,
   catchError,
-  combineLatest,
   debounceTime,
   from,
   Observable,
@@ -9,22 +8,22 @@ import {
   Subject,
   switchMap,
   takeUntil,
+  zip,
 } from "rxjs";
+import { AddonProviderType } from "wowup-lib-core";
 
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { UntypedFormControl, UntypedFormGroup } from "@angular/forms";
+import { FormGroup, UntypedFormControl } from "@angular/forms";
 import { MatSelectionListChange } from "@angular/material/list";
 import { TranslateService } from "@ngx-translate/core";
 
 import { PREF_CF2_API_KEY, PREF_GITHUB_PERSONAL_ACCESS_TOKEN } from "../../../../common/constants";
-
 import { AddonProviderState } from "../../../models/wowup/addon-provider-state";
 import { AddonProviderFactory } from "../../../services/addons/addon.provider.factory";
 import { DialogFactory } from "../../../services/dialog/dialog.factory";
 import { LinkService } from "../../../services/links/link.service";
 import { SensitiveStorageService } from "../../../services/storage/sensitive-storage.service";
 import { formatDynamicLinks } from "../../../utils/dom.utils";
-import { AddonProviderType } from "wowup-lib-core";
 
 interface AddonProviderStateModel extends AddonProviderState {
   adRequired: boolean;
@@ -43,7 +42,7 @@ export class OptionsAddonSectionComponent implements OnInit, OnDestroy {
 
   public addonProviderStates$ = new BehaviorSubject<AddonProviderStateModel[]>([]);
 
-  public preferenceForm = new UntypedFormGroup({
+  public preferenceForm = new FormGroup({
     cfV2ApiKey: new UntypedFormControl(""),
     ghPersonalAccessToken: new UntypedFormControl(""),
   });
@@ -73,7 +72,7 @@ export class OptionsAddonSectionComponent implements OnInit, OnDestroy {
               from(this._sensitiveStorageService.setAsync(PREF_GITHUB_PERSONAL_ACCESS_TOKEN, ch.ghPersonalAccessToken))
             );
           }
-          return combineLatest(tasks);
+          return zip(tasks);
         }),
         catchError((e) => {
           console.error(e);
