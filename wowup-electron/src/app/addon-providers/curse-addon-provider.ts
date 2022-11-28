@@ -825,7 +825,11 @@ export class CurseAddonProvider extends AddonProvider {
   private async getSearchResults(query: string, clientType: WowClientType): Promise<cfv2.CF2Addon[]> {
     const request: cfv2.CF2SearchModsParams = {
       gameId: 1,
+      categoryId: 0,
       searchFilter: query,
+      sortField: 2,
+      sortOrder: 'desc',
+      index: 0,
       gameVersionTypeId: this.getCFGameVersionType(clientType),
     };
 
