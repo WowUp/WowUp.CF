@@ -35,6 +35,7 @@ const CHANGELOGS: ChangeLog[] = [
     <li>Searching on CurseForge should work more as expected</li>
     <li>Rendering lists should no longer fail due to malformed game version</li>
     <li>Fix an issue with missing client types when installing from CF page link</li>
+    <li>Audio should now be muted just in case of an annoying ad</li>
     </ul>
     `,
   },
