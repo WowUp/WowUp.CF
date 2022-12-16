@@ -13,9 +13,9 @@ export function wasFullScreen() {
   return preferenceStore.get(`main-window-is-fullscreen`) as boolean;
 }
 
-export function saveWindowConfig(window: BrowserWindow): void {
+export function saveWindowConfig(window: BrowserWindow | null): void {
   try {
-    if (!window) {
+    if (window === null) {
       return;
     }
 
