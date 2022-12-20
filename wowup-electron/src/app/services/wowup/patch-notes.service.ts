@@ -36,6 +36,7 @@ const CHANGELOGS: ChangeLog[] = [
     <li>Rendering lists should no longer fail due to malformed game version</li>
     <li>Fix an issue with missing client types when installing from CF page link</li>
     <li>Audio should now be muted just in case of an annoying ad</li>
+    <li>Fix an issue with window not showing at startup on Mac</li>
     </ul>
     `,
   },
