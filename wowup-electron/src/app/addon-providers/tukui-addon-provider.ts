@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from "uuid";
 import * as stringSimilarity from "string-similarity";
 
 import { ADDON_PROVIDER_TUKUI } from "../../common/constants";
-import { TukUiAddon } from "../models/tukui/tukui-addon";
 import { CachingService } from "../services/caching/caching-service";
 import { CircuitBreakerWrapper, NetworkService } from "../services/network/network.service";
 import { getGameVersion } from "../utils/addon.utils";
@@ -18,8 +17,8 @@ import {
   AddonSearchResultFile,
   GetAllResult,
   WowClientType,
-  WowInstallation,
 } from "wowup-lib-core";
+import { TukUiAddon, WowInstallation } from "wowup-lib-core/lib/models";
 
 const API_URL = "https://www.tukui.org/api.php";
 const CLIENT_API_URL = "https://www.tukui.org/client-api.php";

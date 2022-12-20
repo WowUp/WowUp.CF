@@ -14,7 +14,8 @@ import { ElectronService } from "../electron/electron.service";
 import { FileService } from "../files/file.service";
 import { PreferenceStorageService } from "../storage/preference-storage.service";
 import { WarcraftService } from "./warcraft.service";
-import { AddonChannelType, WowClientGroup, WowClientType, WowInstallation } from "wowup-lib-core";
+import { AddonChannelType, WowClientGroup, WowClientType } from "wowup-lib-core";
+import { WowInstallation } from "wowup-lib-core/lib/models";
 
 @Injectable({
   providedIn: "root",

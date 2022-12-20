@@ -11,7 +11,8 @@ import { AddonService } from "./addon.service";
 import { Subject } from "rxjs";
 import { AddonInstallState } from "../../models/wowup/addon-install-state";
 import { ElectronService } from "..";
-import { Addon, WowClientType, WowInstallation } from "wowup-lib-core";
+import { Addon, WowClientType } from "wowup-lib-core";
+import { WowInstallation } from "wowup-lib-core/lib/models";
 
 export type ExportReleaseType = "stable" | "beta" | "alpha";
 export type ImportState = "no-change" | "added" | "conflict";

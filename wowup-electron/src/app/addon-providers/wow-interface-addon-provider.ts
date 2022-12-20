@@ -5,7 +5,6 @@ import { HttpErrorResponse } from "@angular/common/http";
 
 import { ADDON_PROVIDER_WOWINTERFACE } from "../../common/constants";
 import { SourceRemovedAddonError } from "../errors";
-import { AddonDetailsResponse } from "../models/wow-interface/addon-details-response";
 import { CachingService } from "../services/caching/caching-service";
 import { CircuitBreakerWrapper, NetworkService } from "../services/network/network.service";
 import { getGameVersion } from "../utils/addon.utils";
@@ -22,8 +21,8 @@ import {
   AddonSearchResultFile,
   GetAllResult,
   SearchByUrlResult,
-  WowInstallation,
 } from "wowup-lib-core";
+import { AddonDetailsResponse, WowInstallation } from "wowup-lib-core/lib/models";
 
 const API_URL = "https://api.mmoui.com/v4/game/WOW";
 const ADDON_URL = "https://www.wowinterface.com/downloads/info";

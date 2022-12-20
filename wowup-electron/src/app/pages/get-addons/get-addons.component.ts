@@ -49,7 +49,8 @@ import { getEnumKeys } from "wowup-lib-core/lib/utils";
 import { camelToSnakeCase } from "../../utils/string.utils";
 
 import { AddonProviderFactory } from "../../services/addons/addon.provider.factory";
-import { AddonCategory, AddonChannelType, AddonSearchResult, WowClientType, WowInstallation } from "wowup-lib-core";
+import { AddonCategory, AddonChannelType, AddonSearchResult, WowClientType } from "wowup-lib-core";
+import { WowInstallation } from "wowup-lib-core/lib/models";
 
 interface CategoryItem {
   category: AddonCategory;
