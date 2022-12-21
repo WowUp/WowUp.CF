@@ -26,6 +26,7 @@ const CHANGELOGS: ChangeLog[] = [
     <ul>
     <li>Spanish locale updates (SkollVargr)</li>
     <li>German locale updates (maestrohdude)</li>
+    <li>Russian locale updates (Valdemar)</li>
     <li>Improved private GitHub repo support</li>
     <li>Disable the ability to shift + click columns</li>
     <li>Update a bunch of dependencies</li>
