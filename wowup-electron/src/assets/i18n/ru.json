@@ -32,10 +32,10 @@
     "VERSION_MISMATCH": "Не совпадают версии"
   },
   "ADS": {
-    "AD_EXPLAINER_BUTTON": "This ad supports addon creators ❤",
+    "AD_EXPLAINER_BUTTON": "Это объявление поддерживает создателей дополнений ❤",
     "AD_EXPLAINER_DIALOG": {
-      "MESSAGE": "In order to use <a appExternalLink href=\"https://curseforge.com/\">CurseForge</a> as an addon provider and help support authors for their hard work on your favorite addons we are required to show this advertisement.\n\nIf you do not want to see this ad, you can always disable CurseForge as a provider in the options tab.",
-      "TITLE": "Why am I seeing this ad?"
+      "MESSAGE": "Для того, чтобы использовать <a appExternalLink href=\"https://curseforge.com/\">CurseForge</a> в качестве поставщика аддонов и помочь поддержать авторов за их тяжелую работу над вашими любимыми аддонами, мы должны показать эту рекламу.\n\nЕсли Вы не хотите видеть эту рекламу, то всегда можете отключить CurseForge в качестве поставщика на вкладке опций.",
+      "TITLE": "Почему я вижу эту рекламу?"
     }
   },
   "APP": {
@@ -298,7 +298,7 @@
         "NO_RELEASE_FOUND": "Не найдено выпусков для {message}.\n\nНеобходим верный выпуск с ресурсами в .zip файле, чтобы WowUp мог загрузить его.",
         "NO_SEARCH_RESULTS": "Поиск не дал результатов.",
         "TITLE": "Установка модификации не удалась",
-        "WRATH_ASSET_NOT_FOUND": "No asset was found to download from {message}.\n\nA valid zip file ending with '-wrath' is required in order for WowUp to download it."
+        "WRATH_ASSET_NOT_FOUND": "Не найден ресурс для загрузки с {message}.\n\nДля того, чтобы WowUp загрузил его, требуется действительный zip-файл, оканчивающийся на «-wrath»."
       },
       "IMPORT_ASSET_WARNING": "Мы не смогли убедиться в совместимости последнего выпуска этой модификации с выбранным Вами клиентом.\n\nНо мы нашли zip файл \"{zipName}\".\n\nУстанавливайте его на свой страх и риск.",
       "IMPORT_BUTTON": "Импорт",
@@ -313,10 +313,10 @@
     },
     "PERMISSIONS": {
       "CURSEFORGE": {
-        "DESCRIPTION_AD_LINK": "ad vendors",
-        "DESCRIPTION_BOTTOM": ". Click on the Manage button to control you consents, or to object to the processing of your data. You can change your preferences any time via the settings screen.",
-        "DESCRIPTION_TOP": " In order to use this application's integration with CurseForge they require that you allow them to show you an ad from one of their ",
-        "MANAGE_BUTTON": "Manage",
+        "DESCRIPTION_AD_LINK": "поставщики рекламы",
+        "DESCRIPTION_BOTTOM": ". Нажмите на кнопку 'Управление', чтобы контролировать свои согласия или возражать против обработки Ваших данных. Вы можете изменить свои предпочтения в любое время через экран настроек.",
+        "DESCRIPTION_TOP": " Для того, чтобы использовать интеграцию этого приложения с CurseForge, они требуют, чтобы Вы разрешили им показывать Вам рекламу от одного из своих приложений ",
+        "MANAGE_BUTTON": "Управление",
         "TITLE": "CurseForge"
       },
       "MESSAGE": "Прежде чем мы начнем, нам нужно настроить несколько разрешений для приложения.",
@@ -557,9 +557,9 @@
         "USE_SYMLINK_SUPPORT_DESCRIPTION": "Разрешает WowUp сканировать папки символических ссылок в папке Вашей модификации. Предупреждение: они будут заменены при обновлении/установке."
       },
       "CURSEFORGE": {
-        "ADS_OPTION_DESCRIPTION": "View and manage how CurseForge advertisers may use your data for ad personalization",
-        "ADS_OPTION_LABEL": "Ads Personalization & Data",
-        "ADS_OPTION_MANAGE": "Manage",
+        "ADS_OPTION_DESCRIPTION": "Просмотр и управление тем, как рекламодатели CurseForge могут использовать Ваши данные для персонализации рекламы",
+        "ADS_OPTION_LABEL": "Персонализация рекламы и данные",
+        "ADS_OPTION_MANAGE": "Управление",
         "TITLE": "CurseForge"
       },
       "DEBUG": {
