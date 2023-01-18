@@ -25,8 +25,10 @@ const CHANGELOGS: ChangeLog[] = [
     <h4 style="margin-top: 1em;">Changes</h4>
     <ul>
     <li>Spanish locale updates (SkollVargr)</li>
+    <li>Norwegian locale updates (espenja)</li>
     <li>German locale updates (maestrohdude)</li>
     <li>Russian locale updates (Valdemar)</li>
+    <li>Improved WowInterface API usage for some addons</li>
     <li>Improved private GitHub repo support</li>
     <li>Disable the ability to shift + click columns</li>
     <li>Update a bunch of dependencies</li>
@@ -38,6 +40,7 @@ const CHANGELOGS: ChangeLog[] = [
     <li>Fix an issue with missing client types when installing from CF page link</li>
     <li>Audio should now be muted just in case of an annoying ad</li>
     <li>Fix an issue with window not showing at startup on Mac</li>
+    <li>Improve some error handling when installing addons</li>
     </ul>
     `,
   },
