@@ -100,7 +100,9 @@ export class MyAddonsComponent implements OnInit, OnDestroy, AfterViewInit {
   private readonly _spinnerMessageSrc = new BehaviorSubject<string>("");
   private readonly _totalAvailableUpdateSrc = new BehaviorSubject<number>(0);
   private readonly _destroy$ = new Subject<boolean>();
+  private readonly _visibleSrc = new BehaviorSubject<boolean>(false);
 
+  public readonly visible$ = this._visibleSrc.pipe(debounceTime(200));
   public readonly totalAvailableUpdateCt$ = this._totalAvailableUpdateSrc.asObservable();
   public readonly enableControls$ = this._sessionService.enableControls$;
   public readonly spinnerMessage$ = this._spinnerMessageSrc.asObservable();
@@ -246,6 +248,7 @@ export class MyAddonsComponent implements OnInit, OnDestroy, AfterViewInit {
       allowToggle: true,
     },
   ];
+  private _tabObserver: MutationObserver;
 
   public get displayedColumns(): string[] {
     return this.columns.filter((col) => col.visible).map((col) => col.name);
@@ -318,6 +321,14 @@ export class MyAddonsComponent implements OnInit, OnDestroy, AfterViewInit {
       )
       .subscribe();
 
+    // When the tab becomes visible, auto size the columns. Column sizes could get weird if resized when not visible
+    this.visible$
+      .pipe(
+        takeUntil(this._destroy$),
+        filter((visible) => visible === true)
+      )
+      .subscribe(() => this.autoSizeColumns());
+
     this._subscriptions.push(
       this.isSelectedTab$
         .pipe(
@@ -372,6 +383,7 @@ export class MyAddonsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public ngOnDestroy(): void {
+    this._tabObserver.disconnect();
     this._destroy$.next(true);
     this._destroy$.complete();
     this._subscriptions.forEach((sub) => sub.unsubscribe());
@@ -432,12 +444,32 @@ export class MyAddonsComponent implements OnInit, OnDestroy, AfterViewInit {
         tap((data) => {
           this.gridApi.setRowData(data);
           this.setPageContextText();
+        }),
+        debounceTime(200),
+        tap(() => {
+          this.autoSizeColumns();
         })
       )
       .subscribe();
   }
 
   public ngAfterViewInit(): void {
+    this._tabObserver = new MutationObserver((mutations: MutationRecord[]) => {
+      const muts = mutations.filter((m) => m.attributeName === "style");
+      this._visibleSrc.next(muts.some((m) => (m.target as HTMLElement).style.transform === "none"));
+    });
+
+    const elem = document.querySelector(".mat-tab-my-addons .mat-tab-body-content");
+    if (elem === null) {
+      this._visibleSrc.next(true);
+      console.warn("visibility observer cannot start");
+    } else {
+      this._tabObserver.observe(elem, {
+        attributes: true,
+        characterData: true,
+      });
+    }
+
     this._sessionService.myAddonsCompactVersion = !this.getLatestVersionColumnVisible();
 
     if (this.addonFilter?.nativeElement !== undefined) {
@@ -559,7 +591,7 @@ export class MyAddonsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public isForceIgnore(addon: Addon) {
-    return this._addonProviderService.isForceIgnore(addon.providerName);
+    return this._addonProviderService.isForceIgnore(addon.providerName ?? "");
   }
 
   public canReInstall(listItem: AddonViewModel): boolean {
@@ -568,12 +600,13 @@ export class MyAddonsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     return (
-      listItem.addon.warningType === undefined && this._addonProviderService.canReinstall(listItem.addon.providerName)
+      listItem.addon.warningType === undefined &&
+      this._addonProviderService.canReinstall(listItem.addon.providerName ?? "")
     );
   }
 
   public canChangeChannel(addon: Addon) {
-    return this._addonProviderService.canChangeChannel(addon.providerName);
+    return this._addonProviderService.canChangeChannel(addon.providerName ?? "");
   }
 
   public filterAddons(rowData: AddonViewModel[], filterVal: string): AddonViewModel[] {
@@ -600,7 +633,7 @@ export class MyAddonsComponent implements OnInit, OnDestroy, AfterViewInit {
 
       const promises = _.map(filteredAddons, async (addon) => {
         try {
-          await this._addonService.updateAddon(addon.id ?? "");
+          await this._addonService.updateAddon(addon);
         } catch (e) {
           console.error("Failed to install", e);
         }
@@ -674,7 +707,8 @@ export class MyAddonsComponent implements OnInit, OnDestroy, AfterViewInit {
   public async onReInstallAddons(listItems: AddonViewModel[]): Promise<void> {
     try {
       console.debug("onReInstallAddons", listItems);
-      const tasks = _.map(listItems, (listItem) => this._addonService.installAddon(listItem.addon?.id ?? ""));
+      const addons = _.map(listItems, (li) => li.addon).filter((li): li is Addon => li !== undefined);
+      const tasks = _.map(addons, (addon) => this._addonService.installAddon(addon));
       await Promise.all(tasks);
     } catch (e) {
       console.error(`Failed to re-install addons`, e);
@@ -1116,7 +1150,7 @@ export class MyAddonsComponent implements OnInit, OnDestroy, AfterViewInit {
           }) as string
         );
 
-        await this._addonService.updateAddon(addon.id);
+        await this._addonService.updateAddon(addon);
       }
 
       await this.loadAddons();
@@ -1234,17 +1268,23 @@ export class MyAddonsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let rowData = _.cloneDeep(this._baseRowDataSrc.value);
     const idx = rowData.findIndex((r) => r.addon?.id === evt.addon.id);
+    const change = idx !== -1 || evt.installState === AddonInstallState.Complete;
 
     // If we have a new addon, just put it at the end
     if (idx === -1) {
-      console.debug("Adding new addon to list");
-      rowData.push(new AddonViewModel(evt.addon));
-      rowData = _.orderBy(rowData, (row) => row.canonicalName);
+      // If this is an update of an addon that is not fully installed yet, ignore it
+      if (evt.installState === AddonInstallState.Complete) {
+        console.debug("Adding new addon to list");
+        rowData.push(new AddonViewModel(evt.addon));
+        rowData = _.orderBy(rowData, (row) => row.canonicalName);
+      }
     } else {
       rowData.splice(idx, 1, new AddonViewModel(evt.addon));
     }
 
-    this._baseRowDataSrc.next(rowData);
+    if (change) {
+      this._baseRowDataSrc.next(rowData);
+    }
     this._sessionService.setEnableControls(this.calculateControlState());
   };
 
@@ -1303,7 +1343,12 @@ export class MyAddonsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  /** If we're auto sizing and not visible, skip it as to not attempt to resize with no bounds */
   private autoSizeColumns() {
+    if (!this._visibleSrc.value) {
+      return;
+    }
+
     this.gridColumnApi?.autoSizeColumns([
       "installedAt",
       "latestVersion",

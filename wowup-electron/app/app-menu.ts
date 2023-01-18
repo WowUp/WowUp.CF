@@ -113,7 +113,7 @@ function createWindowsMenuItems(win: BrowserWindow, config?: MenuConfig): Array<
   if (config === undefined) {
     return [];
   }
-
+  
   const viewMenu: MenuItemConstructorOptions = {
     label: config.viewLabel,
     submenu: [{ label: config.toggleDevToolsLabel, role: "toggleDevTools", accelerator: "CommandOrControl+Shift+I" }],

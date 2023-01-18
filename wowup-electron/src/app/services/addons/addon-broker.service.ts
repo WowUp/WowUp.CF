@@ -129,7 +129,10 @@ export class AddonBrokerService {
     return importJson;
   }
 
-  public async installImportSummary(importSummary: ImportSummary, installation: WowInstallation): Promise<void> {
+  public async installImportSummary(
+    importSummary: ImportSummary,
+    installation: WowInstallation
+  ): Promise<void> {
     const comps = importSummary.comparisons.filter((comp) => comp.state === "added");
 
     const tasks = comps.map((comp) => {
@@ -156,7 +159,10 @@ export class AddonBrokerService {
     await Promise.all(tasks);
   }
 
-  public async getImportSummary(exportPayload: ExportPayload, installation: WowInstallation): Promise<ImportSummary> {
+  public async getImportSummary(
+    exportPayload: ExportPayload,
+    installation: WowInstallation
+  ): Promise<ImportSummary> {
     const summary: ImportSummary = {
       addedCt: 0,
       conflictCt: 0,

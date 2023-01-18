@@ -2,9 +2,6 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { AddonProvider, AddonProviderType } from "wowup-lib-core";
 import { GitHubAddonProvider } from "../../addon-providers/github-addon-provider";
-import { TukUiAddonProvider } from "../../addon-providers/tukui-addon-provider";
-import { WowInterfaceAddonProvider } from "../../addon-providers/wow-interface-addon-provider";
-import { WowUpAddonProvider } from "../../addon-providers/wowup-addon-provider";
 import { RaiderIoAddonProvider } from "../../addon-providers/raiderio-provider";
 import { ZipAddonProvider } from "../../addon-providers/zip-provider";
 import { WowUpCompanionAddonProvider } from "../../addon-providers/wowup-companion-addon-provider";
@@ -15,7 +12,6 @@ import { NetworkService } from "../network/network.service";
 import { FileService } from "../files/file.service";
 import { TocService } from "../toc/toc.service";
 import { WarcraftService } from "../warcraft/warcraft.service";
-import { WowUpApiService } from "../wowup-api/wowup-api.service";
 import { AddonProviderState } from "../../models/wowup/addon-provider-state";
 import { ADDON_PROVIDER_UNKNOWN } from "../../../common/constants";
 import { Subject } from "rxjs";
@@ -23,6 +19,9 @@ import { PreferenceStorageService } from "../storage/preference-storage.service"
 import { SensitiveStorageService } from "../storage/sensitive-storage.service";
 import { UiMessageService } from "../ui-message/ui-message.service";
 import { CurseAddonProvider } from "../../addon-providers/curse-addon-provider";
+import { WowUpAddonProvider, WowInterfaceAddonProvider, TukUiAddonProvider } from "wowup-lib-core/lib/addon-providers";
+import { AppConfig } from "../../../environments/environment";
+import { GenericNetworkInterface } from "../../business-objects/generic-network-interface";
 
 @Injectable({
   providedIn: "root",
@@ -34,6 +33,10 @@ export class AddonProviderFactory {
 
   public readonly addonProviderChange$ = this._addonProviderChangeSrc.asObservable();
 
+  private _wowupNetworkInterface: GenericNetworkInterface;
+  private _wowInterfaceNetworkInterface: GenericNetworkInterface;
+  private _tukuiNetworkInterface: GenericNetworkInterface;
+
   public constructor(
     private _cachingService: CachingService,
     private _electronService: ElectronService,
@@ -43,11 +46,35 @@ export class AddonProviderFactory {
     private _fileService: FileService,
     private _tocService: TocService,
     private _warcraftService: WarcraftService,
-    private _wowupApiService: WowUpApiService,
+
     private _preferenceStorageService: PreferenceStorageService,
     private _sensitiveStorageService: SensitiveStorageService,
     private _uiMessageService: UiMessageService
-  ) {}
+  ) {
+    this._wowupNetworkInterface = new GenericNetworkInterface(
+      this._networkService.getCircuitBreaker(
+        "wowup_addon_provider",
+        AppConfig.defaultHttpResetTimeoutMs,
+        AppConfig.wowUpHubHttpTimeoutMs
+      )
+    );
+
+    this._wowInterfaceNetworkInterface = new GenericNetworkInterface(
+      this._networkService.getCircuitBreaker(
+        "wow_interface_provider",
+        AppConfig.defaultHttpResetTimeoutMs,
+        AppConfig.wowUpHubHttpTimeoutMs
+      )
+    );
+
+    this._tukuiNetworkInterface = new GenericNetworkInterface(
+      this._networkService.getCircuitBreaker(
+        "tukui_provider",
+        AppConfig.defaultHttpResetTimeoutMs,
+        AppConfig.wowUpHubHttpTimeoutMs
+      )
+    );
+  }
 
   /** This is part of the APP_INITIALIZER and called before the app is bootstrapped */
   public async loadProviders(): Promise<void> {
@@ -108,11 +135,11 @@ export class AddonProviderFactory {
   }
 
   public createTukUiAddonProvider(): TukUiAddonProvider {
-    return new TukUiAddonProvider(this._cachingService, this._networkService, this._tocService);
+    return new TukUiAddonProvider(this._tukuiNetworkInterface);
   }
 
   public createWowInterfaceAddonProvider(): WowInterfaceAddonProvider {
-    return new WowInterfaceAddonProvider(this._cachingService, this._networkService, this._tocService);
+    return new WowInterfaceAddonProvider(this._wowInterfaceNetworkInterface);
   }
 
   public createGitHubAddonProvider(): GitHubAddonProvider {
@@ -120,7 +147,7 @@ export class AddonProviderFactory {
   }
 
   public createWowUpAddonProvider(): WowUpAddonProvider {
-    return new WowUpAddonProvider(this._electronService, this._cachingService, this._networkService);
+    return new WowUpAddonProvider(AppConfig.wowUpHubUrl, AppConfig.wowUpWebsiteUrl, this._wowupNetworkInterface);
   }
 
   public createZipAddonProvider(): ZipAddonProvider {

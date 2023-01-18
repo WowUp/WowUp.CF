@@ -21,6 +21,7 @@ import {
   WowClientGroup,
   WowClientType,
 } from "wowup-lib-core";
+import { SourceRemovedAddonError } from "wowup-lib-core/lib/errors";
 import { WowInstallation } from "wowup-lib-core/lib/models";
 import { getEnumName } from "wowup-lib-core/lib/utils";
 
@@ -31,7 +32,6 @@ import {
 } from "../../common/constants";
 import { getWowClientGroup } from "../../common/warcraft";
 import { AppConfig } from "../../environments/environment";
-import { SourceRemovedAddonError } from "../errors";
 import { CachingService } from "../services/caching/caching-service";
 import { CircuitBreakerWrapper, NetworkService } from "../services/network/network.service";
 import { TocService } from "../services/toc/toc.service";

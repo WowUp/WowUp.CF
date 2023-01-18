@@ -31,13 +31,13 @@ export function getAddonStore(): Store {
 
 export function initializeStoreIpcHandlers(): void {
   // Return the store value for a specific key
-  ipcMain.handle(IPC_STORE_GET_ALL, (evt: IpcMainInvokeEvent, storeName: string): any => {
+  ipcMain.handle(IPC_STORE_GET_ALL, (evt: IpcMainInvokeEvent, storeName: string): any[] => {
     const store = stores[storeName];
 
-    const items = [];
+    const items: any[] = [];
     for (const result of store) {
       const item = result[1];
-      items.push(item);
+      items.push(item as any);
     }
 
     return items;
@@ -58,11 +58,13 @@ export function initializeStoreIpcHandlers(): void {
   ipcMain.handle(IPC_STORE_SET_OBJECT, (evt: IpcMainInvokeEvent, storeName: string, key: string, value: any): void => {
     const store = stores[storeName];
 
+    let storedVal = value.toString();
     if (typeof value === "object" || Array.isArray(value)) {
-      store?.set(key, value);
-    } else {
-      store?.set(key, value.toString());
+      storedVal = value;
     }
+    store?.set(key, storedVal);
+
+    return storedVal;
   });
 
   // Remove the store value for a specific key

@@ -628,7 +628,7 @@ export function initializeIpcHandlers(window: BrowserWindow): void {
       try {
         const action = _dlMap.get(key);
         if (typeof action === "function") {
-          action.call(null, evt, item, wc);
+          action?.call(null, evt, item, wc);
         } else {
           log.warn("could not call will-download action, undefined");
         }

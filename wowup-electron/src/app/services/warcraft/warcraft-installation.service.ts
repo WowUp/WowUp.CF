@@ -89,7 +89,9 @@ export class WarcraftInstallationService {
   }
 
   public async getWowInstallationsAsync(): Promise<WowInstallation[]> {
-    const results = await this._preferenceStorageService.getObjectAsync<WowInstallation[]>(WOW_INSTALLATIONS_KEY);
+    const results = await this._preferenceStorageService.getObjectAsync<WowInstallation[]>(
+      WOW_INSTALLATIONS_KEY
+    );
     return results || [];
   }
 

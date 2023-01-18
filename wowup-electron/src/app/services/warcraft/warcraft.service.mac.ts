@@ -26,7 +26,7 @@ const BLIZZARD_AGENT_PATH = "/Users/Shared/Battle.net/Agent";
 const BLIZZARD_PRODUCT_DB_NAME = "product.db";
 
 export class WarcraftServiceMac implements WarcraftServiceImpl {
-  public constructor(private _fileService: FileService) { }
+  public constructor(private _fileService: FileService) {}
 
   public getExecutableExtension(): string {
     return "app";

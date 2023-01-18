@@ -14,10 +14,12 @@ export function wasFullScreen() {
 }
 
 export function saveWindowConfig(window: BrowserWindow | null): void {
+  if (window === null) {
+    return;
+  }
+
   try {
-    if (window === null) {
-      return;
-    }
+
 
     const prefStore = getPreferenceStore();
     prefStore.set(`main-window-is-maximized`, window.isMaximized());

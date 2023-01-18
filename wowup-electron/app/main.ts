@@ -50,7 +50,7 @@ import * as windowState from "./window-state";
 const LOG_PATH = join(app.getPath("userData"), "logs");
 app.setAppLogsPath(LOG_PATH);
 log.transports.file.resolvePath = (variables: log.PathVariables) => {
-  return join(LOG_PATH, variables.fileName ?? "log-files.txt");
+  return join(LOG_PATH, variables.fileName ?? "log-file.txt");
 };
 log.info("Main starting");
 log.info(`Electron: ${process.versions.electron}`);
@@ -195,7 +195,7 @@ app.on("child-process-gone", (e, details) => {
 // See https://www.electronjs.org/docs/api/app#event-open-url-macos
 if (platform.isMac) {
   app.on("open-url", (evt, url) => {
-    log.info(`Open url recieved ${url}`);
+    log.info(`Open url received ${url}`);
 
     // If we did get a custom protocol notify the app
     if (isProtocol(url)) {
@@ -534,14 +534,14 @@ async function onActivate() {
 }
 
 function getBackgroundColor() {
-  const savedTheme = getPreferenceStore().get(CURRENT_THEME_KEY) as string;
+  const savedTheme = getPreferenceStore().get(CURRENT_THEME_KEY) as string | undefined;
   return savedTheme && savedTheme.indexOf("light") !== -1 ? DEFAULT_LIGHT_BG_COLOR : DEFAULT_BG_COLOR;
 }
 
 function canStartHidden() {
   const prefStore = getPreferenceStore();
-  const systemStart = prefStore.get(START_WITH_SYSTEM_PREFERENCE_KEY) as string;
-  const startMin = prefStore.get(START_MINIMIZED_PREFERENCE_KEY) as string;
+  const systemStart = prefStore?.get(START_WITH_SYSTEM_PREFERENCE_KEY) as string | undefined;
+  const startMin = prefStore?.get(START_MINIMIZED_PREFERENCE_KEY) as string | undefined;
 
   console.log(`START_WITH_SYSTEM_PREFERENCE_KEY: ${systemStart}`);
   console.log(`START_MINIMIZED_PREFERENCE_KEY: ${startMin}`);
