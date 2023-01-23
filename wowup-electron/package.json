@@ -141,7 +141,7 @@
     "electron-reload": "2.0.0-alpha.1",
     "eslint": "8.28.0",
     "eslint-config-prettier": "8.5.0",
-    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-import": "2.27.5",
     "eslint-plugin-jsdoc": "39.6.4",
     "eslint-plugin-prefer-arrow": "1.2.3",
     "flat": "5.0.2",
