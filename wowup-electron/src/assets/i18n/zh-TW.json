@@ -101,8 +101,10 @@
     "WINDOW_TITLE_FULLSCREEN": "WowUp.io - 全螢幕模式",
     "WOWUP_UPDATE": {
       "CHECKING_FOR_UPDATE": "檢查更新",
+      "DELAY_INSTALL_TOOLTIP": "Install Later",
       "DOWNLOADED_TOOLTIP": "安裝 WowUp 更新",
       "DOWNLOADING_UPDATE": "正在下載更新",
+      "FOOTER_DELAYED_INSTALL": "Installing Later",
       "INSTALL_MESSAGE": "是否重新啟動 WowUp 以完成更新？",
       "INSTALL_TITLE": "WowUp 更新已準備就緒",
       "NOT_AVAILABLE": "已安裝最新版 WowUp",

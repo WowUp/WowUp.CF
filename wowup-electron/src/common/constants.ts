@@ -199,6 +199,8 @@ export const WOW_ADDON_FOLDER_NAME = "AddOns";
 export const WOW_INTERFACE_FOLDER_NAME = "Interface";
 export const WOW_CLASSIC_ERA_PTR_FOLDER = "_classic_era_ptr_";
 
+export const UPDATE_DELAY_MS = 6 * 60 * 60 * 1000;
+
 export const YEAR_SECONDS = 31536000;
 export const MONTH_SECONDS = 2592000;
 export const DAY_SECONDS = 86400;

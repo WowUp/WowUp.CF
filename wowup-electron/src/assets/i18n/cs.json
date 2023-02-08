@@ -101,8 +101,10 @@
     "WINDOW_TITLE_FULLSCREEN": "WowUp.io - Full Screen",
     "WOWUP_UPDATE": {
       "CHECKING_FOR_UPDATE": "Checking for update",
+      "DELAY_INSTALL_TOOLTIP": "Install Later",
       "DOWNLOADED_TOOLTIP": "Nainstalovat aktualizaci WowUp",
       "DOWNLOADING_UPDATE": "Downloading update",
+      "FOOTER_DELAYED_INSTALL": "Installing Later",
       "INSTALL_MESSAGE": "Chcete restartovat WowUp and nainstalovat aktualizaci?",
       "INSTALL_TITLE": "Aktualizace WowUp je připravena",
       "NOT_AVAILABLE": "Nejnovější verze WowUp je již nainstalována",
