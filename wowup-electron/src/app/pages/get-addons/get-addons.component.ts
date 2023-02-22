@@ -3,6 +3,7 @@ import {
   ColumnApi,
   GridApi,
   GridReadyEvent,
+  IRowNode,
   RowClickedEvent,
   RowDoubleClickedEvent,
   RowNode,
@@ -12,9 +13,9 @@ import { BehaviorSubject, combineLatest, from, Observable, of, Subject } from "r
 import { catchError, filter, first, map, switchMap, takeUntil } from "rxjs/operators";
 
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { MatCheckboxChange } from "@angular/material/checkbox";
-import { MatDialog } from "@angular/material/dialog";
-import { MatMenuTrigger } from "@angular/material/menu";
+import { MatLegacyCheckboxChange as MatCheckboxChange } from "@angular/material/legacy-checkbox";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
+import { MatLegacyMenuTrigger as MatMenuTrigger } from "@angular/material/legacy-menu";
 import { MatDrawer } from "@angular/material/sidenav";
 import { TranslateService } from "@ngx-translate/core";
 
@@ -73,7 +74,7 @@ export class GetAddonsComponent implements OnInit, OnDestroy {
   private _isSelectedTab = false;
   private _lazyLoaded = false;
   private _rowDataSrc = new BehaviorSubject<GetAddonListItem[]>([]);
-  private _lastSelectionState: RowNode[] = [];
+  private _lastSelectionState: IRowNode[] = [];
   private _selectedAddonCategory: CategoryItem | undefined;
 
   public addonCategory = AddonCategory;
@@ -363,7 +364,7 @@ export class GetAddonsComponent implements OnInit, OnDestroy {
   }
 
   // If nodes have the same primary value, use the canonical name as a fallback
-  private compareElement(nodeA: RowNode, nodeB: RowNode, prop: string): number {
+  private compareElement(nodeA: IRowNode, nodeB: IRowNode, prop: string): number {
     if (nodeA.data[prop] === nodeB.data[prop]) {
       if (nodeA.data.canonicalName === nodeB.data.canonicalName) {
         return 0;

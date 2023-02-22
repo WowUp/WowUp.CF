@@ -14,7 +14,7 @@ import { AddonProviderType } from "wowup-lib-core";
 
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { FormGroup, UntypedFormControl } from "@angular/forms";
-import { MatSelectionListChange } from "@angular/material/list";
+import { MatLegacySelectionListChange as MatSelectionListChange } from "@angular/material/legacy-list";
 import { TranslateService } from "@ngx-translate/core";
 
 import { PREF_CF2_API_KEY, PREF_GITHUB_PERSONAL_ACCESS_TOKEN } from "../../../../common/constants";
