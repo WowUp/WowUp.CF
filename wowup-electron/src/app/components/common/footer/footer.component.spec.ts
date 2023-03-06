@@ -35,6 +35,7 @@ describe("FooterComponent", () => {
       wowupUpdateCheck$: new Subject<UpdateCheckResult>().asObservable(),
       wowupUpdateDownloaded$: new Subject<any>().asObservable(),
       wowupUpdateDownloadInProgress$: new Subject<boolean>().asObservable(),
+      installUpdateTime$: new Subject<number>().asObservable(),
     });
 
     sessionServiceSpy = jasmine.createSpyObj("SessionService", [""], {
