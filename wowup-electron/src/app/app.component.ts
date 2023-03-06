@@ -42,7 +42,6 @@ import {
 import { AppUpdateState, MenuConfig, SystemTrayConfig } from "../common/wowup/models";
 import { AppConfig } from "../environments/environment";
 import { InstallFromUrlDialogComponent } from "./components/addons/install-from-url-dialog/install-from-url-dialog.component";
-import { AlertDialogComponent } from "./components/common/alert-dialog/alert-dialog.component";
 import { AddonSyncError, GitHubFetchReleasesError, GitHubFetchRepositoryError, GitHubLimitError } from "./errors";
 import { AddonInstallState } from "./models/wowup/addon-install-state";
 import { ElectronService } from "./services";

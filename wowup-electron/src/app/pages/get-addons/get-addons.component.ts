@@ -6,7 +6,6 @@ import {
   IRowNode,
   RowClickedEvent,
   RowDoubleClickedEvent,
-  RowNode,
 } from "ag-grid-community";
 import * as _ from "lodash";
 import { BehaviorSubject, combineLatest, from, Observable, of, Subject } from "rxjs";

@@ -8,7 +8,6 @@ import {
   RowClassParams,
   RowClickedEvent,
   RowDoubleClickedEvent,
-  RowNode,
   SortChangedEvent,
 } from "ag-grid-community";
 import * as _ from "lodash";
