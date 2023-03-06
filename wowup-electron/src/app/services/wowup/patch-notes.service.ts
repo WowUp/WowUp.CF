@@ -16,6 +16,15 @@ export class PatchNotesService {
 
 const CHANGELOGS: ChangeLog[] = [
   {
+    Version: "2.9.4",
+    html: `
+    <h4>New Features</h4>
+    <ul>
+    <li>WowUp update snooze button</li>
+    </ul>
+    `,
+  },
+  {
     Version: "2.9.2",
     html: `
     <h4>New Features</h4>
