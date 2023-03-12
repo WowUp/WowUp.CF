@@ -487,7 +487,7 @@ export class CurseAddonProvider extends AddonProvider {
     const channelType = this.getChannelType(cfFile.releaseType);
     const latestVersion = latestFiles.find((lf) => this.getChannelType(lf.releaseType) <= channelType);
 
-    const targetToc = this._tocService.getTocForGameType2(addonFolder, installation.clientType);
+    const targetToc = this._tocService.getTocForGameType2(addonFolder.name, addonFolder.tocs, installation.clientType);
     if (!targetToc) {
       console.error(addonFolder.tocs);
       throw new Error("Target toc not found");
@@ -828,7 +828,7 @@ export class CurseAddonProvider extends AddonProvider {
       categoryId: 0,
       searchFilter: query,
       sortField: 2,
-      sortOrder: 'desc',
+      sortOrder: "desc",
       index: 0,
       gameVersionTypeId: this.getCFGameVersionType(clientType),
     };

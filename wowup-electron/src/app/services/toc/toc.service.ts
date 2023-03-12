@@ -87,11 +87,7 @@ export class TocService {
         })
       );
 
-      const af: Partial<AddonFolder> = {
-        name: dir,
-        tocs: allTocs,
-      };
-      const tf = this.getTocForGameType2(af, clientType);
+      const tf = this.getTocForGameType2(dir, allTocs, clientType);
       if (tf !== undefined) {
         tocs.push(tf);
       }
@@ -133,17 +129,20 @@ export class TocService {
     );
   }
 
-  public getTocForGameType2(addonFolder: Partial<AddonFolder>, clientType: WowClientType): tocModels.Toc | undefined {
+  public getTocForGameType2(
+    folderName: string,
+    tocs: tocModels.Toc[],
+    clientType: WowClientType
+  ): tocModels.Toc | undefined {
     let matchedToc = "";
 
-    const tocs = addonFolder.tocs ?? [];
     const tocFileNames = tocs.map((toc) => toc.fileName);
     matchedToc = this.getTocForGameType(tocFileNames, clientType);
 
     // If we still have no match, we need to return the toc that matches the folder name if it exists
     // Example: All the things for TBC (ATT-Classic)
     if (matchedToc === "") {
-      return tocs.find((toc) => removeExtension(toc.fileName).toLowerCase() === addonFolder.name?.toLowerCase());
+      return tocs.find((toc) => removeExtension(toc.fileName).toLowerCase() === folderName.toLowerCase());
     }
 
     return tocs.find((toc) => toc.fileName === matchedToc);

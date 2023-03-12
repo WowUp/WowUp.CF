@@ -18,14 +18,12 @@ import {
   ADDON_PROVIDER_WAGO,
   ADDON_PROVIDER_WOWINTERFACE,
   ADDON_PROVIDER_WOWUP_COMPANION,
-
   ERROR_ADDON_ALREADY_INSTALLED,
   USER_ACTION_ADDON_INSTALL,
   USER_ACTION_ADDON_PROTOCOL_SEARCH,
   USER_ACTION_ADDON_SEARCH,
   USER_ACTION_BROWSE_CATEGORY,
 } from "../../../common/constants";
-
 
 import { AddonScanError, AddonSyncError, GenericProviderError } from "../../errors";
 
@@ -83,15 +81,11 @@ export interface ScanUpdate {
   currentCount?: number;
 }
 
-
-
 export type AddonActionType = "scan" | "sync";
 export interface AddonActionEvent {
   type: AddonActionType;
   addon?: Addon;
 }
-
-
 
 const IGNORED_FOLDER_NAMES = ["__MACOSX"];
 
@@ -121,7 +115,6 @@ export class AddonService {
   private readonly _syncingSrc = new BehaviorSubject<boolean>(false);
 
   private _activeInstalls: AddonUpdateEvent[] = [];
-
 
   public readonly addonAction$ = this._addonActionSrc.asObservable();
   public readonly addonInstalled$ = this._addonInstallService.addonInstalled$;
@@ -173,8 +166,6 @@ export class AddonService {
         this._anyUpdatesAvailableSrc.next(updatesAvailable);
       });
 
-
-
     // Attempt to remove addons for clients that were lost
     this._warcraftInstallationService.wowInstallations$
       .pipe(
@@ -200,8 +191,6 @@ export class AddonService {
       .subscribe((updatesAvailable) => {
         this._anyUpdatesAvailableSrc.next(updatesAvailable);
       });
-
-
   }
 
   public isInstalling(addonId?: string): boolean {
@@ -606,7 +595,6 @@ export class AddonService {
     } else {
       this._activeInstalls.splice(itemIdx, 1, updateEvent);
     }
-
   };
 
   public async logDebugData(): Promise<void> {
@@ -651,8 +639,6 @@ export class AddonService {
 
     console.log(JSON.stringify(clientMap));
   }
-
-
 
   private async installUnzippedDirectory(unzippedDirectory: string, installation: WowInstallation) {
     const addonFolderPath = this._warcraftService.getAddonFolderPath(installation);
@@ -1389,7 +1375,7 @@ export class AddonService {
           return;
         }
 
-        const targetToc = this._tocService.getTocForGameType2(maf, installation.clientType);
+        const targetToc = this._tocService.getTocForGameType2(maf.name, maf.tocs, installation.clientType);
         if (targetToc === undefined) {
           console.warn("toc file undefined", maf, installation.clientType);
           maf.matchingAddon.warningType = AddonWarningType.TocNameMismatch;
@@ -1472,8 +1458,6 @@ export class AddonService {
     addon.externalIds = externalIds;
   }
 
-
-
   /**
    * This should verify that a folder that did not have a match, is actually unmatched
    * This will happen for any sub folders of TukUI or WowInterface addons
@@ -1487,7 +1471,7 @@ export class AddonService {
       return false;
     }
 
-    const targetToc = this._tocService.getTocForGameType2(addonFolder, installation.clientType);
+    const targetToc = this._tocService.getTocForGameType2(addonFolder.name, addonFolder.tocs, installation.clientType);
 
     // if the folder is load on demand, it 'should' be a sub folder
     const isLoadOnDemand = targetToc?.loadOnDemand === "1";
@@ -1582,8 +1566,6 @@ export class AddonService {
       await this.removeAddon(addon, false, false);
     }
   }
-
-
 
   public getFeaturedAddons(installation: WowInstallation): Observable<AddonSearchResult[]> {
     return forkJoin(
@@ -1712,8 +1694,6 @@ export class AddonService {
 
     const fundingLinks = Array.isArray(searchResult.fundingLinks) ? [...searchResult.fundingLinks] : [];
 
-
-
     return {
       id: uuidv4(),
       name: searchResult.name,
@@ -1754,7 +1734,7 @@ export class AddonService {
     installation: WowInstallation,
     matchedAddonFolderNames: string[]
   ): Promise<Addon> {
-    const targetToc = this._tocService.getTocForGameType2(addonFolder, installation.clientType);
+    const targetToc = this._tocService.getTocForGameType2(addonFolder.name, addonFolder.tocs, installation.clientType);
     const tocMissingDependencies = _.difference(targetToc?.dependencyList, matchedAddonFolderNames);
     const lastUpdatedAt = await this._fileService.getLatestDirUpdateTime(addonFolder.path);
 
