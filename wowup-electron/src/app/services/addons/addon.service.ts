@@ -1356,6 +1356,7 @@ export class AddonService {
 
           await provider.scan(installation, defaultAddonChannel, validFolders);
         } catch (e) {
+          console.error('scan failed: ' + provider.name);
           console.error(e);
           this._scanErrorSrc.next(
             new AddonScanError({

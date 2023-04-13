@@ -345,44 +345,50 @@ export class CurseAddonProvider extends AddonProvider {
 
     const result = await this._cf2Client.getFingerprintMatches({ fingerprints });
     const fingerprintData = result.data?.data;
-
-    const matchPairs: { addonFolder: AddonFolder; match: cfv2.CF2FingerprintMatch; addon?: cfv2.CF2Addon }[] = [];
-    for (const af of addonFolders) {
-      let exactMatch = fingerprintData?.exactMatches.find(
-        (em) =>
-          this.isCfFileCompatible(installation.clientType, em.file) &&
-          em.file.modules.some((m) => m.fingerprint == af.cfScanResults?.fingerprintNum)
-      );
-
-      // If the addon does not have an exact match, check the partial matches.
-      if (!exactMatch && Array.isArray(fingerprintData?.partialMatches) && fingerprintData !== undefined) {
-        exactMatch = fingerprintData.partialMatches.find((partialMatch) =>
-          partialMatch.file?.modules?.some((module) => module.fingerprint === af.cfScanResults?.fingerprintNum)
+    try {
+      const matchPairs: { addonFolder: AddonFolder; match: cfv2.CF2FingerprintMatch; addon?: cfv2.CF2Addon }[] = [];
+      for (const af of addonFolders) {
+        let exactMatch = fingerprintData?.exactMatches.find(
+          (em) =>
+            this.isCfFileCompatible(installation.clientType, em.file) &&
+            em.file.modules.some((m) => m.fingerprint == af.cfScanResults?.fingerprintNum)
         );
+
+        // If the addon does not have an exact match, check the partial matches.
+        if (!exactMatch && Array.isArray(fingerprintData?.partialMatches) && fingerprintData !== undefined) {
+          exactMatch = fingerprintData.partialMatches.find((partialMatch) =>
+            partialMatch.file?.modules?.some((module) => module.fingerprint === af.cfScanResults?.fingerprintNum)
+          );
+        }
+
+        if (exactMatch) {
+          matchPairs.push({
+            addonFolder: af,
+            match: exactMatch,
+          });
+        }
       }
 
-      if (exactMatch) {
-        matchPairs.push({
-          addonFolder: af,
-          match: exactMatch,
-        });
-      }
+      const addonIds = matchPairs.map((mp) => mp.match.id);
+      const getAddonsResult = await this._cf2Client.getMods({ modIds: addonIds });
+      const addonResultData = getAddonsResult.data?.data;
+
+      matchPairs.forEach((mp) => {
+        const cfAddon = addonResultData?.find((ar) => ar.id === mp.match.id);
+        if (!cfAddon) {
+          return;
+        }
+
+        mp.addonFolder.matchingAddon = this.createAddon(installation, mp.addonFolder, mp.match.file, cfAddon);
+      });
+
+      console.log(matchPairs);
+    } catch (e) {
+      console.error("failed to process fingerprint response");
+      console.error(e);
+      console.log(result);
+      throw e;
     }
-
-    const addonIds = matchPairs.map((mp) => mp.match.id);
-    const getAddonsResult = await this._cf2Client.getMods({ modIds: addonIds });
-    const addonResultData = getAddonsResult.data?.data;
-
-    matchPairs.forEach((mp) => {
-      const cfAddon = addonResultData?.find((ar) => ar.id === mp.match.id);
-      if (!cfAddon) {
-        return;
-      }
-
-      mp.addonFolder.matchingAddon = this.createAddon(installation, mp.addonFolder, mp.match.file, cfAddon);
-    });
-
-    console.log(matchPairs);
   }
 
   public override async getChangelog(
@@ -459,7 +465,7 @@ export class CurseAddonProvider extends AddonProvider {
   }
 
   private hasSortableGameVersion(file: cfv2.CF2File, typeId: number): boolean {
-    if (!file.sortableGameVersions) {
+    if (!file?.sortableGameVersions) {
       console.debug("sortableGameVersions missing", file);
     }
     return file.sortableGameVersions.some((sgv) => sgv.gameVersionTypeId === typeId);
