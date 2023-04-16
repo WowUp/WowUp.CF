@@ -32,7 +32,7 @@
     "VERSION_MISMATCH": "Las versiones no coinciden"
   },
   "ADS": {
-    "AD_EXPLAINER_BUTTON": "Este anuncio ayuda a los creadores ❤",
+    "AD_EXPLAINER_BUTTON": "Este anuncio ayuda a los creadores de addons ❤",
     "AD_EXPLAINER_DIALOG": {
       "MESSAGE": "Para poder utilizar <a appExternalLink href=\"https://curseforge.com/\">CurseForge</a> como proveedor de addons y apoyar a los autores por su duro trabajo creando tus addons favoritos, necesitamos mostrar esta publicidad.\n\nSi no quieres ver esta publicidad, siempre puedes desactivar CurseForge como proveedor en la pestaña de opciones.",
       "TITLE": "¿Por qué estoy viendo este anuncio?"
@@ -313,9 +313,9 @@
     },
     "PERMISSIONS": {
       "CURSEFORGE": {
-        "DESCRIPTION_AD_LINK": "vendedores de anuncios",
-        "DESCRIPTION_BOTTOM": ". Haz clic en el botón Administrar para controlar sus consentimientos, o para oponerse al procesado de sus datos. Puede cambiar sus preferencias en cualquier momento a través de la pantalla de configuración.",
-        "DESCRIPTION_TOP": " Para poder utilizar la integración con CurseForge de esta aplicación, estos requieren su consentimiento para mostrarle publicidad de uno de sus ",
+        "DESCRIPTION_AD_LINK": "distribuidores de anuncios",
+        "DESCRIPTION_BOTTOM": ". Haga clic en el botón Administrar para controlar sus consentimientos o para oponerse al procesado de sus datos. Puede cambiar sus preferencias en cualquier momento a través de la pantalla de configuración.",
+        "DESCRIPTION_TOP": " Para poder utilizar la integración con CurseForge de esta aplicación, es necesario su consentimiento para mostrarle publicidad de uno de sus ",
         "MANAGE_BUTTON": "Administrar",
         "TITLE": "CurseForge"
       },
