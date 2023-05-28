@@ -62,7 +62,6 @@ import {
 } from "./components/common/consent-dialog/consent-dialog.component";
 import { WowUpProtocolService } from "./services/wowup/wowup-protocol.service";
 import { Addon } from "wowup-lib-core";
-import { ConfirmDialogComponent } from "./components/common/confirm-dialog/confirm-dialog.component";
 import { AlertDialogComponent } from "./components/common/alert-dialog/alert-dialog.component";
 
 @Component({
