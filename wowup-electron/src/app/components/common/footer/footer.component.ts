@@ -39,10 +39,6 @@ export class FooterComponent implements OnInit {
     this.electronService.appUpdate$.pipe(map((evt) => evt.progress?.percent ?? 0)),
   ]).pipe(map(([def, val]) => Math.max(def, val)));
 
-  public updateTime$ = this.wowUpService.installUpdateTime$;
-  public showUpdateTime$ = this.wowUpService.installUpdateTime$.pipe(map((t) => t > 0));
-  public showUpdateTimeInverse$ = this.wowUpService.installUpdateTime$.pipe(map((t) => t === 0));
-
   public constructor(
     private _dialog: MatDialog,
     private _translateService: TranslateService,

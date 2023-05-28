@@ -20,7 +20,7 @@ const CHANGELOGS: ChangeLog[] = [
     html: `
     <h4>New Features</h4>
     <ul>
-    <li>WowUp update snooze button</li>
+    <li>Support new TukUI API</li>
     </ul>
     `,
   },

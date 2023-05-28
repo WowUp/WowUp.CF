@@ -19,8 +19,6 @@ export function saveWindowConfig(window: BrowserWindow | null): void {
   }
 
   try {
-
-
     const prefStore = getPreferenceStore();
     prefStore.set(`main-window-is-maximized`, window.isMaximized());
     prefStore.set(`main-window-is-minimized`, window.isMinimized());

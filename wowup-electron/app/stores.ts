@@ -62,6 +62,7 @@ export function initializeStoreIpcHandlers(): void {
     if (typeof value === "object" || Array.isArray(value)) {
       storedVal = value;
     }
+
     store?.set(key, storedVal);
 
     return storedVal;

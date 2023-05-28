@@ -199,7 +199,7 @@ export const WOW_RETAIL_FOLDER = "_retail_";
 export const WOW_ADDON_FOLDER_NAME = "AddOns";
 export const WOW_INTERFACE_FOLDER_NAME = "Interface";
 
-export const UPDATE_DELAY_MS = 6 * 60 * 60 * 1000;
+
 
 export const YEAR_SECONDS = 31536000;
 export const MONTH_SECONDS = 2592000;

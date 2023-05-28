@@ -250,10 +250,6 @@ export class MyAddonsComponent implements OnInit, OnDestroy, AfterViewInit {
   ];
   private _tabObserver: MutationObserver;
 
-  public get displayedColumns(): string[] {
-    return this.columns.filter((col) => col.visible).map((col) => col.name);
-  }
-
   public constructor(
     private _addonService: AddonService,
     private _addonProviderService: AddonProviderFactory,
@@ -1050,7 +1046,7 @@ export class MyAddonsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public onTableBlur(evt: MouseEvent): void {
-    const ePath = (evt as any).path as HTMLElement[];
+    const ePath = evt.composedPath() as HTMLElement[];
     const tableElem = ePath.find((tag) => tag.tagName === "AG-GRID-ANGULAR");
     if (tableElem) {
       return;

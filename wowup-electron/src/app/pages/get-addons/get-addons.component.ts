@@ -258,7 +258,7 @@ export class GetAddonsComponent implements OnInit, OnDestroy {
   }
 
   public onTableBlur(evt: MouseEvent): void {
-    const ePath = (evt as any).path as HTMLElement[];
+    const ePath = evt.composedPath() as HTMLElement[];
     const tableElem = ePath.find((tag) => tag.tagName === "AG-GRID-ANGULAR");
     if (tableElem) {
       return;

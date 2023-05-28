@@ -66,7 +66,7 @@ export class LinkService {
     return dialogRef.afterClosed().pipe(
       first(),
       switchMap((result: DialogResult) => {
-        if (!result.success) {
+        if (result === undefined || !result.success) {
           return of(undefined);
         }
 

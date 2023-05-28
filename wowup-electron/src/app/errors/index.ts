@@ -72,8 +72,6 @@ export class AddonSyncError extends CustomError {
 
 export class GenericProviderError extends ErrorContainer {}
 
-
-
 export class GitHubError extends ErrorContainer {}
 
 export class GitHubLimitError extends GitHubError {

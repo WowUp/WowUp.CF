@@ -272,6 +272,11 @@ export function initializeIpcHandlers(window: BrowserWindow): void {
     }
 
     const addonStore = getAddonStore();
+    if (addonStore === undefined) {
+      log.warn("IPC_ADDONS_SAVE_ALL failed, addon store undefined");
+      return;
+    }
+
     for (const addon of addons) {
       if (typeof addon.id !== "string") {
         log.warn("malformed addon not saved", addon);

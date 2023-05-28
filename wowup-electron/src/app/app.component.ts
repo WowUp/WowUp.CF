@@ -34,7 +34,6 @@ import {
   IPC_POWER_MONITOR_RESUME,
   IPC_POWER_MONITOR_UNLOCK,
   IPC_REQUEST_INSTALL_FROM_URL,
-  UPDATE_DELAY_MS,
   WOWUP_LOGO_FILENAME,
   ZOOM_FACTOR_KEY,
 } from "../common/constants";
@@ -64,6 +63,7 @@ import {
 import { WowUpProtocolService } from "./services/wowup/wowup-protocol.service";
 import { Addon } from "wowup-lib-core";
 import { ConfirmDialogComponent } from "./components/common/confirm-dialog/confirm-dialog.component";
+import { AlertDialogComponent } from "./components/common/alert-dialog/alert-dialog.component";
 
 @Component({
   selector: "app-root",
@@ -127,26 +127,23 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       } else if (evt.state === AppUpdateState.Downloaded) {
         // Force the user to update when one is ready
-        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        const dialogRef = this._dialog.open(AlertDialogComponent, {
           minWidth: 250,
           disableClose: true,
           data: {
             title: this._translateService.instant("APP.WOWUP_UPDATE.INSTALL_TITLE"),
             message: this._translateService.instant("APP.WOWUP_UPDATE.SNACKBAR_TEXT"),
-            negativeKey: "APP.WOWUP_UPDATE.DELAY_INSTALL_TOOLTIP",
-            positiveKey: "APP.WOWUP_UPDATE.DOWNLOADED_TOOLTIP",
+            positiveButton: "APP.WOWUP_UPDATE.DOWNLOADED_TOOLTIP",
+            positiveButtonColor: "primary",
+            positiveButtonStyle: "raised",
           },
         });
 
         dialogRef
           .afterClosed()
           .pipe(first())
-          .subscribe((result) => {
-            if (result) {
-              this.wowUpService.installUpdate();
-            } else {
-              this.wowUpService.setInstallUpdateTime(Date.now() + UPDATE_DELAY_MS);
-            }
+          .subscribe(() => {
+            this.wowUpService.installUpdate();
           });
       }
     });

@@ -50,9 +50,9 @@ describe("GetAddonsComponent", () => {
             defaultAddonChannelType: AddonChannelType.Stable,
             id: "test",
             clientType: WowClientType.Retail,
-            displayName: 'TEST CLIENT',
             location: "C:/fake_wow",
             label: "Wow Unit Test Client",
+            displayName: "Wow Unit Test Client",
             defaultAutoUpdate: false,
             selected: true,
           };

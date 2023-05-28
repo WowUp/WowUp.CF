@@ -1,6 +1,6 @@
 {
   "name": "wowup-cf",
-  "version": "2.9.4-beta.3",
+  "version": "2.9.4-beta.4",
   "private": true,
   "description": "World of Warcraft addon updater",
   "keywords": [
@@ -72,7 +72,7 @@
     "pushy-electron": "1.0.10",
     "rxjs": "7.8.0",
     "win-ca": "3.5.0",
-    "wowup-lib-core": "0.0.10",
+    "wowup-lib-core": "0.1.1",
     "yauzl": "2.10.0"
   },
   "devDependencies": {
@@ -108,7 +108,7 @@
     "@microsoft/applicationinsights-web": "2.8.10",
     "@ngx-translate/core": "14.0.0",
     "@ngx-translate/http-loader": "7.0.0",
-    "@overwolf/ow-electron": "22.3.2",
+    "@overwolf/ow-electron": "22.3.3",
     "@overwolf/ow-electron-builder": "23.6.0",
     "@types/adm-zip": "0.5.0",
     "@types/archiver": "5.3.1",

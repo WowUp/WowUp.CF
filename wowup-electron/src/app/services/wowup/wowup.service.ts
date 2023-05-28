@@ -1,7 +1,7 @@
 import { UpdateCheckResult } from "electron-updater";
 import * as _ from "lodash";
 import { join } from "path";
-import { BehaviorSubject, Subject } from "rxjs";
+import { Subject } from "rxjs";
 
 import { Injectable } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
@@ -51,10 +51,8 @@ import { AddonChannelType, AddonProviderType, WowClientType } from "wowup-lib-co
 })
 export class WowUpService {
   private readonly _preferenceChangeSrc = new Subject<PreferenceChange>();
-  private readonly _installUpdateTimeSrc = new BehaviorSubject<number>(0);
 
   private _availableVersion = "";
-  private _installUpdateTimeout = 0;
 
   public readonly updaterName = "WowUpUpdater.exe";
   public readonly applicationFolderPath: string = window.userDataPath;
@@ -64,7 +62,6 @@ export class WowUpService {
   public readonly wtfBackupFolder: string = join(this.applicationFolderPath, "wtf_backups");
 
   public readonly preferenceChange$ = this._preferenceChangeSrc.asObservable();
-  public readonly installUpdateTime$ = this._installUpdateTimeSrc.asObservable();
 
   public constructor(
     private _preferenceStorageService: PreferenceStorageService,
@@ -82,13 +79,6 @@ export class WowUpService {
     this.setAutoStartup()
       .then(() => console.log("loginItemSettings", this._electronService.getLoginItemSettings()))
       .catch((e) => console.error(e));
-  }
-
-  public setInstallUpdateTime(time: number) {
-    this._installUpdateTimeSrc.next(time);
-    this._installUpdateTimeout = window.setTimeout(() => {
-      this.installUpdate();
-    }, time - Date.now())
   }
 
   public async getApplicationVersion(): Promise<string> {
