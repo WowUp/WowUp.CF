@@ -10,7 +10,6 @@ import {
   GitHubFetchReleasesError,
   GitHubFetchRepositoryError,
   GitHubLimitError,
-
 } from "../errors";
 import { convertMarkdown } from "../utils/markdown.utlils";
 import { strictFilterBy } from "../utils/array.utils";

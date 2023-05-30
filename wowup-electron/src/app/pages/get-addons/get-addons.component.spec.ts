@@ -5,7 +5,7 @@ import { OverlayModule } from "@angular/cdk/overlay";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { MatDialog } from "@angular/material/dialog";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { TranslateCompiler, TranslateLoader, TranslateModule } from "@ngx-translate/core";
 
@@ -50,9 +50,9 @@ describe("GetAddonsComponent", () => {
             defaultAddonChannelType: AddonChannelType.Stable,
             id: "test",
             clientType: WowClientType.Retail,
-            displayName: 'TEST CLIENT',
             location: "C:/fake_wow",
             label: "Wow Unit Test Client",
+            displayName: "Wow Unit Test Client",
             defaultAutoUpdate: false,
             selected: true,
           };

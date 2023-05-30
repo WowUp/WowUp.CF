@@ -3,9 +3,9 @@ import { BehaviorSubject, from, of, Subscription } from "rxjs";
 import { filter, map, switchMap } from "rxjs/operators";
 
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
-import { MatSelectChange } from "@angular/material/select";
-import { MatSlideToggleChange } from "@angular/material/slide-toggle";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
+import { MatLegacySelectChange as MatSelectChange } from "@angular/material/legacy-select";
+import { MatLegacySlideToggleChange as MatSlideToggleChange } from "@angular/material/legacy-slide-toggle";
 import { TranslateService } from "@ngx-translate/core";
 
 import { ElectronService } from "../../../services";
@@ -118,13 +118,19 @@ export class WowClientOptionsComponent implements OnInit, OnDestroy {
       throw new Error(`Failed to find installation: ${this.installationId}`);
     }
 
-    this.installationModel = { ...this.installation };
+    this.resetInstallationModel();
+
     this.selectedAddonChannelType = this.installation.defaultAddonChannelType;
     this.clientAutoUpdate = this.installation.defaultAutoUpdate;
     this.clientTypeName = `COMMON.CLIENT_TYPES.${getEnumName(
       WowClientType,
       this.installation.clientType
     ).toUpperCase()}`;
+
+    // `COMMON.CLIENT_TYPES.${getEnumName(
+    //   WowClientType,
+    //   this.installation.clientType
+    // ).toUpperCase()}`;
     this.clientFolderName = this.installation.label;
     this.clientLocation = this.installation.location;
   }
@@ -170,10 +176,7 @@ export class WowClientOptionsComponent implements OnInit, OnDestroy {
   }
 
   public onClickCancel(): void {
-    if (this.installation) {
-      this.installationModel = { ...this.installation };
-    }
-
+    this.resetInstallationModel();
     this._editModeSrc.next(false);
   }
 
@@ -217,7 +220,7 @@ export class WowClientOptionsComponent implements OnInit, OnDestroy {
       .afterClosed()
       .pipe(
         switchMap((result) => {
-          if (!result) {
+          if (result === undefined) {
             return of(undefined);
           }
 
@@ -227,6 +230,22 @@ export class WowClientOptionsComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
+  }
+
+  private resetInstallationModel() {
+    if (this.installation === undefined) {
+      return;
+    }
+
+    this.installationModel = { ...this.installation };
+    this._warcraftInstallationService
+      .getInstallationDisplayName(this.installation)
+      .then((name) => {
+        this.installationModel.label = name;
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   }
 
   private getAddonChannelInfos(): { type: AddonChannelType; name: string }[] {

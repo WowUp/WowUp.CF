@@ -15,7 +15,7 @@ import {
   OnDestroy,
   OnInit,
 } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { TranslateService } from "@ngx-translate/core";
 
 import {
@@ -41,7 +41,6 @@ import {
 import { AppUpdateState, MenuConfig, SystemTrayConfig } from "../common/wowup/models";
 import { AppConfig } from "../environments/environment";
 import { InstallFromUrlDialogComponent } from "./components/addons/install-from-url-dialog/install-from-url-dialog.component";
-import { AlertDialogComponent } from "./components/common/alert-dialog/alert-dialog.component";
 import { AddonSyncError, GitHubFetchReleasesError, GitHubFetchRepositoryError, GitHubLimitError } from "./errors";
 import { AddonInstallState } from "./models/wowup/addon-install-state";
 import { ElectronService } from "./services";
@@ -63,6 +62,7 @@ import {
 } from "./components/common/consent-dialog/consent-dialog.component";
 import { WowUpProtocolService } from "./services/wowup/wowup-protocol.service";
 import { Addon } from "wowup-lib-core";
+import { AlertDialogComponent } from "./components/common/alert-dialog/alert-dialog.component";
 
 @Component({
   selector: "app-root",
@@ -237,7 +237,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private async loadZoom() {
     const zoomPref = await this._preferenceStore.getAsync(ZOOM_FACTOR_KEY);
-    console.log('zoomPref', zoomPref)
+    console.log("zoomPref", zoomPref);
     const zoomFactor = parseFloat(zoomPref);
     if (!isNaN(zoomFactor) && isFinite(zoomFactor)) {
       this._zoomService.setZoomFactor(zoomFactor).catch((e) => console.error(e));

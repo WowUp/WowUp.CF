@@ -1,6 +1,6 @@
 import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { UntypedFormControl, UntypedFormGroup } from "@angular/forms";
-import { MatDialogRef } from "@angular/material/dialog";
+import { MatLegacyDialogRef as MatDialogRef } from "@angular/material/legacy-dialog";
 import { IPC_OW_IS_CMP_REQUIRED, IPC_OW_OPEN_CMP } from "../../../../common/constants";
 import { ElectronService } from "../../../services";
 import { LinkService } from "../../../services/links/link.service";

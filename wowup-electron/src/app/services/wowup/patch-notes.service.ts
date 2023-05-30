@@ -16,6 +16,15 @@ export class PatchNotesService {
 
 const CHANGELOGS: ChangeLog[] = [
   {
+    Version: "2.9.4",
+    html: `
+    <h4>New Features</h4>
+    <ul>
+    <li>Support new TukUI API</li>
+    </ul>
+    `,
+  },
+  {
     Version: "2.9.2",
     html: `
     <h4>New Features</h4>

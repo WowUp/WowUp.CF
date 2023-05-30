@@ -4,7 +4,7 @@ import { catchError, delay, first, switchMap } from "rxjs/operators";
 
 import { AfterViewInit, Component, Inject, OnInit } from "@angular/core";
 import { UntypedFormControl } from "@angular/forms";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef } from "@angular/material/legacy-dialog";
 
 import { AddonService } from "../../../services/addons/addon.service";
 import { SessionService } from "../../../services/session/session.service";
@@ -157,6 +157,8 @@ export class InstallFromProtocolDialogComponent implements OnInit, AfterViewInit
           this.addon.providerName,
           installation
         );
+
+        installation.label = await this._warcraftInstallationService.getInstallationDisplayName(installation);
       }
 
       if (this.validWowInstallations.length === 0) {
