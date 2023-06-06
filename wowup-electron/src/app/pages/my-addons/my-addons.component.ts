@@ -8,6 +8,7 @@ import {
   RowClassParams,
   RowClickedEvent,
   RowDoubleClickedEvent,
+
   SortChangedEvent,
 } from "ag-grid-community";
 import * as _ from "lodash";
@@ -248,6 +249,7 @@ export class MyAddonsComponent implements OnInit, OnDestroy, AfterViewInit {
       allowToggle: true,
     },
   ];
+
   private _tabObserver: MutationObserver;
 
   public constructor(

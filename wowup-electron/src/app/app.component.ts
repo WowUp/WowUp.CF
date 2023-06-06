@@ -4,6 +4,7 @@
 import * as _ from "lodash";
 import { BehaviorSubject, from, of } from "rxjs";
 import { catchError, delay, filter, first, map, switchMap } from "rxjs/operators";
+import { Addon } from "wowup-lib-core";
 
 import { OverlayContainer } from "@angular/cdk/overlay";
 import {
@@ -37,32 +38,31 @@ import {
   WOWUP_LOGO_FILENAME,
   ZOOM_FACTOR_KEY,
 } from "../common/constants";
-
 import { AppUpdateState, MenuConfig, SystemTrayConfig } from "../common/wowup/models";
 import { AppConfig } from "../environments/environment";
 import { InstallFromUrlDialogComponent } from "./components/addons/install-from-url-dialog/install-from-url-dialog.component";
+import { AlertDialogComponent } from "./components/common/alert-dialog/alert-dialog.component";
+import {
+  ConsentDialogComponent,
+  ConsentDialogResult,
+} from "./components/common/consent-dialog/consent-dialog.component";
 import { AddonSyncError, GitHubFetchReleasesError, GitHubFetchRepositoryError, GitHubLimitError } from "./errors";
 import { AddonInstallState } from "./models/wowup/addon-install-state";
 import { ElectronService } from "./services";
+import { AddonProviderFactory } from "./services/addons/addon.provider.factory";
 import { AddonService } from "./services/addons/addon.service";
 import { AnalyticsService } from "./services/analytics/analytics.service";
 import { FileService } from "./services/files/file.service";
+import { LinkService } from "./services/links/link.service";
 import { SessionService } from "./services/session/session.service";
 import { SnackbarService } from "./services/snackbar/snackbar.service";
 import { PreferenceStorageService } from "./services/storage/preference-storage.service";
 import { WarcraftInstallationService } from "./services/warcraft/warcraft-installation.service";
 import { WowUpAddonService } from "./services/wowup/wowup-addon.service";
+import { WowUpProtocolService } from "./services/wowup/wowup-protocol.service";
 import { WowUpService } from "./services/wowup/wowup.service";
 import { ZoomService } from "./services/zoom/zoom.service";
 import { ZoomDirection } from "./utils/zoom.utils";
-import { AddonProviderFactory } from "./services/addons/addon.provider.factory";
-import {
-  ConsentDialogComponent,
-  ConsentDialogResult,
-} from "./components/common/consent-dialog/consent-dialog.component";
-import { WowUpProtocolService } from "./services/wowup/wowup-protocol.service";
-import { Addon } from "wowup-lib-core";
-import { AlertDialogComponent } from "./components/common/alert-dialog/alert-dialog.component";
 
 @Component({
   selector: "app-root",
@@ -72,6 +72,19 @@ import { AlertDialogComponent } from "./components/common/alert-dialog/alert-dia
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   private _autoUpdateInterval?: number;
+  @HostListener("document:click", ["$event"])
+  public onDocumentClick(event: MouseEvent) {
+    const elem = event.target as HTMLElement;
+    if (elem.tagName === "A") {
+      const link = elem as HTMLAnchorElement;
+      if (typeof link.href === "string" && link.href.length > 0) {
+        console.log("LINK CLICKED", link.href);
+        event.preventDefault();
+        event.stopPropagation();
+        this._linkService.confirmLinkNavigation(link.href).subscribe();
+      }
+    }
+  }
 
   @HostListener("mousewheel", ["$event"])
   public async handleMouseWheelEvent(event: WheelEvent): Promise<void> {
@@ -107,6 +120,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     private _wowupAddonService: WowUpAddonService,
     private _zoomService: ZoomService,
     private _wowUpProtocolService: WowUpProtocolService,
+    private _linkService: LinkService,
     public electronService: ElectronService,
     public overlayContainer: OverlayContainer,
     public sessionService: SessionService,
