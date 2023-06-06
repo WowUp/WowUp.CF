@@ -1,7 +1,6 @@
 import { AfterViewChecked, Component, ElementRef, Inject, ViewChild } from "@angular/core";
 import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from "@angular/material/legacy-dialog";
 import { LinkService } from "../../../services/links/link.service";
-import { formatDynamicLinks } from "../../../utils/dom.utils";
 
 export interface AlertDialogData {
   title: string;
@@ -26,7 +25,6 @@ export class AlertDialogComponent implements AfterViewChecked {
   ) {}
 
   public ngAfterViewChecked(): void {
-    const descriptionContainer: HTMLDivElement = this.dialogContent?.nativeElement;
     // formatDynamicLinks(descriptionContainer, this.onOpenLink);
   }
 

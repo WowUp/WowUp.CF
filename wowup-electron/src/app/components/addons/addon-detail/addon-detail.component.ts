@@ -32,7 +32,6 @@ import { AddonService } from "../../../services/addons/addon.service";
 import { LinkService } from "../../../services/links/link.service";
 import { SessionService } from "../../../services/session/session.service";
 import { SnackbarService } from "../../../services/snackbar/snackbar.service";
-import { formatDynamicLinks } from "../../../utils/dom.utils";
 import * as SearchResult from "../../../utils/search-result.utils";
 import { AddonUiService } from "../../../services/addons/addon-ui.service";
 import { AddonProviderFactory } from "../../../services/addons/addon.provider.factory";
