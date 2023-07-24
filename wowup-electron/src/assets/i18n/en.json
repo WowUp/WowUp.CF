@@ -164,6 +164,7 @@
       "ERROR": "Error",
       "INSTALLING": "Installing",
       "PENDING": "Pending",
+      "RETRY": "Retrying...",
       "UNINSTALLING": "Uninstalling",
       "UPDATING": "Updating..."
     },

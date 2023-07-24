@@ -1,5 +1,5 @@
 import { Directive, HostListener } from "@angular/core";
-import { LinkService } from "../services/links/link.service";
+
 
 @Directive({
   selector: "[appExternalLink]",
@@ -14,5 +14,5 @@ export class ExternalLinkDirective {
     // this._linkService.confirmLinkNavigation(target.href as string).subscribe();
   }
 
-  public constructor(private _linkService: LinkService) {}
+  public constructor() {}
 }

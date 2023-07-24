@@ -1,6 +1,8 @@
 import { AfterViewChecked, Component, ElementRef, Inject, ViewChild } from "@angular/core";
-import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from "@angular/material/legacy-dialog";
-import { LinkService } from "../../../services/links/link.service";
+import {
+  MatLegacyDialogRef as MatDialogRef,
+  MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
+} from "@angular/material/legacy-dialog";
 
 export interface AlertDialogData {
   title: string;
@@ -20,8 +22,8 @@ export class AlertDialogComponent implements AfterViewChecked {
 
   public constructor(
     public dialogRef: MatDialogRef<AlertDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: AlertDialogData,
-    private _linkService: LinkService
+    @Inject(MAT_DIALOG_DATA) public data: AlertDialogData
+
   ) {}
 
   public ngAfterViewChecked(): void {
@@ -29,7 +31,7 @@ export class AlertDialogComponent implements AfterViewChecked {
   }
 
   // private onOpenLink = (element: HTMLAnchorElement): boolean => {
-    
+
   //   this._linkService.confirmLinkNavigation(element.href).subscribe();
 
   //   return false;

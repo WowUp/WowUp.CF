@@ -1,6 +1,8 @@
 import { Component, ElementRef, Inject, ViewChild } from "@angular/core";
-import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from "@angular/material/legacy-dialog";
-import { LinkService } from "../../../services/links/link.service";
+import {
+  MatLegacyDialogRef as MatDialogRef,
+  MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
+} from "@angular/material/legacy-dialog";
 
 export interface DialogData {
   title: string;
@@ -22,8 +24,7 @@ export class ConfirmDialogComponent {
 
   public constructor(
     public dialogRef: MatDialogRef<ConfirmDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private _linkService: LinkService
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
     this.positiveKey = data.positiveKey ?? "DIALOGS.CONFIRM.POSITIVE_BUTTON";
     this.negativeKey = data.negativeKey ?? "DIALOGS.CONFIRM.NEGATIVE_BUTTON";
