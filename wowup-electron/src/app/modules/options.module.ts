@@ -1,7 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { TreeModule } from "@circlon/angular-tree-component";
 import { TranslateModule } from "@ngx-translate/core";
 
 import { AboutComponent } from "../components/options/about/about.component";
@@ -33,7 +32,6 @@ import { OptionsCurseforgeSectionComponent } from "../components/options/options
     ReactiveFormsModule,
     TranslateModule,
     MatModule,
-    TreeModule,
     PipesModule,
     DirectiveModule,
   ],
