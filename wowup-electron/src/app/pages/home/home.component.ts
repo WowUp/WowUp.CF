@@ -31,7 +31,7 @@ import { WowUpService } from "../../services/wowup/wowup.service";
 
 import { WowUpProtocolService } from "../../services/wowup/wowup-protocol.service";
 import { getProtocol } from "../../utils/string.utils";
-import { WowInstallation } from "wowup-lib-core/lib/models";
+import { WowInstallation } from "wowup-lib-core";
 
 @Component({
   selector: "app-home",

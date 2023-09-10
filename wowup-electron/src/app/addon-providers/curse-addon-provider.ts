@@ -21,9 +21,9 @@ import {
   WowClientGroup,
   WowClientType,
 } from "wowup-lib-core";
-import { SourceRemovedAddonError } from "wowup-lib-core/lib/errors";
-import { WowInstallation } from "wowup-lib-core/lib/models";
-import { getEnumName } from "wowup-lib-core/lib/utils";
+import { SourceRemovedAddonError } from "wowup-lib-core";
+import { WowInstallation } from "wowup-lib-core";
+import { getEnumName } from "wowup-lib-core";
 
 import {
   ADDON_PROVIDER_CURSEFORGE,
@@ -60,7 +60,7 @@ const GAME_TYPE_LISTS = [
   {
     flavor: "wow_retail",
     typeId: 517,
-    matches: [WowClientType.Retail, WowClientType.RetailPtr, WowClientType.Beta],
+    matches: [WowClientType.Retail, WowClientType.RetailPtr, WowClientType.Beta, WowClientType.RetailXPtr],
   },
 ];
 
