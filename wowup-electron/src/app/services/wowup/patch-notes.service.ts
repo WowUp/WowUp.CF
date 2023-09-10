@@ -16,6 +16,15 @@ export class PatchNotesService {
 
 const CHANGELOGS: ChangeLog[] = [
   {
+    Version: "2.11.0",
+    html: `
+    <h4>Changes</h4>
+    <ul>
+    <li>Support new WoW Dragonflight 10.2 PTR</li>
+    </ul>
+    `,
+  },
+  {
     Version: "2.10.0",
     html: `
     <h4>Changes</h4>
