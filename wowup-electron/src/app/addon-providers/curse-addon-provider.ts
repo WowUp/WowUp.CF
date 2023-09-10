@@ -418,7 +418,6 @@ export class CurseAddonProvider extends AddonProvider {
   public override async getDescription(
     installation: WowInstallation,
     externalId: string,
-    addon?: Addon
   ): Promise<string> {
     try {
       const cacheKey = `${this.name}_description_${externalId}`;

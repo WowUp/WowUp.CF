@@ -32,7 +32,7 @@ export function getWowClientGroup(clientType: string | WowClientType): WowClient
     case WowClientType.Beta:
     case WowClientType.Retail:
     case WowClientType.RetailPtr:
-      case WowClientType.RetailXPtr:
+    case WowClientType.RetailXPtr:
       return WowClientGroup.Retail;
     case WowClientType.ClassicEra:
     case WowClientType.ClassicEraPtr:
