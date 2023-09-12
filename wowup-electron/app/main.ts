@@ -152,30 +152,35 @@ function getProtocol(arg: string) {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 // Added 400 ms to fix the black background issue while using transparent window. More details at https://github.com/electron/electron/issues/15947
-app.whenReady().then(() => {
-  powerMonitor.on("resume", () => {
-    log.info("powerMonitor resume");
-    win?.webContents?.send(IPC_POWER_MONITOR_RESUME);
-  });
+app
+  .whenReady()
+  .then(() => {
+    powerMonitor.on("resume", () => {
+      log.info("powerMonitor resume");
+      win?.webContents?.send(IPC_POWER_MONITOR_RESUME);
+    });
 
-  powerMonitor.on("suspend", () => {
-    log.info("powerMonitor suspend");
-    win?.webContents?.send(IPC_POWER_MONITOR_SUSPEND);
-  });
+    powerMonitor.on("suspend", () => {
+      log.info("powerMonitor suspend");
+      win?.webContents?.send(IPC_POWER_MONITOR_SUSPEND);
+    });
 
-  powerMonitor.on("lock-screen", () => {
-    log.info("powerMonitor lock-screen");
-    win?.webContents?.send(IPC_POWER_MONITOR_LOCK);
-  });
+    powerMonitor.on("lock-screen", () => {
+      log.info("powerMonitor lock-screen");
+      win?.webContents?.send(IPC_POWER_MONITOR_LOCK);
+    });
 
-  powerMonitor.on("unlock-screen", () => {
-    log.info("powerMonitor unlock-screen");
-    win?.webContents?.send(IPC_POWER_MONITOR_UNLOCK);
-  });
+    powerMonitor.on("unlock-screen", () => {
+      log.info("powerMonitor unlock-screen");
+      win?.webContents?.send(IPC_POWER_MONITOR_UNLOCK);
+    });
 
-  log.info(`App ready: ${Date.now() - startedAt}ms`);
-  createWindow();
-});
+    log.info(`App ready: ${Date.now() - startedAt}ms`);
+    createWindow();
+  })
+  .catch((e) => {
+    log.error("whenready failed", e);
+  });
 
 app.on("before-quit", () => {
   windowState.saveWindowConfig(win);
