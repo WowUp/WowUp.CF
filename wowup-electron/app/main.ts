@@ -152,16 +152,30 @@ function getProtocol(arg: string) {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 // Added 400 ms to fix the black background issue while using transparent window. More details at https://github.com/electron/electron/issues/15947
-if (app.isReady()) {
-  log.info(`App already ready: ${Date.now() - startedAt}ms`);
-} else {
-  app.once("ready", () => {
-    log.info(`App ready: ${Date.now() - startedAt}ms`);
-    // setTimeout(() => {
-    createWindow();
-    // }, 400);
+app.whenReady().then(() => {
+  powerMonitor.on("resume", () => {
+    log.info("powerMonitor resume");
+    win?.webContents?.send(IPC_POWER_MONITOR_RESUME);
   });
-}
+
+  powerMonitor.on("suspend", () => {
+    log.info("powerMonitor suspend");
+    win?.webContents?.send(IPC_POWER_MONITOR_SUSPEND);
+  });
+
+  powerMonitor.on("lock-screen", () => {
+    log.info("powerMonitor lock-screen");
+    win?.webContents?.send(IPC_POWER_MONITOR_LOCK);
+  });
+
+  powerMonitor.on("unlock-screen", () => {
+    log.info("powerMonitor unlock-screen");
+    win?.webContents?.send(IPC_POWER_MONITOR_UNLOCK);
+  });
+
+  log.info(`App ready: ${Date.now() - startedAt}ms`);
+  createWindow();
+});
 
 app.on("before-quit", () => {
   windowState.saveWindowConfig(win);
@@ -207,26 +221,6 @@ if (platform.isMac) {
   });
 }
 
-powerMonitor.on("resume", () => {
-  log.info("powerMonitor resume");
-  win?.webContents?.send(IPC_POWER_MONITOR_RESUME);
-});
-
-powerMonitor.on("suspend", () => {
-  log.info("powerMonitor suspend");
-  win?.webContents?.send(IPC_POWER_MONITOR_SUSPEND);
-});
-
-powerMonitor.on("lock-screen", () => {
-  log.info("powerMonitor lock-screen");
-  win?.webContents?.send(IPC_POWER_MONITOR_LOCK);
-});
-
-powerMonitor.on("unlock-screen", () => {
-  log.info("powerMonitor unlock-screen");
-  win?.webContents?.send(IPC_POWER_MONITOR_UNLOCK);
-});
-
 let lastCrash = 0;
 
 const crashMap = new Map<string, number>();
@@ -247,7 +241,7 @@ function onChildProcessCrashed(details: Electron.Details) {
   if (ct >= 3) {
     dialog.showErrorBox(
       "Child Process Failure",
-      `Child process ${details.serviceName} has crashed too many times, app will now exit`
+      `Child process ${details.serviceName} has crashed too many times, app will now exit`,
     );
     app.quit();
   }
