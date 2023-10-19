@@ -32,10 +32,10 @@
     "VERSION_MISMATCH": "Versionen stimmen nicht überein"
   },
   "ADS": {
-    "AD_EXPLAINER_BUTTON": "This ad supports addon creators ❤",
+    "AD_EXPLAINER_BUTTON": "Diese Werbung unterstützt den Addon Autor ❤",
     "AD_EXPLAINER_DIALOG": {
-      "MESSAGE": "In order to use <a appExternalLink href=\"https://curseforge.com/\">CurseForge</a> as an addon provider and help support authors for their hard work on your favorite addons we are required to show this advertisement.\n\nIf you do not want to see this ad, you can always disable CurseForge as a provider in the options tab.",
-      "TITLE": "Why am I seeing this ad?"
+      "MESSAGE": "Um <a appExternalLink href=\"https://curseforge.com/\">CurseForge</a> als Anbieter von Add-Ons zu nutzen und Autoren bei ihrer harten Arbeit an Ihren Lieblings-Add-Ons zu unterstützen, sind wir verpflichtet, diese Werbung anzuzeigen.\n\nWenn du diese Anzeige nicht sehen möchtest, kannst du CurseForge jederzeit in den Einstellungen deaktivieren.",
+      "TITLE": "Warum sehe ich diese Werbung?"
     }
   },
   "APP": {
@@ -300,7 +300,7 @@
         "NO_RELEASE_FOUND": "Es wurde kein Release für {message} gefunden.\n\nEin gültiges Release mit Zip-Datei-Assets ist erforderlich, damit WowUp sie herunterladen kann.",
         "NO_SEARCH_RESULTS": "Es wurden keine Suchergebnisse gefunden.",
         "TITLE": "Installation fehlgeschlagen",
-        "WRATH_ASSET_NOT_FOUND": "No asset was found to download from {message}.\n\nA valid zip file ending with '-wrath' is required in order for WowUp to download it."
+        "WRATH_ASSET_NOT_FOUND": "Es wurde keine Datei gefunden, die von {message} heruntergeladen werden kann.\n\nFür den Download durch WowUp ist eine gültige ZIP-Datei erforderlich, die mit '-wrath' endet."
       },
       "IMPORT_ASSET_WARNING": "Wir konnten nicht überprüfen, ob die neueste Version dieses Add-ons mit deinem ausgewählten Client kompatibel ist.\n\nAber wir haben eine ZIP-Datei \"{zipName}\" gefunden.\n\nDie Installation erfolgt auf eigene Gefahr.",
       "IMPORT_BUTTON": "Importieren",
@@ -315,10 +315,10 @@
     },
     "PERMISSIONS": {
       "CURSEFORGE": {
-        "DESCRIPTION_AD_LINK": "ad vendors",
-        "DESCRIPTION_BOTTOM": ". Click on the Manage button to control you consents, or to object to the processing of your data. You can change your preferences any time via the settings screen.",
+        "DESCRIPTION_AD_LINK": "Werbepartner",
+        "DESCRIPTION_BOTTOM": ". Klicke auf die Schaltfläche 'Verwalten', um deine Einwilligungen zu steuern oder Widerspruch gegen die Verarbeitung deiner Daten einzulegen. Du kannst deine Einstellungen jederzeit über das Einstellungsmenü ändern.",
         "DESCRIPTION_TOP": " In order to use this application's integration with CurseForge they require that you allow them to show you an ad from one of their ",
-        "MANAGE_BUTTON": "Manage",
+        "MANAGE_BUTTON": "Verwalten",
         "TITLE": "CurseForge"
       },
       "MESSAGE": "Bevor wir beginnen, müssen wir einige Berechtigungen für die App einrichten.",
@@ -559,9 +559,9 @@
         "USE_SYMLINK_SUPPORT_DESCRIPTION": "Erlaubt WowUp Symlink-Ordner in deinem Addon-Ordner zu scannen. Warnung: Diese werden beim Aktualisieren/Installieren ersetzt."
       },
       "CURSEFORGE": {
-        "ADS_OPTION_DESCRIPTION": "View and manage how CurseForge advertisers may use your data for ad personalization",
-        "ADS_OPTION_LABEL": "Ads Personalization & Data",
-        "ADS_OPTION_MANAGE": "Manage",
+        "ADS_OPTION_DESCRIPTION": "Sehe ein und verwalte, wie CurseForge-Werbetreibende deine Daten für Werbepersonalisierung nutzen können.",
+        "ADS_OPTION_LABEL": "Werbepersonalisierung und Daten",
+        "ADS_OPTION_MANAGE": "Verwalten",
         "TITLE": "CurseForge"
       },
       "DEBUG": {
@@ -611,8 +611,8 @@
         "TITLE": "World of Warcraft"
       },
       "WTF_EXPLORER": {
-        "FOLDER_PATH_LABEL": "Folder: ",
-        "PAGE_EXPLANATION": "The WTF Explorer allows you to inspect all the data your addons have saved.\nFiles in grey are typically things you can ignore such as backup files.\nFiles in red should belong to addons that you no longer have installed.",
+        "FOLDER_PATH_LABEL": "Ordner: ",
+        "PAGE_EXPLANATION": "Der WTF Explorer ermöglicht dir, alle Daten zu inspizieren, die deine Add-Ons gespeichert haben.\nDateien in Grau sind in der Regel Dinge, die du ignorieren kannst, wie beispielsweise Sicherungskopien.\nDateien in Rot sollten zu Add-Ons gehören, die du nicht mehr installiert hast.",
         "TITLE": "WTF Explorer"
       }
     }
