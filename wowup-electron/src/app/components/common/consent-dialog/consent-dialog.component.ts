@@ -1,6 +1,6 @@
 import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { UntypedFormControl, UntypedFormGroup } from "@angular/forms";
-import { MatLegacyDialogRef as MatDialogRef } from "@angular/material/legacy-dialog";
+import { MatDialogRef } from "@angular/material/dialog";
 import { IPC_OW_IS_CMP_REQUIRED, IPC_OW_OPEN_CMP } from "../../../../common/constants";
 import { ElectronService } from "../../../services";
 import { LinkService } from "../../../services/links/link.service";
@@ -24,7 +24,7 @@ export class ConsentDialogComponent implements AfterViewChecked, OnInit {
   public constructor(
     public dialogRef: MatDialogRef<ConsentDialogComponent>,
     private _linkService: LinkService,
-    private _electronService: ElectronService
+    private _electronService: ElectronService,
   ) {
     this.consentOptions = new UntypedFormGroup({
       telemetry: new UntypedFormControl(true),

@@ -17,7 +17,6 @@
           <mat-label>{{ "PAGES.MY_ADDONS.FILTER_LABEL" | translate }}</mat-label>
           <input #addonFilter matInput />
           <button
-            mat-button
             color="accent"
             *ngIf="filterInput$ | async"
             matSuffix

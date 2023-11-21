@@ -15,14 +15,8 @@ import {
   ViewChild,
   ViewChildren,
 } from "@angular/core";
-import {
-  MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
-  MatLegacyDialogRef as MatDialogRef,
-} from "@angular/material/legacy-dialog";
-import {
-  MatLegacyTabChangeEvent as MatTabChangeEvent,
-  MatLegacyTabGroup as MatTabGroup,
-} from "@angular/material/legacy-tabs";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { MatTabChangeEvent, MatTabGroup } from "@angular/material/tabs";
 import { TranslateService } from "@ngx-translate/core";
 
 import { ADDON_PROVIDER_GITHUB, ADDON_PROVIDER_UNKNOWN, TAB_INDEX_MY_ADDONS } from "../../../../common/constants";
@@ -113,7 +107,7 @@ export class AddonDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
     private _addonUiService: AddonUiService,
     private _wowupService: WowUpService,
-    public gallery: Gallery
+    public gallery: Gallery,
   ) {
     this._dependencies = this.getDependencies();
 
@@ -193,7 +187,7 @@ export class AddonDetailComponent implements OnInit, OnDestroy, AfterViewInit {
         takeUntil(this._destroy$),
         tap(() => {
           this.fetchingChangelog = false;
-        })
+        }),
       )
       .subscribe((changelog) => {
         this.hasChangeLog = changelog.length > 0;
@@ -205,12 +199,11 @@ export class AddonDetailComponent implements OnInit, OnDestroy, AfterViewInit {
         takeUntil(this._destroy$),
         tap(() => {
           this.fetchingFullDescription = false;
-        })
+        }),
       )
       .subscribe((description) => {
         this._descriptionSrc.next(description);
       });
-
   }
 
   public ngOnDestroy(): void {
@@ -275,7 +268,7 @@ export class AddonDetailComponent implements OnInit, OnDestroy, AfterViewInit {
           if (result.removed) {
             this._dialogRef.close();
           }
-        })
+        }),
       )
       .subscribe();
   }
@@ -361,7 +354,7 @@ export class AddonDetailComponent implements OnInit, OnDestroy, AfterViewInit {
         selectedInstallation,
         providerName,
         externalId,
-        this.model?.listItem?.addon
+        this.model?.listItem?.addon,
       );
 
       return description || this._translateService.instant("DIALOGS.ADDON_DETAILS.DESCRIPTION_NOT_FOUND");
@@ -375,7 +368,7 @@ export class AddonDetailComponent implements OnInit, OnDestroy, AfterViewInit {
       return SearchResult.getDependencyType(
         this.model.searchResult,
         this.model.channelType ?? AddonChannelType.Stable,
-        AddonDependencyType.Required
+        AddonDependencyType.Required,
       );
     } else if (this.model.listItem) {
       return this.model.listItem.getDependencies(AddonDependencyType.Required);
@@ -398,7 +391,7 @@ export class AddonDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     return await this._addonService.getChangelogForSearchResult(
       selectedInstallation,
       this.model.channelType ?? AddonChannelType.Stable,
-      this.model.searchResult
+      this.model.searchResult,
     );
   }
 
@@ -460,7 +453,7 @@ export class AddonDetailComponent implements OnInit, OnDestroy, AfterViewInit {
       catchError((e) => {
         console.error(e);
         return of(undefined);
-      })
+      }),
     );
   }
 }

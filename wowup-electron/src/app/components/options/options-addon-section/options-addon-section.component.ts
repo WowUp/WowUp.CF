@@ -14,7 +14,7 @@ import { AddonProviderType } from "wowup-lib-core";
 
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { FormGroup, UntypedFormControl } from "@angular/forms";
-import { MatLegacySelectionListChange as MatSelectionListChange } from "@angular/material/legacy-list";
+import { MatSelectionListChange } from "@angular/material/list";
 import { TranslateService } from "@ngx-translate/core";
 
 import { PREF_CF2_API_KEY, PREF_GITHUB_PERSONAL_ACCESS_TOKEN } from "../../../../common/constants";
@@ -52,7 +52,7 @@ export class OptionsAddonSectionComponent implements OnInit, OnDestroy {
     private _sensitiveStorageService: SensitiveStorageService,
     private _translateService: TranslateService,
     private _dialogFactory: DialogFactory,
-    private _linkService: LinkService
+    private _linkService: LinkService,
   ) {
     this._addonProviderService.addonProviderChange$.subscribe(() => {
       this.loadProviderStates();
@@ -69,7 +69,7 @@ export class OptionsAddonSectionComponent implements OnInit, OnDestroy {
           }
           if (typeof ch?.ghPersonalAccessToken === "string") {
             tasks.push(
-              from(this._sensitiveStorageService.setAsync(PREF_GITHUB_PERSONAL_ACCESS_TOKEN, ch.ghPersonalAccessToken))
+              from(this._sensitiveStorageService.setAsync(PREF_GITHUB_PERSONAL_ACCESS_TOKEN, ch.ghPersonalAccessToken)),
             );
           }
           return zip(tasks);
@@ -77,7 +77,7 @@ export class OptionsAddonSectionComponent implements OnInit, OnDestroy {
         catchError((e) => {
           console.error(e);
           return of(undefined);
-        })
+        }),
       )
       .subscribe();
   }

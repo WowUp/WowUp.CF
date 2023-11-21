@@ -16,7 +16,7 @@ import {
   OnDestroy,
   OnInit,
 } from "@angular/core";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
+import { MatDialog } from "@angular/material/dialog";
 import { TranslateService } from "@ngx-translate/core";
 
 import {
@@ -130,12 +130,12 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     public electronService: ElectronService,
     public overlayContainer: OverlayContainer,
     public sessionService: SessionService,
-    public wowUpService: WowUpService
+    public wowUpService: WowUpService,
   ) {
     this._warcraftInstallationService.wowInstallations$
       .pipe(
         first((installations) => installations.length > 0),
-        switchMap(() => from(this.initializeAutoUpdate()))
+        switchMap(() => from(this.initializeAutoUpdate())),
       )
       .subscribe();
 
@@ -191,7 +191,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
           ALLIANCE_THEME,
           ALLIANCE_LIGHT_THEME,
           DEFAULT_THEME,
-          DEFAULT_LIGHT_THEME
+          DEFAULT_LIGHT_THEME,
         );
       this.overlayContainer.getContainerElement().classList.add(pref.value);
     });
@@ -201,7 +201,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     this._addonService.addonAction$
       .pipe(
         filter((action) => action.type === "sync" || action.type === "scan"),
-        switchMap(() => from(this.updateBadgeCount()))
+        switchMap(() => from(this.updateBadgeCount())),
       )
       .subscribe();
 
@@ -209,7 +209,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     this.electronService.windowResumed$
       .pipe(
         delay(1000), // If you dont delay this on Mac, it will sometimes not show up
-        switchMap(() => from(this.updateBadgeCount()))
+        switchMap(() => from(this.updateBadgeCount())),
       )
       .subscribe();
 
@@ -217,7 +217,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     this._addonService.addonInstalled$
       .pipe(
         filter((evt) => evt.installState === AddonInstallState.Complete),
-        switchMap(() => from(this.updateBadgeCount()))
+        switchMap(() => from(this.updateBadgeCount())),
       )
       .subscribe();
 
@@ -240,7 +240,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
         catchError((err) => {
           console.error(err);
           return of(undefined);
-        })
+        }),
       )
       .subscribe();
 
@@ -332,7 +332,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
           }
 
           return of(undefined);
-        })
+        }),
       )
       .subscribe(() => {
         this.showRequiredDialogs().catch((e) => console.error(e));
@@ -379,7 +379,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       const enableSystemNotifications = await this.wowUpService.getEnableSystemNotifications();
       if (enableSystemNotifications) {
         const addonsWithNotificationsEnabled = updatedAddons.filter(
-          (addon) => addon.autoUpdateNotificationsEnabled === true
+          (addon) => addon.autoUpdateNotificationsEnabled === true,
         );
 
         // Windows notification only shows so many chars
