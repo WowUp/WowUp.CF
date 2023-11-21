@@ -104,7 +104,7 @@
     "@microsoft/applicationinsights-web": "3.0.2",
     "@ngx-translate/core": "15.0.0",
     "@ngx-translate/http-loader": "8.0.0",
-    "@overwolf/ow-electron": "22.3.3",
+    "@overwolf/ow-electron": "22.3.26",
     "@overwolf/ow-electron-builder": "23.6.2",
     "@types/adm-zip": "0.5.1",
     "@types/flat": "5.0.2",
