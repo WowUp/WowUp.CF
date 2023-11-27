@@ -1,6 +1,6 @@
 import * as path from "path";
 import * as _ from "lodash";
-import * as log from "electron-log";
+import * as log from "electron-log/main";
 import { exists, readDirRecursive } from "./file.utils";
 import * as fsp from "fs/promises";
 import { firstValueFrom, from, mergeMap, toArray } from "rxjs";
