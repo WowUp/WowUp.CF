@@ -27,6 +27,7 @@ import { MatGridListModule } from "@angular/material/grid-list";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { ObserversModule } from "@angular/cdk/observers";
 import { MatTreeModule } from "@angular/material/tree";
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
 
 @NgModule({
   exports: [
@@ -89,5 +90,13 @@ import { MatTreeModule } from "@angular/material/tree";
     MatExpansionModule,
     MatTreeModule,
   ],
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        subscriptSizing: 'dynamic'
+      }
+    }
+  ]
 })
 export class MatModule {}

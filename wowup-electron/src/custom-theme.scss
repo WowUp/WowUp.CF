@@ -27,6 +27,7 @@
   --mdc-filled-text-field-label-text-size: 14px;
   --mat-select-trigger-text-size: 14px;
   --mat-option-label-text-size: 14px;
+  --mdc-typography-button-letter-spacing: normal;
 }
 
 $md-wowup-palette: (
@@ -266,6 +267,11 @@ body {
   --title-logo: url("assets/images/wowup-white-1.png");
   --theme-logo: url("assets/images/wowup-white-1.png");
   --ad-placeholder: url("assets/images/wowup-placeholder.png");
+
+  --mdc-filled-text-field-disabled-container-color: transparent;
+  --mdc-filled-text-field-container-color: var(--background-secondary-2);
+  --mdc-filled-text-field-focus-label-text-color: #fff;
+  --mdc-filled-text-field-caret-color: #fff;
 }
 
 .default-theme-light-theme {
