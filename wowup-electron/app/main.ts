@@ -44,6 +44,7 @@ import { initializeDefaultPreferences } from "./preferences";
 import { PUSH_NOTIFICATION_EVENT, pushEvents } from "./push";
 import { getPreferenceStore, initializeStoreIpcHandlers } from "./stores";
 import * as windowState from "./window-state";
+import { validateGpuCache } from "./utils/gpu-cache-buster";
 
 // LOGGING SETUP
 // Override the default log path so they aren't a pain to find on Mac
@@ -73,6 +74,8 @@ process.on("unhandledRejection", (error) => {
 if (platform.isWin) {
   require("win-ca");
 }
+
+validateGpuCache(app)
 
 // VARIABLES
 const startedAt = Date.now();
