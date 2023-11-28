@@ -1389,7 +1389,7 @@ export class AddonService {
         const targetToc = this._tocService.getTocForGameType2(maf.name, maf.tocs, installation.clientType);
         if (targetToc === undefined) {
           console.warn("toc file undefined", maf, installation.clientType);
-          maf.matchingAddon.warningType = AddonWarningType.TocNameMismatch;
+          maf.matchingAddon.warningType = AddonWarningType.GameVersionTocMissing;
           return;
         }
 
