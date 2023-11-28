@@ -30,16 +30,16 @@ export class WebViewComponent implements OnDestroy, AfterViewInit {
     private _linkService: LinkService,
     private _sessionService: SessionService,
     private _uiMessageService: UiMessageService,
-    private _ngZone: NgZone
+    private _ngZone: NgZone,
   ) {}
 
   public ngAfterViewInit(): void {
-    this.initWebview(this.webviewContainer).catch((e) => console.error(e));
+    this.initWebview(this.webviewContainer);
     this._electronService.on("webview-new-window", this.onWebviewNewWindow);
     this._uiMessageService.message$
       .pipe(
         takeUntil(this.destroy$),
-        filter((msg) => msg.action === "ad-frame-reload")
+        filter((msg) => msg.action === "ad-frame-reload"),
       )
       .subscribe(() => {
         if (this._webviewReady) {
