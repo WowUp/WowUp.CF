@@ -266,19 +266,6 @@ mat-icon.success-icon {
   }
 }
 
-.mat-slide-toggle-thumb,
-.mat-slide-toggle-bar {
-  &:hover {
-    cursor: pointer !important;
-  }
-}
-
-.mat-slide-toggle-thumb,
-.mat-slide-toggle-bar,
-.mat-button-wrapper {
-  -webkit-app-region: no-drag;
-}
-
 .window-appicon {
   background-size: 30px !important;
   padding-left: 12px !important;
@@ -478,24 +465,6 @@ mat-icon.success-icon {
         height: 10px;
       }
     }
-  }
-}
-
-.wide-slide-toggle {
-  width: 100%;
-
-  &:hover {
-    cursor: pointer !important;
-  }
-
-  .mat-slide-toggle-label {
-    &:hover {
-      cursor: pointer !important;
-    }
-  }
-
-  .mat-slide-toggle-content {
-    flex-grow: 1;
   }
 }
 
