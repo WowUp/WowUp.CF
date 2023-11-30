@@ -548,8 +548,10 @@ body {
 }
 
 .wowup-snackbar {
-  background-color: var(--background-secondary-4) !important;
-
+  .mdc-snackbar__surface {
+    background-color: var(--background-secondary-4) !important;
+  }
+  
   &.text-1 {
     * {
       color: var(--text-1) !important;
