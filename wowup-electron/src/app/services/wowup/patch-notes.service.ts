@@ -20,6 +20,7 @@ const CHANGELOGS: ChangeLog[] = [
     html: `
     <h4>Changes</h4>
     <ul>
+    <li>German locale updates (Glow)</li>
     <li>Support new WoW Dragonflight 10.2 PTR</li>
     <li>Update to latest OW framework</li>
     <li>Update to latest UI framework</li>
@@ -249,7 +250,7 @@ const CHANGELOGS: ChangeLog[] = [
       <div>Added the new <a appExternalLink href="https://addons.wago.io/">Wago.io</a> addon provider</div>
       <a appExternalLink href="https://addons.wago.io/">
         <img src="https://cdn.wowup.io/images/wago-logo.svg" style="width: 100px; border-radius: 4px;" />
-      </a> 
+      </a>
     </li>
     <li>
       <div>New app layout courtesy of our friends at <a appExternalLink href="https://www.warcrafttavern.com">Warcraft Tavern</a>.</div>
