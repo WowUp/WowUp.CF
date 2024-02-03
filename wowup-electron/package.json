@@ -1,6 +1,6 @@
 {
   "name": "wowup-cf",
-  "version": "2.11.0-beta.6",
+  "version": "2.11.0-beta.7",
   "private": true,
   "description": "World of Warcraft addon updater",
   "keywords": [
