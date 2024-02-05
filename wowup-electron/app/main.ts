@@ -1,6 +1,6 @@
 import { dialog } from "electron";
 import { app, BrowserWindow, BrowserWindowConstructorOptions, powerMonitor } from "electron";
-import * as log from "electron-log";
+import * as log from "electron-log/main";
 import { find } from "lodash";
 import * as minimist from "minimist";
 import { arch as osArch, release as osRelease, type as osType } from "os";
@@ -44,12 +44,14 @@ import { initializeDefaultPreferences } from "./preferences";
 import { PUSH_NOTIFICATION_EVENT, pushEvents } from "./push";
 import { getPreferenceStore, initializeStoreIpcHandlers } from "./stores";
 import * as windowState from "./window-state";
+import { validateGpuCache } from "./utils/gpu-cache-buster";
 
 // LOGGING SETUP
 // Override the default log path so they aren't a pain to find on Mac
 const LOG_PATH = join(app.getPath("userData"), "logs");
 app.setAppLogsPath(LOG_PATH);
-log.transports.file.resolvePath = (variables: log.PathVariables) => {
+log.initialize();
+log.transports.file.resolvePathFn = (variables) => {
   return join(LOG_PATH, variables.fileName ?? "log-file.txt");
 };
 log.info("Main starting");
@@ -72,6 +74,8 @@ process.on("unhandledRejection", (error) => {
 if (platform.isWin) {
   require("win-ca");
 }
+
+validateGpuCache(app)
 
 // VARIABLES
 const startedAt = Date.now();
@@ -152,16 +156,35 @@ function getProtocol(arg: string) {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 // Added 400 ms to fix the black background issue while using transparent window. More details at https://github.com/electron/electron/issues/15947
-if (app.isReady()) {
-  log.info(`App already ready: ${Date.now() - startedAt}ms`);
-} else {
-  app.once("ready", () => {
+app
+  .whenReady()
+  .then(() => {
+    powerMonitor.on("resume", () => {
+      log.info("powerMonitor resume");
+      win?.webContents?.send(IPC_POWER_MONITOR_RESUME);
+    });
+
+    powerMonitor.on("suspend", () => {
+      log.info("powerMonitor suspend");
+      win?.webContents?.send(IPC_POWER_MONITOR_SUSPEND);
+    });
+
+    powerMonitor.on("lock-screen", () => {
+      log.info("powerMonitor lock-screen");
+      win?.webContents?.send(IPC_POWER_MONITOR_LOCK);
+    });
+
+    powerMonitor.on("unlock-screen", () => {
+      log.info("powerMonitor unlock-screen");
+      win?.webContents?.send(IPC_POWER_MONITOR_UNLOCK);
+    });
+
     log.info(`App ready: ${Date.now() - startedAt}ms`);
-    // setTimeout(() => {
     createWindow();
-    // }, 400);
+  })
+  .catch((e) => {
+    log.error("whenready failed", e);
   });
-}
 
 app.on("before-quit", () => {
   windowState.saveWindowConfig(win);
@@ -207,26 +230,6 @@ if (platform.isMac) {
   });
 }
 
-powerMonitor.on("resume", () => {
-  log.info("powerMonitor resume");
-  win?.webContents?.send(IPC_POWER_MONITOR_RESUME);
-});
-
-powerMonitor.on("suspend", () => {
-  log.info("powerMonitor suspend");
-  win?.webContents?.send(IPC_POWER_MONITOR_SUSPEND);
-});
-
-powerMonitor.on("lock-screen", () => {
-  log.info("powerMonitor lock-screen");
-  win?.webContents?.send(IPC_POWER_MONITOR_LOCK);
-});
-
-powerMonitor.on("unlock-screen", () => {
-  log.info("powerMonitor unlock-screen");
-  win?.webContents?.send(IPC_POWER_MONITOR_UNLOCK);
-});
-
 let lastCrash = 0;
 
 const crashMap = new Map<string, number>();
@@ -247,7 +250,7 @@ function onChildProcessCrashed(details: Electron.Details) {
   if (ct >= 3) {
     dialog.showErrorBox(
       "Child Process Failure",
-      `Child process ${details.serviceName} has crashed too many times, app will now exit`
+      `Child process ${details.serviceName} has crashed too many times, app will now exit`,
     );
     app.quit();
   }

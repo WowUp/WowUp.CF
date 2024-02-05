@@ -19,7 +19,7 @@ import { PreferenceStorageService } from "../storage/preference-storage.service"
 import { SensitiveStorageService } from "../storage/sensitive-storage.service";
 import { UiMessageService } from "../ui-message/ui-message.service";
 import { CurseAddonProvider } from "../../addon-providers/curse-addon-provider";
-import { WowUpAddonProvider, WowInterfaceAddonProvider, TukUiAddonProvider } from "wowup-lib-core/lib/addon-providers";
+import { WowUpAddonProvider, WowInterfaceAddonProvider, TukUiAddonProvider } from "wowup-lib-core";
 import { AppConfig } from "../../../environments/environment";
 import { GenericNetworkInterface } from "../../business-objects/generic-network-interface";
 

@@ -32,7 +32,7 @@ import { AddonInstallState } from "../../models/wowup/addon-install-state";
 import { AddonUpdateEvent } from "../../models/wowup/addon-update-event";
 
 import * as AddonUtils from "../../utils/addon.utils";
-import { getEnumName } from "wowup-lib-core/lib/utils";
+import { getEnumName, WowInstallation, WowUpAddonProvider } from "wowup-lib-core";
 import * as SearchResults from "../../utils/search-result.utils";
 
 import { AnalyticsService } from "../analytics/analytics.service";
@@ -64,8 +64,6 @@ import {
   Toc,
   WowClientType,
 } from "wowup-lib-core";
-import { WowInstallation } from "wowup-lib-core/lib/models";
-import { WowUpAddonProvider } from "wowup-lib-core/lib/addon-providers";
 import { AddonInstallService, InstallQueueItem, InstallType } from "./addon-install.service";
 import { strIsNotNullOrEmpty } from "../../utils/string.utils";
 import { delayMs } from "../../utils/time.utils";
@@ -1391,7 +1389,7 @@ export class AddonService {
         const targetToc = this._tocService.getTocForGameType2(maf.name, maf.tocs, installation.clientType);
         if (targetToc === undefined) {
           console.warn("toc file undefined", maf, installation.clientType);
-          maf.matchingAddon.warningType = AddonWarningType.TocNameMismatch;
+          maf.matchingAddon.warningType = AddonWarningType.GameVersionTocMissing;
           return;
         }
 

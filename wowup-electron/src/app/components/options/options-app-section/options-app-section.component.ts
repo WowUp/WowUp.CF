@@ -2,9 +2,9 @@ import { BehaviorSubject, firstValueFrom, from, of } from "rxjs";
 import { catchError, map, switchMap } from "rxjs/operators";
 
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
-import { MatLegacySelectChange as MatSelectChange } from "@angular/material/legacy-select";
-import { MatLegacySlideToggleChange as MatSlideToggleChange } from "@angular/material/legacy-slide-toggle";
+import { MatDialog } from "@angular/material/dialog";
+import { MatSelectChange } from "@angular/material/select";
+import { MatSlideToggleChange } from "@angular/material/slide-toggle";
 import { TranslateService } from "@ngx-translate/core";
 
 import {
@@ -47,7 +47,7 @@ interface ReleaseChannelViewModel {
 export class OptionsAppSectionComponent implements OnInit {
   public readonly wowupProtocolName = APP_PROTOCOL_NAME;
   public readonly curseProtocolName = CURSE_PROTOCOL_NAME;
-  
+
   public minimizeOnCloseDescription = "";
   public protocolRegistered = false;
   public zoomScale = ZOOM_SCALE;
@@ -131,7 +131,7 @@ export class OptionsAppSectionComponent implements OnInit {
     private _addonService: AddonService,
     public electronService: ElectronService,
     public sessionService: SessionService,
-    public wowupService: WowUpService
+    public wowupService: WowUpService,
   ) {}
 
   public ngOnInit(): void {
@@ -303,7 +303,7 @@ export class OptionsAppSectionComponent implements OnInit {
           catchError((e) => {
             console.error(e);
             return of(undefined);
-          })
+          }),
         )
         .subscribe();
       return;
@@ -311,10 +311,10 @@ export class OptionsAppSectionComponent implements OnInit {
 
     // Prompt the user that this may affect their existing CurseForge app
     const title: string = this._translateService.instant(
-      "PAGES.OPTIONS.APPLICATION.USE_CURSE_PROTOCOL_CONFIRMATION_LABEL"
+      "PAGES.OPTIONS.APPLICATION.USE_CURSE_PROTOCOL_CONFIRMATION_LABEL",
     );
     const message: string = this._translateService.instant(
-      "PAGES.OPTIONS.APPLICATION.USE_CURSE_PROTOCOL_CONFIRMATION_DESCRIPTION"
+      "PAGES.OPTIONS.APPLICATION.USE_CURSE_PROTOCOL_CONFIRMATION_DESCRIPTION",
     );
 
     const dialogRef = this._dialogFactory.getConfirmDialog(title, message);
@@ -333,19 +333,19 @@ export class OptionsAppSectionComponent implements OnInit {
         catchError((error) => {
           console.error(error);
           return of(undefined);
-        })
+        }),
       )
       .subscribe();
   };
 
   public onUseHardwareAccelerationChange = (evt: MatSlideToggleChange): void => {
     const title: string = this._translateService.instant(
-      "PAGES.OPTIONS.APPLICATION.USE_HARDWARE_ACCELERATION_CONFIRMATION_LABEL"
+      "PAGES.OPTIONS.APPLICATION.USE_HARDWARE_ACCELERATION_CONFIRMATION_LABEL",
     );
     const message: string = this._translateService.instant(
       evt.checked
         ? "PAGES.OPTIONS.APPLICATION.USE_HARDWARE_ACCELERATION_ENABLE_CONFIRMATION_DESCRIPTION"
-        : "PAGES.OPTIONS.APPLICATION.USE_HARDWARE_ACCELERATION_DISABLE_CONFIRMATION_DESCRIPTION"
+        : "PAGES.OPTIONS.APPLICATION.USE_HARDWARE_ACCELERATION_DISABLE_CONFIRMATION_DESCRIPTION",
     );
 
     const dialogRef = this._dialogFactory.getConfirmDialog(title, message);
@@ -360,13 +360,13 @@ export class OptionsAppSectionComponent implements OnInit {
           }
 
           return from(this.wowupService.setUseHardwareAcceleration(evt.checked)).pipe(
-            switchMap(() => from(this.electronService.restartApplication()))
+            switchMap(() => from(this.electronService.restartApplication())),
           );
         }),
         catchError((error) => {
           console.error(error);
           return of(undefined);
-        })
+        }),
       )
       .subscribe();
   };
@@ -381,7 +381,7 @@ export class OptionsAppSectionComponent implements OnInit {
       data: {
         title: this._translateService.instant("PAGES.OPTIONS.APPLICATION.USE_SYMLINK_SUPPORT_CONFIRMATION_LABEL"),
         message: this._translateService.instant(
-          "PAGES.OPTIONS.APPLICATION.USE_SYMLINK_SUPPORT_CONFIRMATION_DESCRIPTION"
+          "PAGES.OPTIONS.APPLICATION.USE_SYMLINK_SUPPORT_CONFIRMATION_DESCRIPTION",
         ),
       },
     });
@@ -396,13 +396,13 @@ export class OptionsAppSectionComponent implements OnInit {
           }
 
           return from(this.wowupService.setUseSymlinkMode(evt.checked)).pipe(
-            map(() => this.useSymlinkMode$.next(evt.checked))
+            map(() => this.useSymlinkMode$.next(evt.checked)),
           );
         }),
         catchError((error) => {
           console.error(error);
           return of(undefined);
-        })
+        }),
       )
       .subscribe();
   };
@@ -458,14 +458,14 @@ export class OptionsAppSectionComponent implements OnInit {
 
           return from(this.wowupService.setCurrentLanguage(evt.value as string)).pipe(map(() => evt.value as string));
         }),
-        switchMap((result) => {
+        switchMap((result: string) => {
           this.currentLanguage$.next(result);
           return from(this.electronService.restartApplication());
         }),
         catchError((error) => {
           console.error(error);
           return of(undefined);
-        })
+        }),
       )
       .subscribe();
   };

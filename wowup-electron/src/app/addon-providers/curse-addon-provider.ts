@@ -21,9 +21,9 @@ import {
   WowClientGroup,
   WowClientType,
 } from "wowup-lib-core";
-import { SourceRemovedAddonError } from "wowup-lib-core/lib/errors";
-import { WowInstallation } from "wowup-lib-core/lib/models";
-import { getEnumName } from "wowup-lib-core/lib/utils";
+import { SourceRemovedAddonError } from "wowup-lib-core";
+import { WowInstallation } from "wowup-lib-core";
+import { getEnumName } from "wowup-lib-core";
 
 import {
   ADDON_PROVIDER_CURSEFORGE,
@@ -37,10 +37,17 @@ import { CircuitBreakerWrapper, NetworkService } from "../services/network/netwo
 import { TocService } from "../services/toc/toc.service";
 import * as AddonUtils from "../utils/addon.utils";
 import { strictFilter } from "../utils/array.utils";
+import { TocNotFoundError } from "../errors";
 
 interface ProtocolData {
   addonId: number;
   fileId: number;
+}
+
+interface ScanMatchPair {
+  addonFolder: AddonFolder;
+  match: cfv2.CF2FingerprintMatch;
+  addon?: cfv2.CF2Addon;
 }
 
 const CHANGELOG_CACHE_TTL_SEC = 30 * 60;
@@ -60,7 +67,7 @@ const GAME_TYPE_LISTS = [
   {
     flavor: "wow_retail",
     typeId: 517,
-    matches: [WowClientType.Retail, WowClientType.RetailPtr, WowClientType.Beta],
+    matches: [WowClientType.Retail, WowClientType.RetailPtr, WowClientType.Beta, WowClientType.RetailXPtr],
   },
 ];
 
@@ -81,14 +88,14 @@ export class CurseAddonProvider extends AddonProvider {
   public constructor(
     private _cachingService: CachingService,
     private _networkService: NetworkService,
-    private _tocService: TocService
+    private _tocService: TocService,
   ) {
     super();
 
     this._circuitBreaker = this._networkService.getCircuitBreaker(
       `${this.name}_main`,
       undefined,
-      AppConfig.curseforge.httpTimeoutMs
+      AppConfig.curseforge.httpTimeoutMs,
     );
 
     this._cf2Client = new cfv2.CFV2Client({
@@ -124,12 +131,12 @@ export class CurseAddonProvider extends AddonProvider {
 
       const missingAddonIds = _.filter(
         addonIds,
-        (addonId) => _.find(searchResults, (sr) => sr.id.toString() === addonId) === undefined
+        (addonId) => _.find(searchResults, (sr) => sr.id.toString() === addonId) === undefined,
       );
 
       batchResult.errors[installation.id] = _.map(
         missingAddonIds,
-        (addonId) => new SourceRemovedAddonError(addonId, undefined)
+        (addonId) => new SourceRemovedAddonError(addonId, undefined),
       );
 
       batchResult.installationResults[installation.id] = addonResults;
@@ -163,7 +170,7 @@ export class CurseAddonProvider extends AddonProvider {
 
     const missingAddonIds = _.filter(
       addonIds,
-      (addonId) => _.find(searchResults, (sr) => sr.id.toString() === addonId) === undefined
+      (addonId) => _.find(searchResults, (sr) => sr.id.toString() === addonId) === undefined,
     );
 
     const deletedErrors = _.map(missingAddonIds, (addonId) => new SourceRemovedAddonError(addonId, undefined));
@@ -194,7 +201,7 @@ export class CurseAddonProvider extends AddonProvider {
     query: string,
     installation: WowInstallation,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    channelType?: AddonChannelType
+    channelType?: AddonChannelType,
   ): Promise<AddonSearchResult[]> {
     const searchResults: AddonSearchResult[] = [];
 
@@ -217,7 +224,7 @@ export class CurseAddonProvider extends AddonProvider {
 
   public override async searchByUrl(
     addonUri: URL,
-    installation: WowInstallation
+    installation: WowInstallation,
   ): Promise<SearchByUrlResult | undefined> {
     const slugRegex = /\/addons\/(.*?)(\/|$)/gi;
     const slugMatch = slugRegex.exec(addonUri.pathname);
@@ -271,7 +278,7 @@ export class CurseAddonProvider extends AddonProvider {
 
   public override async getCategory(
     category: AddonCategory,
-    installation: WowInstallation
+    installation: WowInstallation,
   ): Promise<AddonSearchResult[]> {
     const curseCategories = this.mapAddonCategory(category);
     const gameVersionTypeId = this.getGameVersionTypeId(installation.clientType);
@@ -296,7 +303,7 @@ export class CurseAddonProvider extends AddonProvider {
 
   public override async getById(
     addonId: string,
-    installation: WowInstallation
+    installation: WowInstallation,
   ): Promise<AddonSearchResult | undefined> {
     const result = await this.getByIdBase(addonId);
 
@@ -331,7 +338,7 @@ export class CurseAddonProvider extends AddonProvider {
   public override async scan(
     installation: WowInstallation,
     addonChannelType: AddonChannelType,
-    addonFolders: AddonFolder[]
+    addonFolders: AddonFolder[],
   ): Promise<void> {
     if (!addonFolders.length) {
       return;
@@ -346,18 +353,19 @@ export class CurseAddonProvider extends AddonProvider {
     const result = await this._cf2Client.getFingerprintMatches({ fingerprints });
     const fingerprintData = result.data?.data;
     try {
-      const matchPairs: { addonFolder: AddonFolder; match: cfv2.CF2FingerprintMatch; addon?: cfv2.CF2Addon }[] = [];
+      const matchPairs: ScanMatchPair[] = [];
       for (const af of addonFolders) {
         let exactMatch = fingerprintData?.exactMatches.find(
           (em) =>
             this.isCfFileCompatible(installation.clientType, em.file) &&
-            em.file.modules.some((m) => m.fingerprint == af.cfScanResults?.fingerprintNum)
+            em.file.modules.some((m) => m.fingerprint == af.cfScanResults?.fingerprintNum),
         );
 
         // If the addon does not have an exact match, check the partial matches.
         if (!exactMatch && Array.isArray(fingerprintData?.partialMatches) && fingerprintData !== undefined) {
-          exactMatch = fingerprintData.partialMatches.find((partialMatch) =>
-            partialMatch.file?.modules?.some((module) => module.fingerprint === af.cfScanResults?.fingerprintNum)
+          exactMatch = fingerprintData.partialMatches.find(
+            (partialMatch) =>
+              partialMatch.file?.modules?.some((module) => module.fingerprint === af.cfScanResults?.fingerprintNum),
           );
         }
 
@@ -373,16 +381,30 @@ export class CurseAddonProvider extends AddonProvider {
       const getAddonsResult = await this._cf2Client.getMods({ modIds: addonIds });
       const addonResultData = getAddonsResult.data?.data;
 
+      const potentialChildren: ScanMatchPair[] = [];
       matchPairs.forEach((mp) => {
         const cfAddon = addonResultData?.find((ar) => ar.id === mp.match.id);
         if (!cfAddon) {
           return;
         }
 
-        mp.addonFolder.matchingAddon = this.createAddon(installation, mp.addonFolder, mp.match.file, cfAddon);
+        try {
+          mp.addonFolder.matchingAddon = this.createAddon(installation, mp.addonFolder, mp.match.file, cfAddon);
+        } catch (e) {
+          if (e instanceof TocNotFoundError) {
+            potentialChildren.push(mp);
+          } else {
+            console.error(e);
+          }
+        }
       });
 
-      console.log(matchPairs);
+      potentialChildren.forEach((pc) => {
+        const parent = matchPairs.find(
+          (mp) => mp.addonFolder.matchingAddon !== undefined && this.isChildAddon(mp.match.file, pc.addonFolder.name),
+        );
+        pc.addonFolder.matchingAddon = parent?.addonFolder.matchingAddon;
+      });
     } catch (e) {
       console.error("failed to process fingerprint response");
       console.error(e);
@@ -391,10 +413,14 @@ export class CurseAddonProvider extends AddonProvider {
     }
   }
 
+  private isChildAddon(cfAddon: cfv2.CF2File, addonName: string) {
+    return cfAddon.modules.some((m) => m.name == addonName);
+  }
+
   public override async getChangelog(
     installation: WowInstallation,
     externalId: string,
-    externalReleaseId: string
+    externalReleaseId: string,
   ): Promise<string> {
     try {
       const cacheKey = `${this.name}_changelog_${externalId}_${externalReleaseId}`;
@@ -404,7 +430,7 @@ export class CurseAddonProvider extends AddonProvider {
         () => {
           return this._cf2Client.getModFileChangelog(parseInt(externalId, 10), parseInt(externalReleaseId, 10));
         },
-        CHANGELOG_CACHE_TTL_SEC
+        CHANGELOG_CACHE_TTL_SEC,
       );
 
       return response.data?.data || "";
@@ -415,11 +441,7 @@ export class CurseAddonProvider extends AddonProvider {
     return "";
   }
 
-  public override async getDescription(
-    installation: WowInstallation,
-    externalId: string,
-    addon?: Addon
-  ): Promise<string> {
+  public override async getDescription(installation: WowInstallation, externalId: string): Promise<string> {
     try {
       const cacheKey = `${this.name}_description_${externalId}`;
       const response = await this._cachingService.transaction(
@@ -427,7 +449,7 @@ export class CurseAddonProvider extends AddonProvider {
         () => {
           return this._cf2Client.getModDescription(parseInt(externalId, 10));
         },
-        CHANGELOG_CACHE_TTL_SEC
+        CHANGELOG_CACHE_TTL_SEC,
       );
 
       if (response.data) {
@@ -483,7 +505,7 @@ export class CurseAddonProvider extends AddonProvider {
     installation: WowInstallation,
     addonFolder: AddonFolder,
     cfFile: cfv2.CF2File,
-    cfAddon: cfv2.CF2Addon
+    cfAddon: cfv2.CF2Addon,
   ): Addon {
     const authors = cfAddon.authors.map((author) => author.name).join(", ");
     const folders = cfFile.modules.map((module) => module.name);
@@ -495,8 +517,8 @@ export class CurseAddonProvider extends AddonProvider {
 
     const targetToc = this._tocService.getTocForGameType2(addonFolder.name, addonFolder.tocs, installation.clientType);
     if (!targetToc) {
-      console.error(addonFolder.tocs);
-      throw new Error("Target toc not found");
+      console.error(cfAddon.name, addonFolder.tocs);
+      throw new TocNotFoundError("Target toc not found");
     }
 
     const gameVersion = AddonUtils.getGameVersion(targetToc.interface);
@@ -542,7 +564,7 @@ export class CurseAddonProvider extends AddonProvider {
 
   private getLatestFiles(result: cfv2.CF2Addon, clientType: WowClientType): cfv2.CF2File[] {
     const filtered = result.latestFiles.filter(
-      (latestFile) => latestFile.exposeAsAlternative !== true && this.isClientType(latestFile, clientType)
+      (latestFile) => latestFile.exposeAsAlternative !== true && this.isClientType(latestFile, clientType),
     );
     return _.sortBy(filtered, (latestFile) => latestFile.id).reverse();
   }
@@ -603,7 +625,7 @@ export class CurseAddonProvider extends AddonProvider {
 
   private async getAddonFileById(addonId: string | number, fileId: string | number): Promise<cfv2.CF2File | undefined> {
     const response = await this._circuitBreaker.fire(() =>
-      this._cf2Client.getModFile(parseInt(`${addonId}`, 10), parseInt(`${fileId}`, 10))
+      this._cf2Client.getModFile(parseInt(`${addonId}`, 10), parseInt(`${fileId}`, 10)),
     );
 
     return response.data?.data;
@@ -773,8 +795,8 @@ export class CurseAddonProvider extends AddonProvider {
   private getValidClientTypes(file: cfv2.CF2File): WowClientType[] {
     const gameVersions: WowClientType[] = _.flatten(
       GAME_TYPE_LISTS.filter((type) =>
-        file.sortableGameVersions.find((sgv) => sgv.gameVersionTypeId === type.typeId)
-      ).map((game) => game.matches)
+        file.sortableGameVersions.find((sgv) => sgv.gameVersionTypeId === type.typeId),
+      ).map((game) => game.matches),
     );
 
     return _.uniq(gameVersions);
@@ -807,7 +829,7 @@ export class CurseAddonProvider extends AddonProvider {
     const result = await this._cachingService.transaction(
       cacheKey,
       () => this._cf2Client.getFeaturedMods(request),
-      FEATURED_ADDONS_CACHE_TTL_SEC
+      FEATURED_ADDONS_CACHE_TTL_SEC,
     );
 
     if (!result || result.statusCode !== 200) {
@@ -869,7 +891,7 @@ export class CurseAddonProvider extends AddonProvider {
     category: cfv2.CF2WowAddonCategory,
     gameVersionFlavor: cfv2.CF2WowGameVersionType,
     pageSize: number,
-    pageNumber: number
+    pageNumber: number,
   ): Promise<cfv2.CF2Addon[]> {
     const request: cfv2.CF2SearchModsParams = {
       gameId: 1,
@@ -883,7 +905,7 @@ export class CurseAddonProvider extends AddonProvider {
     const cacheKey = JSON.stringify(request);
 
     const result = await this._cachingService.transaction(cacheKey, () =>
-      this._circuitBreaker.fire(() => this._cf2Client.searchMods(request))
+      this._circuitBreaker.fire(() => this._cf2Client.searchMods(request)),
     );
 
     return result?.data?.data ?? [];
