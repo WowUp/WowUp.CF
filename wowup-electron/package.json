@@ -1,6 +1,6 @@
 {
   "name": "wowup-cf",
-  "version": "2.11.0",
+  "version": "2.11.1-beta.1",
   "private": true,
   "description": "World of Warcraft addon updater",
   "keywords": [
@@ -130,6 +130,7 @@
     "curseforge-v2": "1.2.0",
     "del": "7.1.0",
     "dotenv": "16.3.1",
+    "electron": "28.2.1",
     "electron-builder": "24.9.1",
     "electron-notarize": "1.2.2",
     "electron-reload": "2.0.0-alpha.1",
