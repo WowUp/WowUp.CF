@@ -30,6 +30,7 @@ module.exports = async function (params) {
       appPath: appPath,
       appleId: process.env.NOTARIZE_APPLE_ID,
       appleIdPassword: process.env.NOTARIZE_APPLE_PASSWORD,
+      teamId: process.env.NOTARIZE_APPLE_TEAM_ID,
       ascProvider: process.env.NOTARIZE_APPLE_TEAM_ID
     });
   } catch (error) {
