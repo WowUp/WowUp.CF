@@ -12,7 +12,7 @@ export const AppConfig = {
   },
   curseforge: {
     httpTimeoutMs: 60000,
-    apiKey: "$2a$10$bL4bIL5pUWqfcO7KQtnMReakwtfHbNKh6v1uTpKlzhwoueEJQnPnm",
+    apiKey: "{{CURSEFORGE_API_KEY}}",
   },
   autoUpdateIntervalMs: 3600000, // 1 hour
   appUpdateIntervalMs: 3600000, // 1 hour
