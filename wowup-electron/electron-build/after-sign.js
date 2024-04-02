@@ -1,7 +1,7 @@
 // Inspired by https://medium.com/@TwitterArchiveEraser/notarize-electron-apps-7a5f988406db
 const fs = require('fs');
 const path = require('path');
-const electron_notarize = require('electron-notarize');
+const electron_notarize = require('@electron/notarize');
 
 // Pull in signing env vars
 require('dotenv').config({
