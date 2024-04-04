@@ -681,6 +681,8 @@ export class CurseAddonProvider extends AddonProvider {
     const clientGroup = getWowClientGroup(clientType);
 
     switch (clientGroup) {
+      case WowClientGroup.Cata:
+        return cfv2.CF2WowGameVersionType.Cata;
       case WowClientGroup.WOTLK:
         return cfv2.CF2WowGameVersionType.WOTLK;
       case WowClientGroup.BurningCrusade:
