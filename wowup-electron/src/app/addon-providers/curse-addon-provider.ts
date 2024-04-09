@@ -62,12 +62,17 @@ const GAME_TYPE_LISTS = [
   {
     flavor: "wow-wrath-classic",
     typeId: 73713,
-    matches: [WowClientType.Classic, WowClientType.ClassicPtr, WowClientType.ClassicBeta],
+    matches: [WowClientType.Classic, WowClientType.ClassicPtr],
   },
   {
     flavor: "wow_retail",
     typeId: 517,
     matches: [WowClientType.Retail, WowClientType.RetailPtr, WowClientType.Beta, WowClientType.RetailXPtr],
+  },
+  {
+    flavor: "wow-cataclysm-classic",
+    typeId: 77522,
+    matches: [WowClientType.ClassicBeta],
   },
 ];
 
