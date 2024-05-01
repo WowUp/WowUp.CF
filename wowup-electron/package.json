@@ -106,7 +106,7 @@
     "@ngx-translate/core": "15.0.0",
     "@ngx-translate/http-loader": "8.0.0",
     "@overwolf/ow-electron": "28.2.5",
-    "@overwolf/ow-electron-builder": "24.7.0",
+    "@overwolf/ow-electron-builder": "24.13.4",
     "@types/adm-zip": "0.5.1",
     "@types/flat": "5.0.2",
     "@types/globrex": "0.1.2",
