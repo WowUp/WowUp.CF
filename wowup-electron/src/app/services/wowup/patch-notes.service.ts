@@ -20,7 +20,7 @@ const CHANGELOGS: ChangeLog[] = [
     html: `
     <h4>Features</h4>
     <ul>
-    <li>Add basic Cataclysm beta support</li>
+    <li>Add Cataclysm</li>
     </ul>
     `,
   },
