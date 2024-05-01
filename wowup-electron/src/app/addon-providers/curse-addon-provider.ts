@@ -37,7 +37,6 @@ import { AppConfig } from "../../environments/environment";
 import { CachingService } from "../services/caching/caching-service";
 import { CircuitBreakerWrapper, NetworkService } from "../services/network/network.service";
 import { TocService } from "../services/toc/toc.service";
-import * as AddonUtils from "../utils/addon.utils";
 import { strictFilter } from "../utils/array.utils";
 import { TocNotFoundError } from "../errors";
 
