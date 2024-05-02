@@ -1,6 +1,6 @@
 {
   "name": "wowup-cf",
-  "version": "2.12.0-beta.3",
+  "version": "2.12.0-beta.4",
   "private": true,
   "description": "World of Warcraft addon updater",
   "keywords": [
@@ -72,7 +72,7 @@
     "pushy-electron": "1.0.11",
     "rxjs": "7.8.1",
     "win-ca": "3.5.1",
-    "wowup-lib-core": "1.0.1",
+    "wowup-lib-core": "1.0.4",
     "yauzl": "2.10.0"
   },
   "devDependencies": {
@@ -130,7 +130,7 @@
     "curseforge-v2": "1.3.0",
     "del": "7.1.0",
     "dotenv": "16.4.5",
-    "electron": "30.0.1",
+    "electron": "29.3.1",
     "electron-builder": "24.13.3",
     "electron-notarize": "1.2.2",
     "electron-reload": "2.0.0-alpha.1",

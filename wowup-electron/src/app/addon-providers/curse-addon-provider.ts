@@ -16,23 +16,23 @@ import {
   AdPageOptions,
   GetAllBatchResult,
   GetAllResult,
+  getEnumName,
   getGameVersion,
   getGameVersionList,
+  getWowClientGroupForType,
   ProtocolSearchResult,
   SearchByUrlResult,
+  SourceRemovedAddonError,
   WowClientGroup,
   WowClientType,
+  WowInstallation,
 } from "wowup-lib-core";
-import { SourceRemovedAddonError } from "wowup-lib-core";
-import { WowInstallation } from "wowup-lib-core";
-import { getEnumName } from "wowup-lib-core";
 
 import {
   ADDON_PROVIDER_CURSEFORGE,
   NO_LATEST_SEARCH_RESULT_FILES_ERROR,
   NO_SEARCH_RESULTS_ERROR,
 } from "../../common/constants";
-import { getWowClientGroup } from "../../common/warcraft";
 import { AppConfig } from "../../environments/environment";
 import { CachingService } from "../services/caching/caching-service";
 import { CircuitBreakerWrapper, NetworkService } from "../services/network/network.service";
@@ -483,7 +483,6 @@ export class CurseAddonProvider extends AddonProvider {
   }
 
   private getGameVersionTypeId(clientType: WowClientType): number {
-    console.debug("getGameVersionTypeId", clientType);
     const gameType = GAME_TYPE_LISTS.find((gtl) => gtl.matches.includes(clientType));
     if (!gameType) {
       throw new Error(`Game type not found: ${clientType}`);
@@ -684,7 +683,7 @@ export class CurseAddonProvider extends AddonProvider {
   }
 
   private getCFGameVersionType(clientType: WowClientType): cfv2.CF2WowGameVersionType {
-    const clientGroup = getWowClientGroup(clientType);
+    const clientGroup = getWowClientGroupForType(clientType);
 
     switch (clientGroup) {
       case WowClientGroup.Cata:
