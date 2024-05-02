@@ -522,7 +522,7 @@ export class CurseAddonProvider extends AddonProvider {
 
     const targetToc = this._tocService.getTocForGameType2(addonFolder.name, addonFolder.tocs, installation.clientType);
     if (!targetToc) {
-      console.error(cfAddon.name, addonFolder.tocs);
+      console.error('targetToc undefined', cfAddon.name, addonFolder.tocs);
       throw new TocNotFoundError("Target toc not found");
     }
 

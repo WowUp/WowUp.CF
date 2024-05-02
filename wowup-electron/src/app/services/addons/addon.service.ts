@@ -1032,7 +1032,6 @@ export class AddonService {
     addons: Addon[],
     installation: WowInstallation,
   ): Promise<void> {
-
     for (const result of addonSearchResults) {
       const addon = addons.find((addon) => this.addonMatchesSearchResult(addon, result));
       if (!addon) {
@@ -1396,7 +1395,7 @@ export class AddonService {
         const targetToc = this._tocService.getTocForGameType2(maf.name, maf.tocs, installation.clientType);
         if (targetToc === undefined) {
           console.warn("toc file undefined", maf, installation.clientType);
-          maf.matchingAddon.warningType = AddonWarningType.GameVersionTocMissing;
+          // maf.matchingAddon.warningType = AddonWarningType.GameVersionTocMissing;
           return;
         }
 
