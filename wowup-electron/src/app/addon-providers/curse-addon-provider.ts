@@ -16,26 +16,27 @@ import {
   AdPageOptions,
   GetAllBatchResult,
   GetAllResult,
+  getEnumName,
+  getGameVersion,
+  getGameVersionList,
+  getWowClientGroupForType,
   ProtocolSearchResult,
   SearchByUrlResult,
+  SourceRemovedAddonError,
   WowClientGroup,
   WowClientType,
+  WowInstallation,
 } from "wowup-lib-core";
-import { SourceRemovedAddonError } from "wowup-lib-core";
-import { WowInstallation } from "wowup-lib-core";
-import { getEnumName } from "wowup-lib-core";
 
 import {
   ADDON_PROVIDER_CURSEFORGE,
   NO_LATEST_SEARCH_RESULT_FILES_ERROR,
   NO_SEARCH_RESULTS_ERROR,
 } from "../../common/constants";
-import { getWowClientGroup } from "../../common/warcraft";
 import { AppConfig } from "../../environments/environment";
 import { CachingService } from "../services/caching/caching-service";
 import { CircuitBreakerWrapper, NetworkService } from "../services/network/network.service";
 import { TocService } from "../services/toc/toc.service";
-import * as AddonUtils from "../utils/addon.utils";
 import { strictFilter } from "../utils/array.utils";
 import { TocNotFoundError } from "../errors";
 
@@ -62,12 +63,17 @@ const GAME_TYPE_LISTS = [
   {
     flavor: "wow-wrath-classic",
     typeId: 73713,
-    matches: [WowClientType.Classic, WowClientType.ClassicPtr, WowClientType.ClassicBeta],
+    matches: [],
   },
   {
     flavor: "wow_retail",
     typeId: 517,
     matches: [WowClientType.Retail, WowClientType.RetailPtr, WowClientType.Beta, WowClientType.RetailXPtr],
+  },
+  {
+    flavor: "wow-cataclysm-classic",
+    typeId: 77522,
+    matches: [WowClientType.Classic, WowClientType.ClassicPtr, WowClientType.ClassicBeta],
   },
 ];
 
@@ -363,9 +369,8 @@ export class CurseAddonProvider extends AddonProvider {
 
         // If the addon does not have an exact match, check the partial matches.
         if (!exactMatch && Array.isArray(fingerprintData?.partialMatches) && fingerprintData !== undefined) {
-          exactMatch = fingerprintData.partialMatches.find(
-            (partialMatch) =>
-              partialMatch.file?.modules?.some((module) => module.fingerprint === af.cfScanResults?.fingerprintNum),
+          exactMatch = fingerprintData.partialMatches.find((partialMatch) =>
+            partialMatch.file?.modules?.some((module) => module.fingerprint === af.cfScanResults?.fingerprintNum),
           );
         }
 
@@ -517,11 +522,11 @@ export class CurseAddonProvider extends AddonProvider {
 
     const targetToc = this._tocService.getTocForGameType2(addonFolder.name, addonFolder.tocs, installation.clientType);
     if (!targetToc) {
-      console.error(cfAddon.name, addonFolder.tocs);
+      console.error('targetToc undefined', cfAddon.name, addonFolder.tocs);
       throw new TocNotFoundError("Target toc not found");
     }
 
-    const gameVersion = AddonUtils.getGameVersion(targetToc.interface);
+    const gameVersions = getGameVersionList(targetToc.interface);
 
     const addon: Addon = {
       id: uuidv4(),
@@ -534,7 +539,7 @@ export class CurseAddonProvider extends AddonProvider {
       downloadUrl: latestVersion?.downloadUrl ?? cfFile.downloadUrl ?? "",
       externalUrl: cfAddon?.links?.websiteUrl ?? "",
       externalId: cfAddon?.id.toString() ?? "",
-      gameVersion: gameVersion,
+      gameVersion: gameVersions,
       installedAt: new Date(addonFolder?.fileStats?.birthtimeMs ?? 0),
       installedFolders: folderList,
       installedFolderList: folders,
@@ -678,9 +683,11 @@ export class CurseAddonProvider extends AddonProvider {
   }
 
   private getCFGameVersionType(clientType: WowClientType): cfv2.CF2WowGameVersionType {
-    const clientGroup = getWowClientGroup(clientType);
+    const clientGroup = getWowClientGroupForType(clientType);
 
     switch (clientGroup) {
+      case WowClientGroup.Cata:
+        return cfv2.CF2WowGameVersionType.Cata;
       case WowClientGroup.WOTLK:
         return cfv2.CF2WowGameVersionType.WOTLK;
       case WowClientGroup.BurningCrusade:
@@ -764,7 +771,7 @@ export class CurseAddonProvider extends AddonProvider {
           version: lf.displayName,
           downloadUrl: lf.downloadUrl,
           folders: this.getFolderNames(lf),
-          gameVersion: AddonUtils.getGameVersion(this.getGameVersion(lf)),
+          gameVersion: getGameVersion(this.getGameVersion(lf)),
           releaseDate: new Date(lf.fileDate),
           dependencies: lf.dependencies.map(this.createAddonSearchResultDependency),
           externalId: lf.id.toString(),

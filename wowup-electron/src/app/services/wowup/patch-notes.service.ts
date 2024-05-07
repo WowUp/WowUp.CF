@@ -16,6 +16,26 @@ export class PatchNotesService {
 
 const CHANGELOGS: ChangeLog[] = [
   {
+    Version: "2.12.0",
+    html: `
+    <h4>Features</h4>
+    <ul>
+    <li>Add Cataclysm</li>
+    <h4>Changes</h4>
+    <li>Remove minor warning for folders not containing exact interface match</li>
+    </ul>
+    `,
+  },
+  {
+    Version: "2.11.1",
+    html: `
+    <h4>Changes</h4>
+    <ul>
+    <li>Update for better Linux support</li>
+    </ul>
+    `,
+  },
+  {
     Version: "2.11.0",
     html: `
     <h4>Changes</h4>

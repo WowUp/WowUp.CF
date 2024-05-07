@@ -13,7 +13,6 @@
   flex-direction: row;
   padding: 0 1em 0 1em;
   margin: 1em 1em 0 1em;
-  // border-radius: 4px;
 
   .select-container {
     flex-grow: 1;
@@ -35,9 +34,6 @@
     flex-direction: row;
     flex-grow: 1;
     justify-content: flex-end;
-
-    .search-container {
-    }
 
     .button-container {
       display: flex;
