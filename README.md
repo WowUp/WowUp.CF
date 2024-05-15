@@ -33,12 +33,24 @@ If you feel like helping us test the latest and greatest changes beta builds are
 
 ### Community Support Alternatives
 
+#### Chocolatey
+
 [Chocolatey](https://chocolatey.org)
 
 You can also install the latest version via Chocolatey package manager:
 
 ```cmd
 choco install wowup
+```
+
+#### Nix
+
+A nix package can be found on [nixpkgs](https://search.nixos.org/packages?channel=unstable&show=wowup-cf&from=0&size=50&sort=relevance&type=packages&query=wowup).
+
+You can try it out with:
+
+```bash
+nix-shell -p wowup-cf
 ```
 
 ## Contributing
